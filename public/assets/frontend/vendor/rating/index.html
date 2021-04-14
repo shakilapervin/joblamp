@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Star Rating by pryley</title>
+    <meta name="keywords" content="starrating star-rating star rating">
+    <meta name="description"
+          content="A zero-dependency library that transforms a SELECT with numerical-range values (i.e. 1-5) into a dynamic star rating element.">
+    <meta name="author" content="Paul Ryley">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' type='text/css'>
+    <link rel="stylesheet" href="demo/styles.css">
+</head>
+<body>
+<main class="main-content">
+    <select id="glsr-ltr" class="star-rating">
+        <option value="">Select a rating</option>
+        <option value="5">Fantastic</option>
+        <option value="4">Great</option>
+        <option value="3">Good</option>
+        <option value="2">Poor</option>
+        <option value="1">Terrible</option>
+    </select>
+</main>
+<script src="src/star-rating.js?ver=3.4.0"></script>
+<script>
+    var destroyed = false;
+    var starratings = new StarRating('.star-rating', {
+        onClick: function (el) {
+            console.log('Selected: ' + el[el.selectedIndex].text);
+        },
+    });
+    document.querySelector('.toggle-star-rating').addEventListener('click', function () {
+        if (!destroyed) {
+            starratings.destroy();
+            destroyed = true;
+        } else {
+            starratings.rebuild();
+            destroyed = false;
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,184 @@
+<?php
+
+namespace App\Http\Controllers\Website;
+
+
+use App\UserTransaction;
+use App\UserWithdrawMethod;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use PragmaRX\Countries\Package\Countries;
+use Stripe;
+use PaypalPayoutsSDK\Core\PayPalHttpClient;
+use PaypalPayoutsSDK\Core\ProductionEnvironment;
+use PaypalPayoutsSDK\Core\SandboxEnvironment;
+use PaypalPayoutsSDK\Payouts\PayoutsPostRequest;
+class WithdrawController extends Controller
+{
+    /*
+    |--------------------------------------------------------------------------
+    | Withdraw Method
+    |--------------------------------------------------------------------------
+    */
+    public function index()
+    {
+        $countryList = new Countries();
+        $countries = $countryList->all()->toArray();
+        $currencies = $countryList->currencies();
+        $user = Auth::user();
+        $bank = UserWithdrawMethod::where('user_id', $user->id)->first();
+        $cashIn = UserTransaction::where('user_id', $user->id)->sum('credit');
+        $cashOut = UserTransaction::where('user_id', $user->id)->sum('debit');
+        $balance = $cashIn - $cashOut;
+        return view('frontend.withdraw.index', compact('user', 'bank', 'countries', 'currencies', 'balance'));
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Update Withdraw Method
+    |--------------------------------------------------------------------------
+    */
+    public function updateWithdrawMethod(Request $request)
+    {
+        $user = Auth::user();
+        if ($request->type == 'bank_account') {
+            $validator = Validator::make($request->all(), [
+                'country' => 'required',
+                'currency' => 'required',
+                'account_holder_name' => 'required',
+                'routing_number' => 'required',
+                'account_number' => 'required',
+                'account_holder_type' => 'required',
+            ]);
+            if ($validator->fails()) {
+                return redirect()->back()
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+            $account = UserWithdrawMethod::where('user_id',$user->id)->where('type','stripe')->first();
+            Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+            $account = \Stripe\Account::create([
+                'country' => $request->country,
+                'type' => 'standard',
+            ]);
+            $account_links = \Stripe\AccountLink::create([
+                'account' => $account->id,
+                'refresh_url' => 'https://example.com/reauth',
+                'return_url' => 'https://example.com/return',
+                'type' => 'account_onboarding',
+            ]);
+            return redirect($account_links->url);
+        }else{
+            $validator = Validator::make($request->all(), [
+                'paypal_email' => 'required',
+                'currency' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()->back()
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+            $account = UserWithdrawMethod::where('user_id',$user->id)->where('type','paypal')->first();
+            if (!empty($account)) {
+                $account->account_number = $request->paypal_email;
+                $account->currency = $request->currency;
+                $account->save();
+                return redirect()->back()->with('success', __('Paypal account updated'));
+            }else{
+                UserWithdrawMethod::create(array(
+                    'user_id' => $user->id,
+                    'account_number' => $request->paypal_email,
+                    'currency' => $request->currency
+                ));
+                return redirect()->back()->with('success', __('Paypal account updated'));
+            }
+
+        }
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Withdraw Request
+    |--------------------------------------------------------------------------
+    */
+    public function withdrawRequest(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'withdraw_method' => 'required',
+            'amount' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $userId = Auth::id();
+        $uId = rand(5,10);
+        $account = UserWithdrawMethod::where('user_id',$userId)->where('type',$request->withdraw_method)->first();
+        if (!empty($account)) {
+            $environment = env('PAYPAL_MODE');
+            if ($environment == 'sandbox') {
+                $paypal = new SandboxEnvironment(env('PAYPAL_SANDBOX_API_CLIENT_ID'), env('PAYPAL_SANDBOX_API_SECRET'));
+            }else{
+                $paypal = new ProductionEnvironment(env('PAYPAL_SANDBOX_API_CLIENT_ID'), env('PAYPAL_SANDBOX_API_SECRET'));
+            }
+            $client = new PayPalHttpClient($paypal);
+            $request = new PayoutsPostRequest();
+            $body= json_decode(
+                '{
+                "sender_batch_header":
+                {
+                  "email_subject": "Joblamp Payout"
+                },
+                "items": [
+                {
+                  "recipient_type": "EMAIL",
+                  "receiver": "'.$account->account_number.'",
+                  "note": "Joblamp payout",
+                  "sender_item_id": "'.$uId.'",
+                  "amount":
+                  {
+                    "currency": "'.$account->currency.'",
+                    "value": "'.number_format($request->amount,2,'.').'"
+                  }
+                }]
+              }',
+                true);
+            $request->body = $body;
+            $response = $client->execute($body);
+            dd($response->statusCode);
+        }else{
+            return redirect()->back()->with('error', __('Please setup your withdraw method first'));
+        }
+
+
+
+
+        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+        $cashIn = UserTransaction::where('user_id', $userId)->sum('credit');
+        $cashOut = UserTransaction::where('user_id', $userId)->sum('debit');
+        $balance = $cashIn - $cashOut;
+        if ($request->amount <= $balance) {
+            $response = Stripe\Payout::create([
+                'amount' => $request->amount * 100,
+                'currency' => 'inr',
+                'destination' => UserWithdrawMethod::where('user_id', $userId)->first()->token
+            ]);
+            if ($response->status == 'in_transit') {
+                UserTransaction::create(array(
+                    'user_id' => $userId,
+                    'debit' => $request->amount
+                ));
+                return redirect()->back()->with('success', __('Your withdraw request is taken'));
+            } else {
+                return redirect()->back()->with('error', __('An error occurred! Please contact support center'));
+            }
+        } else {
+            return redirect()->back()->with('error', __('You don\'t have enough balance'));
+        }
+    }
+}

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="joblamp">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/joblamp.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
