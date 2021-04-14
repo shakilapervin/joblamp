@@ -20,8 +20,8 @@
                     <nav id="breadcrumbs" class="dark">
                         <ul>
                             <li><a href="{{ route('home') }}">{{ __('Home') }}</a></li>
-                            <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                            <li>Messages</li>
+                            <li><a href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a></li>
+                            <li>{{ __('Messages') }}</li>
                         </ul>
                     </nav>
                 </div>
@@ -40,6 +40,7 @@
                             </div>
 
                             <ul>
+                                @foreach($contacts as $contact)
                                 <li>
                                     <a href="#">
                                         <div class="message-avatar"><i class="status-icon status-online"></i><img
@@ -54,7 +55,7 @@
                                         </div>
                                     </a>
                                 </li>
-
+                                @endforeach
                             </ul>
                         </div>
                         <!-- Messages / End -->
