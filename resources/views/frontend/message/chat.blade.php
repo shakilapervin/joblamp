@@ -19,7 +19,7 @@
                     <!-- Breadcrumbs -->
                     <nav id="breadcrumbs" class="dark">
                         <ul>
-                            <li><a href="{{ route('home') }}">Home</a></li>
+                            <li><a href="{{ route('home') }}">{{ __('Home') }}</a></li>
                             <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
                             <li>Messages</li>
                         </ul>
