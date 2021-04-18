@@ -87,6 +87,22 @@
                                         </div>
                                     </div>
                                 </form>
+                            @else
+                                <form action="{{ route('job-list') }}" method="get">
+                                    <div class="intro-banner-search-form">
+
+                                        <!-- Search Field -->
+                                        <div class="intro-search-field with-label">
+                                            <input id="intro-keywords" type="text" placeholder="Job Title or Keywords"
+                                                   name="keyword">
+                                        </div>
+
+                                        <!-- Button -->
+                                        <div class="intro-search-button">
+                                            <button class="button ripple-effect" type="submit">{{ __('Search') }}</button>
+                                        </div>
+                                    </div>
+                                </form>
                             @endif
                         @else
                             <form action="{{ route('job-list') }}" method="get">

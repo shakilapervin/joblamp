@@ -37,26 +37,17 @@
                 <div class="fun-facts-container">
                     <div class="fun-fact" data-fun-fact-color="#b81b7f">
                         <div class="fun-fact-text">
-                            <span>Jobs Applied</span>
-                            <h4>4</h4>
+                            <span>{{ __('Job Posted') }}</span>
+                            <h4>{{ $totalJob }}</h4>
                         </div>
                         <div class="fun-fact-icon"><i class="icon-material-outline-business-center"></i></div>
                     </div>
                     <div class="fun-fact" data-fun-fact-color="#efa80f">
                         <div class="fun-fact-text">
-                            <span>Reviews</span>
-                            <h4>28</h4>
+                            <span>{{ __('Reviews') }}</span>
+                            <h4>{{ $ratings }}</h4>
                         </div>
                         <div class="fun-fact-icon"><i class="icon-material-outline-rate-review"></i></div>
-                    </div>
-
-                    <!-- Last one has to be hidden below 1600px, sorry :( -->
-                    <div class="fun-fact" data-fun-fact-color="#2a41e6">
-                        <div class="fun-fact-text">
-                            <span>This Month Views</span>
-                            <h4>987</h4>
-                        </div>
-                        <div class="fun-fact-icon"><i class="icon-feather-trending-up"></i></div>
                     </div>
                 </div>
 
@@ -118,7 +109,7 @@
                                             </div>
                                             <!-- Buttons -->
                                             <div class="buttons-to-right">
-                                                <a href="{{ route('job.applications',encrypt($myJob->id)) }}"
+                                                <a href="{{ route('manage.my.job',encrypt($myJob->id)) }}"
                                                    class="button">{{ __('View Job') }}</a>
                                             </div>
                                         </li>
@@ -200,7 +191,7 @@
                 <div class="row">
 
                     <!-- Dashboard Box -->
-                    <div class="col-xl-6">
+                    <div class="col-xl-12">
                         <div class="dashboard-box">
                             <div class="headline">
                                 <h3><i class="icon-material-baseline-notifications-none"></i> Notifications</h3>
@@ -270,75 +261,6 @@
                                         <div class="buttons-to-right">
                                             <a href="#" class="button ripple-effect ico" title="Mark as read"
                                                data-tippy-placement="left"><i class="icon-feather-check-square"></i></a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Dashboard Box -->
-                    <div class="col-xl-6">
-                        <div class="dashboard-box">
-                            <div class="headline">
-                                <h3><i class="icon-material-outline-assignment"></i> Orders</h3>
-                            </div>
-                            <div class="content">
-                                <ul class="dashboard-box-list">
-                                    <li>
-                                        <div class="invoice-list-item">
-                                            <strong>Professional Plan</strong>
-                                            <ul>
-                                                <li><span class="unpaid">Unpaid</span></li>
-                                                <li>Order: #326</li>
-                                                <li>Date: 12/08/2019</li>
-                                            </ul>
-                                        </div>
-                                        <!-- Buttons -->
-                                        <div class="buttons-to-right">
-                                            <a href="pages-checkout-page.html" class="button">Finish Payment</a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="invoice-list-item">
-                                            <strong>Professional Plan</strong>
-                                            <ul>
-                                                <li><span class="paid">Paid</span></li>
-                                                <li>Order: #264</li>
-                                                <li>Date: 10/07/2019</li>
-                                            </ul>
-                                        </div>
-                                        <!-- Buttons -->
-                                        <div class="buttons-to-right">
-                                            <a href="pages-invoice-template.html" class="button gray">View Invoice</a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="invoice-list-item">
-                                            <strong>Professional Plan</strong>
-                                            <ul>
-                                                <li><span class="paid">Paid</span></li>
-                                                <li>Order: #211</li>
-                                                <li>Date: 12/06/2019</li>
-                                            </ul>
-                                        </div>
-                                        <!-- Buttons -->
-                                        <div class="buttons-to-right">
-                                            <a href="pages-invoice-template.html" class="button gray">View Invoice</a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="invoice-list-item">
-                                            <strong>Professional Plan</strong>
-                                            <ul>
-                                                <li><span class="paid">Paid</span></li>
-                                                <li>Order: #179</li>
-                                                <li>Date: 06/05/2019</li>
-                                            </ul>
-                                        </div>
-                                        <!-- Buttons -->
-                                        <div class="buttons-to-right">
-                                            <a href="pages-invoice-template.html" class="button gray">View Invoice</a>
                                         </div>
                                     </li>
                                 </ul>

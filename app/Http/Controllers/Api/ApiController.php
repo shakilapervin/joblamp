@@ -421,8 +421,13 @@ class ApiController extends Controller
             return response()->json($validator->errors());
         }
         $status = true;
-        $data = Job::with('creatorDetails')->where('id', $request->job_id)->first();
-        return response()->json(compact('data', 'status'));
+        $has_applied = false;
+        $applied = JobApplication::where('job_id',$request->job_id)->where('candidate_id',$request->user_id)->first();
+        if (!empty($applied)){
+            $has_applied = true;
+        }
+        $data = Job::with(array('categoryInfo','creatorDetails','jobCountry'))->where('id', $request->job_id)->first();
+        return response()->json(compact('data', 'status','has_applied'));
     }
 
     /*
@@ -663,8 +668,9 @@ class ApiController extends Controller
             return response()->json($validator->errors());
         }
         $data = JobApplication::where('job_applications.candidate_id', $request->user_id)
-            ->select('jobs.*')
+            ->select('jobs.*','users.first_name as creator_first_name','users.last_name as creator_last_name')
             ->join('jobs', 'jobs.id', 'job_applications.job_id')
+            ->join('users', 'users.id', 'jobs.user_id')
             ->where('job_applications.status', $request->status)
             ->get();
         $status = true;
@@ -1109,5 +1115,23 @@ class ApiController extends Controller
             ->limit(20)
             ->get();
         return response()->json(compact('data'));
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | All Job list
+    |--------------------------------------------------------------------------
+    */
+    public function allJobList(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'status' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+        $data = Job::with('creatorDetails')->where('status', $request->status)->get();
+        $status = true;
+        return response()->json(compact('status', 'data'));
     }
 }

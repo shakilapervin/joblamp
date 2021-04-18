@@ -25,8 +25,8 @@
                                 {{ __('Dashboard') }}
                             </a>
                         </li>
-                        <li class="{{ Route::is('profile') ? 'active' : '' }}">
-                            <a href="{{ route('profile') }}">
+                        <li class="{{ Route::is('my.profile') ? 'active' : '' }}">
+                            <a href="{{ route('my.profile') }}">
                                 <i class="icon-material-outline-dashboard"></i>
                                 {{ __('My Profile') }}
                             </a>

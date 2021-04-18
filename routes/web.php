@@ -52,7 +52,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('subscription/confirm/{id}', 'Website\FrontendController@subscriptionConfirm')->name('subscription.confirm');
     Route::get('dashboard', 'Website\FrontendController@dashboard')->name('dashboard');
     Route::get('user-logout', 'Website\FrontendController@userLogout')->name('user-logout');
-    Route::get('profile', 'Website\FrontendController@profile')->name('profile');
+    Route::get('my-profile', 'Website\FrontendController@myProfile')->name('my.profile');
     Route::get('edit-profile', 'Website\FrontendController@editprofileForm')->name('edit.profile');
     Route::post('update-profile', 'Website\FrontendController@updateProfile')->name('update.profile');
     Route::post('remove-doc', 'Website\FrontendController@removeDoc')->name('remove.doc');

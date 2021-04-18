@@ -246,7 +246,9 @@ class FrontendController extends Controller
             $hiredJobs = Job::where('user_id',$user->id)->where('status','hired')->get();
             $deliveredJobs = Job::where('user_id',$user->id)->where('status','delivered')->get();
             $completedJobs = Job::where('user_id',$user->id)->where('status','completed')->get();
-            return view('frontend.dashboard.customer-dashboard',compact('user','notHiredJobs','hiredJobs','deliveredJobs','completedJobs'));
+            $ratings = Rating::where('user_id',$user->id)->count();
+            $totalJob = Job::where('user_id',$user->id)->count();
+            return view('frontend.dashboard.customer-dashboard',compact('user','notHiredJobs','hiredJobs','deliveredJobs','completedJobs','ratings','totalJob'));
         }else{
             $jobs = Job::where('status','opened')->limit(4)->get();
             $jobsApplied = JobApplication::where('candidate_id',$user->id)->where('status','applied')->get();
@@ -264,7 +266,7 @@ class FrontendController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function profile(){
+    public function myProfile(){
         $user = Auth::user();
         return  view('frontend.profile.profile',compact('user'));
     }

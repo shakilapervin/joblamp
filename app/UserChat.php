@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserChat extends Model
 {
-    protected $fillable = array('sender_id','receiver_id');
+    protected $fillable = array('sender_id','receiver_id','url');
     /*
     |--------------------------------------------------------------------------
     | Receiver Details

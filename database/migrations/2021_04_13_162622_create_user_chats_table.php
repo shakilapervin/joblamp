@@ -17,8 +17,7 @@ class CreateUserChatsTable extends Migration
             $table->id();
             $table->string('sender_id');
             $table->string('receiver_id');
-            $table->longText('message')->nullable();
-            $table->text('file')->nullable();
+            $table->string('url')->nullable();
             $table->timestamps();
         });
     }

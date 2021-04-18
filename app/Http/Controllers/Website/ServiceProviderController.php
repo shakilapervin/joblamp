@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Job;
 use App\JobApplication;
 use App\Rating;
+use App\User;
 use App\UserJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -31,12 +32,13 @@ class ServiceProviderController extends Controller
             $job = UserJob::where('service_provider_id', Auth::user()->id)
                 ->where('job_id', $jobId)
                 ->first();
+            $receiver = User::where('id',$job->customer_id)->first();
             $rated = false;
             $rating = Rating::where('job_id',$jobId)->where('user_id','!=',Auth::user()->id)->get();
             if ($rating->count() > 0) {
                 $rated = true;
             }
-            return view('frontend.job.service-provider-manage', compact('job','jobId','rated'));
+            return view('frontend.job.service-provider-manage', compact('job','jobId','rated','receiver'));
         } else {
             return redirect('')->home();
         }

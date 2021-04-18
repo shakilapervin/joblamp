@@ -111,6 +111,7 @@ class CustomerDashboardController extends Controller
             return redirect('');
         }
         if (Auth::user()->user_type == 'customer') {
+            $receiver = UserJob::with('workerDetails')->where('job_id',$jobId)->first();
             $job = Job::with('creatorDetails')->where('user_id', Auth::user()->id)
                 ->where('id', $jobId)
                 ->first();
@@ -119,7 +120,7 @@ class CustomerDashboardController extends Controller
             if ($rating->count() > 0) {
                 $rated = true;
             }
-            return view('frontend.job.customer-manage', compact('job', 'jobId', 'rated'));
+            return view('frontend.job.customer-manage', compact('job', 'jobId', 'rated','receiver'));
         } else {
             return redirect('')->home();
         }

@@ -41,3 +41,4 @@ Route::get('banner-list', 'Api\ApiController@bannerList');
 Route::post('notification-list', 'Api\ApiController@notificationList');
 Route::post('job-count', 'Api\ApiController@jobCount');
 Route::get('top-rated-workers', 'Api\ApiController@topRatedWorkers');
+Route::post('all-jobs', 'Api\ApiController@allJobList');

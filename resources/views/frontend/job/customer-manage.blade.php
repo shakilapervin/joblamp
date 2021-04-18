@@ -87,6 +87,28 @@
                     <p>
                         {{ $job->description }}
                     </p>
+                    <div class="messages-container margin-top-0">
+
+                        <div class="messages-container-inner">
+                            <!-- Message Content -->
+                            <div class="message-content">
+
+                                <!-- Message Content Inner -->
+                                <div class="message-content-inner"></div>
+                                <!-- Message Content Inner / End -->
+
+                                <!-- Reply Area -->
+                                <div class="message-reply">
+                                <textarea cols="1" rows="1" placeholder="Your Message" data-autoresize
+                                          class="message-data"></textarea>
+                                    <button class="button ripple-effect" onclick="postChat();">Send</button>
+                                </div>
+
+                            </div>
+                            <!-- Message Content -->
+
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -120,7 +142,9 @@
                                             <div class="col-xl-12">
                                                 <div class="submit-field">
                                                     <h5 style="margin-bottom: 20px;">{{ __('Service Provider Rating') }}</h5>
-                                                    <select class="star-rating @error('service_provider_rating') is-invalid @enderror" required name="rating">
+                                                    <select
+                                                        class="star-rating @error('service_provider_rating') is-invalid @enderror"
+                                                        required name="rating">
                                                         <option>{{ __('Service Provider Rating') }}</option>
                                                         <option value="5">{{ __('5 Star') }}</option>
                                                         <option value="4">{{ __('4 Star') }}</option>
@@ -138,7 +162,8 @@
                                             <div class="col-xl-12">
                                                 <div class="submit-field">
                                                     <h5>{{ __('Feedback') }}</h5>
-                                                    <textarea cols="30" rows="5" class="with-border" name="feedback" required></textarea>
+                                                    <textarea cols="30" rows="5" class="with-border" name="feedback"
+                                                              required></textarea>
                                                     <input type="hidden" name="job_id" value="{{ encrypt($job->id) }}">
                                                 </div>
                                             </div>
@@ -250,6 +275,64 @@
             onClick: function (el) {
                 console.log('Selected: ' + el[el.selectedIndex].text);
             },
+        });
+    </script>
+
+    <script>
+        const db = firebase.database();
+        const url = "job_chat_{{ $jobId }}";
+
+        @if(!empty($receiver->workerDetails->profile_pic))
+        let receiver_photo = "{{ asset('public/profile/'.$receiver->workerDetails->profile_pic) }}";
+        @else
+        let receiver_photo = "{{ asset('public/assets/frontend') }}/images/user-avatar-placeholder.png";
+        @endif
+
+        @if(!empty(\Illuminate\Support\Facades\Auth::user()->profile_pic))
+        let sender_photo = "{{ asset('public/profile/'.\Illuminate\Support\Facades\Auth::user()->profile_pic) }}";
+        @else
+        let sender_photo = "{{ asset('public/assets/frontend') }}/images/user-avatar-placeholder.png";
+        @endif
+
+        function postChat() {
+            let message = $('.message-data').val();
+            db.ref("messages/" + url).push().set({
+                "message": message,
+                "type": 'text',
+                "sender_id": {{ \Illuminate\Support\Facades\Auth::id() }},
+                "receiver_id": {{ $receiver->workerDetails->id }}
+            }, function (error) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    $('.message-data').val('');
+                }
+            });
+        }
+
+        db.ref('messages/' + url).on("child_added", function (snapshot) {
+            const messages = snapshot.val();
+            if (messages.sender_id == {{ \Illuminate\Support\Facades\Auth::id() }}) {
+                const msg = `<div class="message-bubble me">
+                            <div class="message-bubble-inner">
+                                <div class="message-avatar"><img src="` + sender_photo + `" alt=""/>
+                                </div>
+                                <div class="message-text"><p>` + messages.message + `</p></div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>`;
+                $('.message-content-inner').append(msg);
+            } else {
+                const msg = `<div class="message-bubble">
+                            <div class="message-bubble-inner">
+                                <div class="message-avatar"><img src="` + receiver_photo + `" alt=""/>
+                                </div>
+                                <div class="message-text"><p>` + messages.message + `</p></div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>`;
+                $('.message-content-inner').append(msg);
+            }
         });
     </script>
 @endsection
