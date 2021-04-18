@@ -349,7 +349,6 @@ class ApiController extends Controller
     public function jobApplications(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required',
             'job_id' => 'required',
         ]);
         if ($validator->fails()) {
@@ -359,9 +358,11 @@ class ApiController extends Controller
         $candidates = DB::table('job_applications')
             ->select('job_applications.cover_letter',
                 'job_applications.bid_amount',
+                'job_applications.created_at',
                 'users.first_name',
                 'users.last_name',
                 'users.id',
+                'users.profile_pic',
                 'countries.name as country_name'
             )
             ->join('users', 'users.id', '=', 'job_applications.candidate_id')
@@ -374,11 +375,13 @@ class ApiController extends Controller
             $data[] = array(
                 'id' => $row->id,
                 'first_name' => $row->first_name,
+                'profile_pic' => $row->profile_pic,
                 'last_name' => $row->last_name,
                 'rating' => calculateRating(Rating::where('user_id', $row->id)->get()),
                 'country' => $row->country_name,
                 'cover_letter' => $row->cover_letter,
                 'bid_amount' => $row->bid_amount,
+                'created_date' => date('Y-m-d',strtotime($row->created_at)),
             );
         }
         return response()->json(compact('data', 'status'));
@@ -648,7 +651,7 @@ class ApiController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors());
         }
-        $data = Job::where('user_id', $request->user_id)->where('status', $request->status)->get();
+        $data = Job::with(array('categoryInfo'))->where('user_id', $request->user_id)->where('status', $request->status)->get();
         $status = true;
         return response()->json(compact('status', 'data'));
     }
@@ -668,7 +671,7 @@ class ApiController extends Controller
             return response()->json($validator->errors());
         }
         $data = JobApplication::where('job_applications.candidate_id', $request->user_id)
-            ->select('jobs.*','users.first_name as creator_first_name','users.last_name as creator_last_name')
+            ->select('jobs.*','users.first_name as creator_first_name','users.last_name as creator_last_name','users.profile_pic as picture','users.id as creator_id')
             ->join('jobs', 'jobs.id', 'job_applications.job_id')
             ->join('users', 'users.id', 'jobs.user_id')
             ->where('job_applications.status', $request->status)
@@ -938,7 +941,10 @@ class ApiController extends Controller
             return response()->json(compact('data'));
         } else {
             $data = array();
-            $users = User::where('first_name', 'like', '%' . $keyword . '%')->orWhere('last_name', 'like', '%' . $keyword . '%')->get();
+            $users = User::where('first_name', 'like', '%' . $keyword . '%')
+                    ->orWhere('last_name', 'like', '%' . $keyword . '%')
+                    ->orderBy('promotion_expire','desc')
+                    ->get();
             if (!empty($users)) {
                 foreach ($users as $user) {
                     $skills = array();
@@ -951,6 +957,7 @@ class ApiController extends Controller
                     $data[] = array(
                         'first_name' => $user->first_name,
                         'last_name' => $user->last_name,
+                        'picture' => $user->profile_pic,
                         'email' => $user->email,
                         'mobile_number' => $user->mobile_number,
                         'address_line_1' => $user->address_line_1,
@@ -1071,7 +1078,7 @@ class ApiController extends Controller
             $currentJob = UserJob::where('service_provider_id', $request->user_id)
                 ->where('status', 'opened')
                 ->count();
-            $appliedJob = UserJob::where('service_provider_id', $request->user_id)
+            $appliedJob = JobApplication::where('candidate_id', $request->user_id)
                 ->where('status', 'applied')
                 ->count();
             $data = array(
