@@ -26,13 +26,21 @@
                         </ul>
                     </nav>
                 </div>
+                @if(empty($user->doc_1) or empty($user->doc_2) or empty($user->doc_3))
+                <div class="alert alert-danger text-center">
+                    <p>
+                        {{ __('Please Upload Your Documents') }}
+                        <a class="btn btn-dark" href="{{ route('edit.profile') }}">Upload Your Document</a>
+                    </p>
+                </div>
+                @endif
                 @if (Session::has('success'))
                     <div class="alert alert-success text-center">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
                         <p>{{ Session::get('success') }}</p>
                     </div>
 
-            @endif
+                @endif
 
             <!-- Fun Facts Container -->
                 <div class="fun-facts-container">

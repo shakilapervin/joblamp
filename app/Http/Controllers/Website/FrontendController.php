@@ -250,7 +250,7 @@ class FrontendController extends Controller
             $totalJob = Job::where('user_id',$user->id)->count();
             return view('frontend.dashboard.customer-dashboard',compact('user','notHiredJobs','hiredJobs','deliveredJobs','completedJobs','ratings','totalJob'));
         }else{
-            $jobs = Job::where('status','opened')->limit(4)->get();
+            $jobs = Job::where('status','opened')->orderBy('id','desc')->limit(4)->get();
             $jobsApplied = JobApplication::where('candidate_id',$user->id)->where('status','applied')->get();
             $activeJobs = UserJob::with('jobDetails')->where('service_provider_id',$user->id)->where('status','opened')->get();
             $deliveredJobs = UserJob::with('jobDetails')->where('service_provider_id',$user->id)->where('status','delivered')->get();
@@ -267,7 +267,8 @@ class FrontendController extends Controller
     */
 
     public function myProfile(){
-        $user = Auth::user();
+        $id = Auth::id();
+        $user = User::where('id',$id)->first();
         return  view('frontend.profile.profile',compact('user'));
     }
 
@@ -500,12 +501,10 @@ class FrontendController extends Controller
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => 'required',
-            'pincode' => 'required',
             'country' => 'required',
             'state' => 'required',
             'city' => 'required',
             'address_line_1' => 'required',
-            'address_line_2' => 'required',
             'mobile_number' => 'required',
             'doc_1' => 'mimes:jpg,jpeg,png,bmp,tiff,pdf',
             'doc_2' => 'mimes:jpg,jpeg,png,bmp,tiff,pdf',
@@ -539,13 +538,13 @@ class FrontendController extends Controller
             $user->profile_pic = $photoName;
         }
         if ($request->hasFile('doc_1')){
-            $user->doc_1 = $path = $request->file('doc_1')->store('documents');
+            $user->doc_1 = $request->file('doc_1')->store('documents');
         }
         if ($request->hasFile('doc_2')){
-            $user->doc_2 = $path = $request->file('doc_2')->store('documents');
+            $user->doc_2 = $request->file('doc_2')->store('documents');
         }
         if ($request->hasFile('doc_3')){
-            $user->doc_3 = $path = $request->file('doc_3')->store('documents');
+            $user->doc_3 = $request->file('doc_3')->store('documents');
         }
         $skills = array();
         if ($request->has('skills') && count($request->skills) > 0) {

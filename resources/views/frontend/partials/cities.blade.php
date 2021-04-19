@@ -2,7 +2,7 @@
     <select id="city"
             class="citypicker with-border @error('city') is-invalid @enderror"
             data-size="7" title="Select City" data-live-search="true"
-            name="city">
+            name="city" required>
         @foreach($cities as $city)
             <option value="{{ $city->id }}">{{ $city->name }}</option>
         @endforeach
@@ -13,7 +13,7 @@
         <select id="city"
                 class="citypicker with-border @error('city') is-invalid @enderror"
                 data-size="7" title="{{ __('Select City') }}" data-live-search="true"
-                name="city">
+                name="city" required>
             @foreach($cities as $city)
                 <option value="{{ $city->id }}">{{ $city->name }}</option>
             @endforeach

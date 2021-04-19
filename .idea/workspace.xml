@@ -6,7 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="102137b5-5205-44c0-83f0-459dcecac978" name="Default Changelist" comment="Latest">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/ApiController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/ApiController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Website/FrontendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Website/FrontendController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/joblamp.zip" beforeDir="false" afterPath="$PROJECT_DIR$/joblamp.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/dashboard/service-provider-dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/dashboard/service-provider-dashboard.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/layouts/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/layouts/header.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/partials/cities.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/partials/cities.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/partials/states.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/partials/states.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/profile/edit-profile.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/profile/edit-profile.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/profile/profile.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/profile/profile.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -207,7 +215,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="dart.analysis.tool.window.visible" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../boker" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
     <property name="show.migrate.to.gradle.popup" value="false" />
@@ -361,7 +369,8 @@
       <workItem from="1618469706853" duration="26000" />
       <workItem from="1618492715774" duration="11085000" />
       <workItem from="1618761130507" duration="3365000" />
-      <workItem from="1618768512776" duration="2853000" />
+      <workItem from="1618768512776" duration="5555000" />
+      <workItem from="1618812982147" duration="70000" />
     </task>
     <task id="LOCAL-00001" summary="Latest">
       <created>1616691922612</created>

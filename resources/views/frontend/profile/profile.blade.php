@@ -106,17 +106,17 @@
                                     @endif
                                     @if(!empty($user->city))
                                         <div class="col-md-12">
-                                            <b>{{ __('City') }}</b> : {{ $user->city }}
+                                            <b>{{ __('City') }}</b> : {{ $user->userCity->name }}
                                         </div>
                                     @endif
                                     @if(!empty($user->state))
                                         <div class="col-md-12">
-                                            <b>{{ __('State') }}</b> : {{ $user->state }}
+                                            <b>{{ __('State') }}</b> : {{ $user->userState->name }}
                                         </div>
                                     @endif
                                     @if(!empty($user->country))
                                         <div class="col-md-12">
-                                            <b>{{ __('Country') }}</b> : {{ $user->country }}
+                                            <b>{{ __('Country') }}</b> : {{ $user->userCountry->name }}
                                         </div>
                                     @endif
                                     @if(!empty($user->pincode))

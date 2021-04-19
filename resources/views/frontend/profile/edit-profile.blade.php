@@ -170,7 +170,7 @@
                                                         <h5>{{ __('Address Line 1') }}</h5>
                                                         <input name="address_line_1" type="text"
                                                                class="with-border @error('address_line_1') is-invalid @enderror"
-                                                               value="{{ $user->address_line_1 }}">
+                                                               value="{{ $user->address_line_1 }}" required>
                                                         @error('address_line_1')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                         @enderror
@@ -195,7 +195,7 @@
                                                         <select id="country"
                                                             class="selectpicker with-border @error('country') is-invalid @enderror"
                                                             data-size="7" title="Select Country" data-live-search="true"
-                                                            name="country" onchange="getStates();">
+                                                            name="country" onchange="getStates();" required>
                                                             @foreach($countries as $country)
                                                                 <option value="{{ $country->id }}"
                                                                         @if($country->id == $user->country) selected @endif>{{ $country->name }}</option>
@@ -210,7 +210,7 @@
                                                         <select
                                                                 class="selectpicker with-border @error('state') is-invalid @enderror"
                                                                 data-size="7" title="Select State"
-                                                                data-live-search="true" name="state" onchange="getCities()">
+                                                                data-live-search="true" name="state" onchange="getCities()" required>
                                                             @foreach($states as $state)
                                                                 <option value="{{ $state->id }}"
                                                                         @if($state->id == $user->state) selected @endif>{{ $state->name }}</option>
@@ -225,7 +225,7 @@
                                                         <select id="city"
                                                             class="selectpicker with-border @error('city') is-invalid @enderror"
                                                             data-size="7" title="Select City" data-live-search="true"
-                                                            name="city">
+                                                            name="city" required>
                                                             @foreach($cities as $city)
                                                                 <option value="{{ $city->id }}"
                                                                         @if($city->id == $user->city) selected @endif>{{ $city->name }}</option>
@@ -301,8 +301,8 @@
                                                                     <div class="clearfix"></div>
                                                                     <!-- Upload Button -->
                                                                     <div class="uploadButton margin-top-0">
-                                                                        <input class="uploadButton-input" type="file" accept="image/*, application/pdf" id="upload" name="doc_1">
-                                                                        <label class="uploadButton-button ripple-effect" for="upload">
+                                                                        <input class="uploadButton-input" type="file" accept="image/*, application/pdf" id="doc_1" name="doc_1">
+                                                                        <label class="uploadButton-button ripple-effect" for="doc_1">
                                                                             {{ __('Upload Files') }}
                                                                         </label>
                                                                     </div>
@@ -326,8 +326,8 @@
                                                                     <div class="clearfix"></div>
                                                                     <!-- Upload Button -->
                                                                     <div class="uploadButton margin-top-0">
-                                                                        <input class="uploadButton-input" type="file" accept="image/*, application/pdf" id="upload" name="doc_2">
-                                                                        <label class="uploadButton-button ripple-effect" for="upload">
+                                                                        <input class="uploadButton-input" type="file" accept="image/*, application/pdf" id="doc_2" name="doc_2">
+                                                                        <label class="uploadButton-button ripple-effect" for="doc_2">
                                                                             {{ __('Upload Files') }}
                                                                         </label>
                                                                     </div>
@@ -351,8 +351,8 @@
                                                                     <div class="clearfix"></div>
                                                                     <!-- Upload Button -->
                                                                     <div class="uploadButton margin-top-0">
-                                                                        <input class="uploadButton-input" type="file" accept="image/*, application/pdf" id="upload" name="doc_3">
-                                                                        <label class="uploadButton-button ripple-effect" for="upload">
+                                                                        <input class="uploadButton-input" type="file" accept="image/*, application/pdf" id="doc_3" name="doc_3">
+                                                                        <label class="uploadButton-button ripple-effect" for="doc_3">
                                                                             {{ __('Upload Files') }}
                                                                         </label>
                                                                     </div>
