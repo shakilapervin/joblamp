@@ -202,22 +202,8 @@
         messagingSenderId: "734987684302",
         appId: "1:734987684302:web:0a77d422e02407b4ebc39f"
     };
-    // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
 
-    // const db = firebase.database();
-    // function postChat() {
-    //     db.ref("messages").push().set({
-    //         "message": 'adfdfd',
-    //         "sender": 'dfdfdfd'
-    //     });
-    // }
-    // postChat();
-    //
-    // db.ref('messages').on("child_added", function (snapshot) {
-    //     const messages = snapshot.val();
-    //     console.log(messages);
-    // });
 </script>
 
 @yield('script')

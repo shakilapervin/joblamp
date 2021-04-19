@@ -123,6 +123,8 @@ Route::group(['middleware' => ['auth']], function () {
     */
     Route::get('messages', 'Website\MessageController@index')->name('messages');
     Route::get('message/{id}', 'Website\MessageController@chat')->name('message');
+    Route::get('get-current-time', 'Website\MessageController@getCurrentTime')->name('get.current.time');
+    Route::post('chat-update-time', 'Website\MessageController@chatUpdateTime')->name('chat.update.time');
 });
 
 

@@ -39,7 +39,7 @@
                                 </div>
                             </div>
 
-                            <ul>
+                            <ul class="contact-list">
                                 @foreach($contacts as $contact)
                                     <li class="@if($contact->receiver->id == $receiver->receiver->id) active-message @endif">
                                         <a href="{{ route('message',$contact->receiver->id) }}">
@@ -124,17 +124,38 @@
         @endif
 
         function postChat() {
-            let message = $('.message-data').val();
-            db.ref("messages/" + url).push().set({
-                "message": message,
-                "type": 'text',
-                "sender_id": {{ \Illuminate\Support\Facades\Auth::id() }},
-                "receiver_id": {{ $receiver->receiver->id }}
-            }, function (error) {
-                if (error) {
-                    console.log(error);
-                } else {
-                    $('.message-data').val('');
+            $.ajax({
+                type: "GET",
+                url: '{{ route('get.current.time') }}',
+                success: function (data) {
+                    let message = $('.message-data').val();
+                    db.ref("messages/" + url).push().set({
+                        "message": message,
+                        "type": 'text',
+                        "sender_id": {{ \Illuminate\Support\Facades\Auth::id() }},
+                        "receiver_id": {{ $receiver->receiver->id }},
+                        "date": data.date,
+                        "time": data.time,
+                    }, function (error) {
+                        if (error) {
+                            console.log(error);
+                        } else {
+                            $.ajax({
+                                type: "POST",
+                                url: '{{ route('chat.update.time') }}',
+                                data: {
+                                    _token: '{{ csrf_token() }}',
+                                    sender_id: {{ \Illuminate\Support\Facades\Auth::id() }},
+                                    receiver_id:{{ $receiver->receiver->id }}
+                                },
+                                success: function (data) {
+                                    $('.message-data').val('');
+                                    $('.contact-list').html(null);
+                                    $('.contact-list').html(data);
+                                }
+                            });
+                        }
+                    });
                 }
             });
         }
@@ -146,7 +167,10 @@
                             <div class="message-bubble-inner">
                                 <div class="message-avatar"><img src="` + sender_photo + `" alt=""/>
                                 </div>
-                                <div class="message-text"><p>` + messages.message + `</p></div>
+                                <div class="message-text">
+                                    <p>` + messages.message + `</p>
+                                    <p class="message-time">` + messages.date+', '+ messages.time +`</p>
+                                </div>
                             </div>
                             <div class="clearfix"></div>
                         </div>`;
@@ -156,7 +180,10 @@
                             <div class="message-bubble-inner">
                                 <div class="message-avatar"><img src="` + receiver_photo + `" alt=""/>
                                 </div>
-                                <div class="message-text"><p>` + messages.message + `</p></div>
+                                <div class="message-text">
+                                    <p>` + messages.message + `</p>
+                                    <p class="message-time">` + messages.date+', '+ messages.time+`</p>
+                                </div>
                             </div>
                             <div class="clearfix"></div>
                         </div>`;
@@ -182,6 +209,25 @@
             font-size: 20px !important;
             color: #f39c12;
             cursor: pointer;
+        }
+        .message-text{
+            position: relative;
+        }
+        .message-time {
+            position: absolute;
+            width: 200px;
+            bottom: -30px;
+            left: 0;
+            color: grey;
+            font-size: 12px !important;
+        }
+        .me .message-time {
+            right: 0;
+            text-align: right;
+            left: inherit;
+        }
+        .me.message-bubble{
+            margin-bottom: 35px !important;
         }
     </style>
 @endsection

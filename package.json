@@ -22,5 +22,13 @@
         "sass-loader": "^8.0.0",
         "vue": "^2.5.17",
         "vue-template-compiler": "^2.6.10"
+    },
+    "dependencies": {
+        "express": "^4.17.1",
+        "socket.io": "^4.0.1"
+    },
+    "optionalDependencies": {
+        "bufferutil": "^4.0.3",
+        "utf-8-validate": "^5.0.4"
     }
 }
