@@ -16,10 +16,9 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user() &&  Auth::user()->is_admin == 1) {
+        if (Auth::user() &&  Auth::user()->user_type == 'admin' || Auth::user()->user_type == 'cs_person') {
             return $next($request);
         }
-
         return redirect('admin/login')->with('error','You have not admin access');
     }
 }

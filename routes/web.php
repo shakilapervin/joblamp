@@ -125,6 +125,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('message/{id}', 'Website\MessageController@chat')->name('message');
     Route::get('get-current-time', 'Website\MessageController@getCurrentTime')->name('get.current.time');
     Route::post('chat-update-time', 'Website\MessageController@chatUpdateTime')->name('chat.update.time');
+    Route::post('save-chat-file', 'Website\MessageController@saveChatFile')->name('save.chat.file');
+    Route::get('download-message-file/{file}', 'Website\MessageController@downloadChatFile')->name('download.chat.file');
 });
 
 

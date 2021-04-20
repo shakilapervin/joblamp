@@ -9,6 +9,7 @@ use App\State;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Image;
 class ContractorController extends Controller
@@ -19,6 +20,9 @@ class ContractorController extends Controller
     |--------------------------------------------------------------------------
     */
     public function index(){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $contractors = User::where('user_type','service_provider')->get();
         return view('admin.contractor.index',compact('contractors'));
     }
@@ -29,6 +33,9 @@ class ContractorController extends Controller
     |--------------------------------------------------------------------------
     */
     public function updateStatus($id,$status){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $contractor = User::where('id',$id)->first();
         $contractor->status = $status;
         $contractor->save();
@@ -45,6 +52,9 @@ class ContractorController extends Controller
     |--------------------------------------------------------------------------
     */
     public function edit($id){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $customer = User::where('id',$id)->first();
         $countries = Country::where('status',1)->get();
         $states = State::where('status',1)->get();
@@ -59,6 +69,9 @@ class ContractorController extends Controller
     |--------------------------------------------------------------------------
     */
     public function update(Request $request){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $validator = Validator::make($request->all(), [
             'first_name' => 'required',
             'last_name' => 'required',
@@ -123,6 +136,9 @@ class ContractorController extends Controller
     |--------------------------------------------------------------------------
     */
     public function delete($id){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $status = User::where('id',$id)->delete();
         if ($status){
             return redirect('admin-contractors')->with('success', __('Deleted!'));
@@ -137,6 +153,9 @@ class ContractorController extends Controller
     |--------------------------------------------------------------------------
     */
     public function lottoUsers(Request $request){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $contractors = LottoUser::with('user')->whereMonth('created_at', date('m'))
             ->whereYear('created_at', date('Y'))
             ->get();

@@ -11474,7 +11474,8 @@ button.mfp-close {
 #small-dialog-2,
 #small-dialog-3,
 #small-dialog-4,
-#small-dialog {
+#small-dialog,
+#file-dialog{
     background: #fff;
     padding: 40px;
     padding-top: 0;
@@ -11874,7 +11875,8 @@ img.mfp-img {
 .dialog-with-tabs#small-dialog-2,
 .dialog-with-tabs#small-dialog-3,
 .dialog-with-tabs#small-dialog-4,
-.dialog-with-tabs#small-dialog {
+.dialog-with-tabs#small-dialog,
+.dialog-with-tabs#file-dialog {
     padding: 0;
     color: #666;
     max-width: 540px;
@@ -11884,6 +11886,7 @@ img.mfp-img {
 /* Close Button Adjustments*/
 #sign-in-dialog.dialog-with-tabs .mfp-close,
 #small-dialog.dialog-with-tabs .mfp-close,
+#file-dialog.dialog-with-tabs .mfp-close,
 #small-dialog-1.dialog-with-tabs .mfp-close,
 #small-dialog-2.dialog-with-tabs .mfp-close,
 #small-dialog-3.dialog-with-tabs .mfp-close,

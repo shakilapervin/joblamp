@@ -8,6 +8,7 @@ use App\State;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Image;
 class CustomerController extends Controller
@@ -18,6 +19,9 @@ class CustomerController extends Controller
     |--------------------------------------------------------------------------
     */
     public function customers(){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $customers = User::where('user_type','customer')->get();
         return view('admin.customer.index',compact('customers'));
     }
@@ -28,6 +32,9 @@ class CustomerController extends Controller
     |--------------------------------------------------------------------------
     */
     public function editCustomerForm($id){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $customer = User::where('id',$id)->first();
         $countries = Country::where('status',1)->get();
         $states = State::where('status',1)->get();
@@ -41,6 +48,9 @@ class CustomerController extends Controller
     |--------------------------------------------------------------------------
     */
     public function updateCustomer(Request $request){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $validator = Validator::make($request->all(), [
             'first_name' => 'required',
             'last_name' => 'required',
@@ -105,6 +115,9 @@ class CustomerController extends Controller
     |--------------------------------------------------------------------------
     */
     public function deleteCustomer($id){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $status = User::where('id',$id)->delete();
         if ($status){
             return redirect('admin-customers')->with('success', __('Deleted!'));

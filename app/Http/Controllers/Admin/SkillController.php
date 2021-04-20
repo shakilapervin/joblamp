@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Skill;
 use App\Slider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class SkillController extends Controller
@@ -16,6 +17,9 @@ class SkillController extends Controller
     |--------------------------------------------------------------------------
     */
     public function index(){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $skills = Skill::all();
         return view('admin.skill.index',compact('skills'));
     }
@@ -26,6 +30,9 @@ class SkillController extends Controller
     |--------------------------------------------------------------------------
     */
     public function create(){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         return view('admin.skill.create');
     }
 
@@ -35,6 +42,9 @@ class SkillController extends Controller
     |--------------------------------------------------------------------------
     */
     public function store(Request $request){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $validator = Validator::make($request->all(), [
             'name' => 'required',
         ]);
@@ -57,6 +67,9 @@ class SkillController extends Controller
     |--------------------------------------------------------------------------
     */
     public function edit($id){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $skill = Skill::where('id',$id)->first();
         return view('admin.skill.edit',compact('skill'));
     }
@@ -67,6 +80,9 @@ class SkillController extends Controller
     |--------------------------------------------------------------------------
     */
     public function update(Request $request){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $validator = Validator::make($request->all(), [
             'name' => 'required',
         ]);
@@ -89,6 +105,9 @@ class SkillController extends Controller
     |--------------------------------------------------------------------------
     */
     public function delete($id){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         Skill::where('id',$id)->delete();
         return redirect()->back()->with('success', __('Successfully Deleted!'));
     }

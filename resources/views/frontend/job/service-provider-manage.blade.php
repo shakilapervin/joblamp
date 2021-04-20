@@ -4,6 +4,56 @@
 @endsection
 @section('style')
     <link rel="stylesheet" href="{{ asset('public/assets/frontend') }}/vendor/rating/dist/star-rating.min.css">
+    <link rel="stylesheet" href="{{ asset('public/assets/frontend/vendor/dropify/css/dropify.min.css') }}">
+    <style>
+        .message-reply {
+            position: relative;
+            display: flex;
+            margin-bottom: 40px;
+        }
+
+        .message-picker {
+            list-style: none;
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            margin: 0;
+        }
+
+        .message-picker li span {
+            font-size: 20px !important;
+            color: #f39c12;
+            cursor: pointer;
+        }
+
+        .message-text {
+            position: relative;
+        }
+
+        .message-time {
+            position: absolute;
+            width: 200px;
+            bottom: -30px;
+            left: 0;
+            color: grey;
+            font-size: 12px !important;
+        }
+
+        .me .message-time {
+            right: 0;
+            text-align: right;
+            left: inherit;
+        }
+
+        .message-bubble {
+            margin-bottom: 35px !important;
+        }
+
+        .dropify-wrapper {
+            height: 250px;
+            margin-top: 24px;
+        }
+    </style>
 @endsection
 @section('content')
     <!-- Titlebar
@@ -102,8 +152,12 @@
 
                                 <!-- Reply Area -->
                                 <div class="message-reply">
-                                <textarea cols="1" rows="1" placeholder="Your Message" data-autoresize
-                                          class="message-data"></textarea>
+                                <textarea cols="1" rows="1" placeholder="Your Message" data-autoresize class="message-data"></textarea>
+                                    <button class="button apply-now-button popup-with-zoom-anim"
+                                            style="background: transparent; color: #D5152F;padding: 10px; position: absolute;top: 85%;"
+                                            href="#file-dialog">
+                                        <i class="icon-feather-paperclip"></i>
+                                    </button>
                                     <button class="button ripple-effect" onclick="postChat();">Send</button>
                                 </div>
 
@@ -215,11 +269,34 @@
 
         </div>
     </div>
-
+    <div id="file-dialog" class="zoom-anim-dialog mfp-hide dialog-with-tabs">
+        <!--Tabs -->
+        <div class="sign-in-form">
+            <div class="popup-tabs-container">
+                <!-- Tab -->
+                <div class="popup-tab-content" id="tab">
+                    <form method="post" id="send-file-form" action="{{ route('apply-job') }}" enctype="multipart/form-data">
+                    @csrf
+                    <!-- Welcome Text -->
+                        <div class="welcome-text">
+                            <input type="file" class="dropify chat-file" style="margin-top: 20px;" name="chat_file" required>
+                        </div>
+                        <button class="button margin-top-35 full-width button-sliding-icon ripple-effect" type="submit">
+                            {{ __('Send') }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('script')
     <script src="{{ asset('public/assets/frontend') }}/vendor/rating/dist/star-rating.min.js"></script>
+    <script src="{{ asset('public/assets/frontend/vendor/dropify/js/dropify.min.js') }}"></script>
     <script>
+        $(document).ready(function () {
+            $('.dropify').dropify();
+        });
         var starratings = new StarRating('.star-rating', {
             onClick: function (el) {
                 console.log('Selected: ' + el[el.selectedIndex].text);
@@ -243,44 +320,146 @@
         @endif
 
         function postChat() {
-            let message = $('.message-data').val();
-            db.ref("messages/" + url).push().set({
-                "message": message,
-                "type": 'text',
-                "sender_id": {{ \Illuminate\Support\Facades\Auth::id() }},
-                "receiver_id": {{ $receiver->id }}
-            }, function (error) {
-                if (error) {
-                    console.log(error);
-                } else {
-                    $('.message-data').val('');
+            $.ajax({
+                type: "GET",
+                url: '{{ route('get.current.time') }}',
+                success: function (data) {
+                    let message = $('.message-data').val();
+                    if (message != '') {
+                        db.ref("messages/" + url).push().set({
+                            "message": message,
+                            "type": 'text',
+                            "sender_id": {{ \Illuminate\Support\Facades\Auth::id() }},
+                            "receiver_id": {{ $receiver->id }},
+                            "date": data.date,
+                            "time": data.time,
+                        }, function (error) {
+                            if (error) {
+                                console.log(error);
+                            } else {
+                                $.ajax({
+                                    type: "POST",
+                                    url: '{{ route('chat.update.time') }}',
+                                    data: {
+                                        _token: '{{ csrf_token() }}',
+                                        "sender_id": {{ \Illuminate\Support\Facades\Auth::id() }},
+                                        "receiver_id": {{ $receiver->id }}
+                                    },
+                                    success: function (data) {
+                                        $('.message-data').val('');
+                                        $('.contact-list').html(null);
+                                        $('.contact-list').html(data);
+                                    }
+                                });
+                            }
+                        });
+                    }
                 }
             });
         }
 
         db.ref('messages/' + url).on("child_added", function (snapshot) {
+            const url = "{{ asset('public') }}/";
             const messages = snapshot.val();
             if (messages.sender_id == {{ \Illuminate\Support\Facades\Auth::id() }}) {
+                let type = messages.type;
+                let chatMessage = '';
+                if (type == 'text'){
+                    chatMessage = `<p>`+messages.message+`</p>`;
+                }else if(type == 'image'){
+                    chatMessage = `<a href="`+`{{ url('download-message-file') }}`+'/'+messages.message.replace('message/','')+`"> <img src="`+url+messages.message+`" width="100"></a>`;
+                }else{
+                    chatMessage = `<a style="color:#ffffff;" href="`+`{{ url('download-message-file') }}`+'/'+messages.message.replace('message/','')+`">`+messages.message.replace('message/','')+`</a>`;
+                }
                 const msg = `<div class="message-bubble me">
                             <div class="message-bubble-inner">
                                 <div class="message-avatar"><img src="` + sender_photo + `" alt=""/>
                                 </div>
-                                <div class="message-text"><p>` + messages.message + `</p></div>
+                                <div class="message-text">` + chatMessage + `
+                                    <p class="message-time">` + messages.date + ', ' + messages.time + `</p>
+                                </div>
                             </div>
                             <div class="clearfix"></div>
                         </div>`;
                 $('.message-content-inner').append(msg);
             } else {
+                let type = messages.type;
+                let chatMessage = '';
+                if (type == 'text'){
+                    chatMessage = `<p>`+messages.message+`</p>`;
+                }else if(type == 'image'){
+                    chatMessage = `<a href="`+`{{ url('download-message-file') }}`+'/'+messages.message.replace('message/','')+`"> <img src="`+url+messages.message+`" width="100"></a>`;
+                }else{
+                    chatMessage = `<a style="color:#ffffff;" href="`+`{{ url('download-message-file') }}`+'/'+messages.message.replace('message/','')+`">`+messages.message.replace('message/','')+`</a>`;
+                }
                 const msg = `<div class="message-bubble">
                             <div class="message-bubble-inner">
                                 <div class="message-avatar"><img src="` + receiver_photo + `" alt=""/>
                                 </div>
-                                <div class="message-text"><p>` + messages.message + `</p></div>
+                                <div class="message-text">` + chatMessage + `
+                                    <p class="message-time">` + messages.date + ', ' + messages.time + `</p>
+                                </div>
                             </div>
                             <div class="clearfix"></div>
                         </div>`;
                 $('.message-content-inner').append(msg);
             }
+        });
+    </script>
+
+
+    <script>
+        $(document).ready(function(){
+            $('#send-file-form').on('submit', function(event){
+                event.preventDefault();
+                $.ajax({
+                    url:"{{ route('save.chat.file') }}",
+                    method:"POST",
+                    data:new FormData(this),
+                    dataType:'JSON',
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success:function(data)
+                    {
+                        if(data.status == false){
+                            alert(data.error)
+                        }else {
+                            db.ref("messages/" + url).push().set({
+                                "message": data.file_name,
+                                "type": data.file_type,
+                                "sender_id": {{ \Illuminate\Support\Facades\Auth::id() }},
+                                "receiver_id": {{ $receiver->id }},
+                                "date": data.date,
+                                "time": data.time,
+                            }, function (error) {
+                                if (error) {
+                                    console.log(error);
+                                } else {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: '{{ route('chat.update.time') }}',
+                                        data: {
+                                            _token: '{{ csrf_token() }}',
+                                            "sender_id": {{ \Illuminate\Support\Facades\Auth::id() }},
+                                            "receiver_id": {{ $receiver->id }}
+                                        },
+                                        success: function (data) {
+                                            $('.message-data').val('');
+                                            $('.contact-list').html(null);
+                                            $('.contact-list').html(data);
+                                            $('#send-file-form').trigger("reset");
+                                            $('.mfp-close').trigger("click");
+                                            $('.dropify-clear').trigger("click");
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    }
+                })
+            });
+
         });
     </script>
 @endsection

@@ -19,6 +19,9 @@ class LocationController extends Controller
     |--------------------------------------------------------------------------
     */
     public function country(){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $countries = Country::all();
         return view('admin.location.country.index',compact('countries'));
     }
@@ -29,6 +32,9 @@ class LocationController extends Controller
     |--------------------------------------------------------------------------
     */
     public function addCountry(){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         return view('admin.location.country.create');
     }
 
@@ -38,6 +44,9 @@ class LocationController extends Controller
     |--------------------------------------------------------------------------
     */
     public function saveCountry(Request $request){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $validator = Validator::make($request->all(), [
             'name' => 'required',
         ]);
@@ -64,6 +73,9 @@ class LocationController extends Controller
     |--------------------------------------------------------------------------
     */
     public function editCountryForm($id){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $country = Country::find($id);
         return view('admin.location.country.edit', compact('country'));
     }
@@ -74,6 +86,9 @@ class LocationController extends Controller
     |--------------------------------------------------------------------------
     */
     public function updateCountry(Request $request){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $country = Country::find($request->id);
         $country->name = $request->name;
         $country->status = $request->status;
@@ -91,6 +106,9 @@ class LocationController extends Controller
     |--------------------------------------------------------------------------
     */
     public function deleteCountry($id){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $status = Country::where('id',$id)->delete();
         if ($status){
             return redirect('admin-country')->with('success', __('Deleted!'));
@@ -105,6 +123,9 @@ class LocationController extends Controller
     |--------------------------------------------------------------------------
     */
     public function states(){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $states = State::with('countryName')->get();
         return view('admin.location.state.index',compact('states'));
     }
@@ -115,6 +136,9 @@ class LocationController extends Controller
     |--------------------------------------------------------------------------
     */
     public function addState(){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $countries = Country::all();
         return view('admin.location.state.create',compact('countries'));
     }
@@ -125,6 +149,9 @@ class LocationController extends Controller
     |--------------------------------------------------------------------------
     */
     public function saveState(Request $request){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'country_id' => 'required',
@@ -153,6 +180,9 @@ class LocationController extends Controller
     |--------------------------------------------------------------------------
     */
     public function editStateForm($id){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $countries = Country::all();
         $state = State::with('countryName')->where('id',$id)->first();
         return view('admin.location.state.edit', compact('countries','state'));
@@ -164,6 +194,9 @@ class LocationController extends Controller
     |--------------------------------------------------------------------------
     */
     public function updateState(Request $request){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $state = State::find($request->id);
         $state->name = $request->name;
         $state->country_id = $request->country_id;
@@ -182,6 +215,9 @@ class LocationController extends Controller
     |--------------------------------------------------------------------------
     */
     public function deleteState($id){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $status = State::where('id',$id)->delete();
         if ($status){
             return redirect('admin-states')->with('success', __('Deleted!'));
@@ -196,6 +232,9 @@ class LocationController extends Controller
     |--------------------------------------------------------------------------
     */
     public function cities(){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $cities = City::with('countryName')->with('stateName')->get();
         return view('admin.location.city.index',compact('cities'));
     }
@@ -206,6 +245,9 @@ class LocationController extends Controller
     |--------------------------------------------------------------------------
     */
     public function addCity(){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $countries = Country::all();
         $states = State::all();
         return view('admin.location.city.create',compact('countries','states'));
@@ -217,6 +259,9 @@ class LocationController extends Controller
     |--------------------------------------------------------------------------
     */
     public function saveCity(Request $request){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'country_id' => 'required',
@@ -247,6 +292,9 @@ class LocationController extends Controller
     |--------------------------------------------------------------------------
     */
     public function editCityForm($id){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $countries = Country::all();
         $states = State::all();
         $city = City::with('countryName')->with('stateName')->where('id',$id)->first();
@@ -259,6 +307,9 @@ class LocationController extends Controller
     |--------------------------------------------------------------------------
     */
     public function updateCity(Request $request){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $city = City::find($request->id);
         $city->name = $request->name;
         $city->country_id = $request->country_id;
@@ -278,6 +329,9 @@ class LocationController extends Controller
     |--------------------------------------------------------------------------
     */
     public function deleteCity($id){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $status = City::where('id',$id)->delete();
         if ($status){
             return redirect('admin-states')->with('success', __('Deleted!'));

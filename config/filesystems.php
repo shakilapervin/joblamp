@@ -83,6 +83,7 @@ return [
         public_path('profile') => storage_path('app/profile'),
         public_path('documents') => storage_path('app/documents'),
         public_path('banner') => storage_path('app/banner'),
+        public_path('message') => storage_path('app/message'),
     ],
 
 ];

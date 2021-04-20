@@ -8,6 +8,7 @@ use App\SubscriptionPlan;
 use App\SubscriptionPlanFeature;
 use App\SubscriptionPlanPrice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class SubscriptionPlanController extends Controller
@@ -18,6 +19,9 @@ class SubscriptionPlanController extends Controller
     |--------------------------------------------------------------------------
     */
     public function index(){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $plans = SubscriptionPlan::all();
         return view('admin.subscription-plan.index',compact('plans'));
     }
@@ -28,6 +32,9 @@ class SubscriptionPlanController extends Controller
     |--------------------------------------------------------------------------
     */
     public function add(){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $countries = Country::all();
         return view('admin.subscription-plan.create',compact('countries'));
     }
@@ -38,6 +45,9 @@ class SubscriptionPlanController extends Controller
     |--------------------------------------------------------------------------
     */
     public function save(Request $request){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'description' => 'required',
@@ -93,6 +103,9 @@ class SubscriptionPlanController extends Controller
     |--------------------------------------------------------------------------
     */
     public function edit($id){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $plan = SubscriptionPlan::where('id',$id)->first();
         $prices = SubscriptionPlanPrice::where('plan_id',$id)->get();
         return view('admin.subscription-plan.edit', compact('plan','prices'));
@@ -104,6 +117,9 @@ class SubscriptionPlanController extends Controller
     |--------------------------------------------------------------------------
     */
     public function update(Request $request){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'description' => 'required',
@@ -148,6 +164,9 @@ class SubscriptionPlanController extends Controller
     |--------------------------------------------------------------------------
     */
     public function delete($id){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $status = SubscriptionPlan::where('id',$id)->delete();
         SubscriptionPlanPrice::where('plan_id',$id)->delete();
         if ($status){

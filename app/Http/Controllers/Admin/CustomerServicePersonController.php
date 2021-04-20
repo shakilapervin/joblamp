@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,6 +17,9 @@ class CustomerServicePersonController extends Controller
     |--------------------------------------------------------------------------
     */
     public function index(){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $users = User::where('user_type','cs_person')->get();
         return view('admin.cs-person.index',compact('users'));
     }
@@ -26,6 +30,9 @@ class CustomerServicePersonController extends Controller
     |--------------------------------------------------------------------------
     */
     public function create(){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         return view('admin.cs-person.create');
     }
 
@@ -35,6 +42,9 @@ class CustomerServicePersonController extends Controller
     |--------------------------------------------------------------------------
     */
     public function store(Request $request){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $validator = Validator::make($request->all(), [
             'first_name' => 'required',
             'last_name' => 'required',
@@ -70,6 +80,9 @@ class CustomerServicePersonController extends Controller
     |--------------------------------------------------------------------------
     */
     public function edit($id){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $user = User::where('id',$id)->first();
         return view('admin.cs-person.edit',compact('user'));
     }
@@ -80,6 +93,9 @@ class CustomerServicePersonController extends Controller
     |--------------------------------------------------------------------------
     */
     public function update(Request $request){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $validator = Validator::make($request->all(), [
             'first_name' => 'required',
             'last_name' => 'required',
@@ -115,6 +131,9 @@ class CustomerServicePersonController extends Controller
     |--------------------------------------------------------------------------
     */
     public function delete($id){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         User::where('id',$id)->delete();
         return redirect()->back()->with('success', __('Successfully Deleted!'));
     }

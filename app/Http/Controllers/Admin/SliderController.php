@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Slider;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Image;
 class SliderController extends Controller
@@ -15,6 +16,9 @@ class SliderController extends Controller
     |--------------------------------------------------------------------------
     */
     public function index(){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $banners = Slider::all();
         return view('admin.banner.index',compact('banners'));
     }
@@ -25,6 +29,9 @@ class SliderController extends Controller
     |--------------------------------------------------------------------------
     */
     public function create(){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         return view('admin.banner.create');
     }
 
@@ -34,6 +41,9 @@ class SliderController extends Controller
     |--------------------------------------------------------------------------
     */
     public function store(Request $request){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'image' => 'required|mimes:jpg,jpeg,png',
@@ -65,6 +75,9 @@ class SliderController extends Controller
     |--------------------------------------------------------------------------
     */
     public function edit($id){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $banner = Slider::where('id',$id)->first();
         return view('admin.banner.edit',compact('banner'));
     }
@@ -75,6 +88,9 @@ class SliderController extends Controller
     |--------------------------------------------------------------------------
     */
     public function update(Request $request){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'image' => 'mimes:jpg,jpeg,png',
@@ -107,6 +123,9 @@ class SliderController extends Controller
     |--------------------------------------------------------------------------
     */
     public function delete($id){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         Slider::where('id',$id)->delete();
         return redirect()->back()->with('success', __('Successfully Deleted!'));
     }

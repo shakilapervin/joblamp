@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\JobCategory;
 use App\JobSubCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class JobSubCategoryController extends Controller
@@ -15,6 +16,9 @@ class JobSubCategoryController extends Controller
     |--------------------------------------------------------------------------
     */
     public function categories(){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $categories = JobSubCategory::all();
         return view('admin.job-sub-category.index',compact('categories'));
     }
@@ -25,6 +29,9 @@ class JobSubCategoryController extends Controller
     |--------------------------------------------------------------------------
     */
     public function add(){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $categories = JobCategory::where('status',1)->get();
         return view('admin.job-sub-category.create',compact('categories'));
     }
@@ -35,6 +42,9 @@ class JobSubCategoryController extends Controller
     |--------------------------------------------------------------------------
     */
     public function store(Request $request){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'parent_id' => 'required'
@@ -64,6 +74,9 @@ class JobSubCategoryController extends Controller
     |--------------------------------------------------------------------------
     */
     public function edit($id){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $categories = JobCategory::where('status',1)->get();
         $details = JobSubCategory::where('id',$id)->first();
         return view('admin.job-sub-category.edit', compact('categories','details'));
@@ -75,6 +88,9 @@ class JobSubCategoryController extends Controller
     |--------------------------------------------------------------------------
     */
     public function update(Request $request){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'parent_id' => 'required',
@@ -100,6 +116,9 @@ class JobSubCategoryController extends Controller
     |--------------------------------------------------------------------------
     */
     public function delete($id){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $status = JobCategory::where('id',$id)->delete();
         if ($status){
             return redirect('admin-customers')->with('success', __('Deleted!'));

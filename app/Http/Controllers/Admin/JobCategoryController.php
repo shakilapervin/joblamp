@@ -8,6 +8,7 @@ use App\JobCategory;
 use App\State;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class JobCategoryController extends Controller
@@ -18,6 +19,9 @@ class JobCategoryController extends Controller
     |--------------------------------------------------------------------------
     */
     public function jobCategories(){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $categories = JobCategory::all();
         return view('admin.job-category.index',compact('categories'));
     }
@@ -28,6 +32,9 @@ class JobCategoryController extends Controller
     |--------------------------------------------------------------------------
     */
     public function addJobCategoryForm(){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         return view('admin.job-category.create');
     }
 
@@ -37,6 +44,9 @@ class JobCategoryController extends Controller
     |--------------------------------------------------------------------------
     */
     public function saveJobCategory(Request $request){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'description' => 'required',
@@ -68,6 +78,9 @@ class JobCategoryController extends Controller
     |--------------------------------------------------------------------------
     */
     public function editJobCategoryForm($id){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $category = JobCategory::where('id',$id)->first();
         return view('admin.job-category.edit', compact('category'));
     }
@@ -78,6 +91,9 @@ class JobCategoryController extends Controller
     |--------------------------------------------------------------------------
     */
     public function updateJobCategory(Request $request){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'description' => 'required',
@@ -104,6 +120,9 @@ class JobCategoryController extends Controller
     |--------------------------------------------------------------------------
     */
     public function deleteJobCategory($id){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
         $status = JobCategory::where('id',$id)->delete();
         if ($status){
             return redirect('admin-customers')->with('success', __('Deleted!'));

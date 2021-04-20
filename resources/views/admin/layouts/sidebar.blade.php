@@ -36,6 +36,7 @@
                         <span class="menu-text">Dashboards</span>
                     </a>
                 </li>
+                @if(\Illuminate\Support\Facades\Auth::user()->user_type == 'admin')
                 <li class="sidebar-dropdown {{ Route::is('admin.country') ? 'active' : '' }} {{ Route::is('admin.states') ? 'active' : '' }} {{ Route::is('admin.add.state') ? 'active' : '' }} {{ Route::is('admin.edit.state') ? 'active' : '' }} {{ Route::is('admin.add.country') ? 'active' : '' }} {{ Route::is('admin.edit.country') ? 'active' : '' }} {{ Route::is('admin.cities') ? 'active' : '' }} {{ Route::is('admin.add.city') ? 'active' : '' }} {{ Route::is('admin.edit.city') ? 'active' : '' }} {{ Route::is('admin.cities') ? 'active' : '' }} {{ Route::is('admin.add.city') ? 'active' : '' }} {{ Route::is('admin.edit.city') ? 'active' : '' }}">
                     <a href="javascript:void(0);">
                         <i class="icon-map-pin"></i>
@@ -102,7 +103,7 @@
                     </a>
 
                 </li>
-
+                @endif
                 <li class="sidebar-dropdown {{ Route::is('admin.jobs') ? 'active' : '' }} {{ Route::is('admin.edit.job') ? 'active' : '' }} {{ Route::is('admin.view.job') ? 'active' : '' }} {{ Route::is('admin.disputed.jobs') ? 'active' : '' }} {{ Route::is('admin.view.dispute.job') ? 'active' : '' }}">
                     <a href="javascript:void(0);">
                         <i class="icon-book"></i>
@@ -126,13 +127,15 @@
                         </ul>
                     </div>
                 </li>
-
+                @if(\Illuminate\Support\Facades\Auth::user()->user_type == 'admin')
                 <li class="{{ Route::is('admin.subscription.plans') ? 'active' : '' }} {{ Route::is('admin.subscription.plan.add') ? 'active' : '' }} {{ Route::is('admin.subscription.plan.edit') ? 'active' : '' }}">
-                    <a href="{{ route('admin.subscription.plans') }}" class="{{ Route::is('admin.subscription.plans') ? 'current-page' : '' }}  {{ Route::is('admin.subscription.plan.add') ? 'current-page' : '' }} {{ Route::is('admin.subscription.plan.edit') ? 'current-page' : '' }}">
+                    <a href="{{ route('admin.subscription.plans') }}"
+                       class="{{ Route::is('admin.subscription.plans') ? 'current-page' : '' }}  {{ Route::is('admin.subscription.plan.add') ? 'current-page' : '' }} {{ Route::is('admin.subscription.plan.edit') ? 'current-page' : '' }}">
                         <i class="icon-list"></i>
                         <span class="menu-text">{{ __('Subscription Plans') }}</span>
                     </a>
                 </li>
+                @endif
                 <li class="{{ Route::is('admin.transactions') ? 'active' : '' }}">
                     <a href="{{ route('admin.transactions') }}"
                        class="{{ Route::is('admin.transactions') ? 'current-page' : '' }}">
@@ -140,6 +143,7 @@
                         <span class="menu-text">Transactions</span>
                     </a>
                 </li>
+                @if(\Illuminate\Support\Facades\Auth::user()->user_type == 'admin')
                 <li class="{{ Route::is('edit.charge') ? 'active' : '' }}">
                     <a href="{{ route('edit.charge') }}"
                        class="{{ Route::is('edit.charge') ? 'current-page' : '' }}">
@@ -154,6 +158,7 @@
                         <span class="menu-text">{{ __('Customer Service Person') }}</span>
                     </a>
                 </li>
+                @endif
                 <li class="{{ Route::is('admin.supports') ? 'active' : '' }}">
                     <a href="{{ route('admin.supports') }}"
                        class="{{ Route::is('admin.supports') ? 'current-page' : '' }}">
@@ -161,6 +166,7 @@
                         <span class="menu-text">Contact Supports</span>
                     </a>
                 </li>
+                @if(\Illuminate\Support\Facades\Auth::user()->user_type == 'admin')
                 <li class="sidebar-dropdown {{ Route::is('admin.banners') ? 'active' : '' }} {{ Route::is('admin.create.banner') ? 'active' : '' }}">
                     <a href="javascript:void(0);">
                         <i class="icon-laptop_mac"></i>
@@ -192,6 +198,7 @@
                         <span class="menu-text">{{ __('Lotto Users') }}</span>
                     </a>
                 </li>
+                @endif
             </ul>
         </div>
         <!-- sidebar menu end -->

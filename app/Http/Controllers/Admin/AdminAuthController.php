@@ -17,7 +17,7 @@ class AdminAuthController extends Controller
     */
     public function loginForm(){
         if (!empty(Auth::user())){
-            if (Auth::user()->is_admin == 1){
+            if (Auth::user()->user_type == 'admin' || Auth::user()->user_type == 'cs_person'){
                 return redirect('admin-dashboard');
             }
         }
@@ -42,7 +42,7 @@ class AdminAuthController extends Controller
         }
         $user = User::where('email',$request->email)->first();
         if(!empty($user)){
-            if ($user->is_admin == 1){
+            if ($user->user_type == 'admin' || $user->user_type == 'cs_person' && $user->status == 'active'){
                 $credentials = $request->only('email', 'password');
                 if (Auth::attempt($credentials)) {
                     return redirect('admin-dashboard');
