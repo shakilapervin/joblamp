@@ -17,7 +17,7 @@
                                         <img src="{{ asset('') }}/{{ $job->creatorDetails->profile_pic }}" alt=""/>
                                     @else
                                         <img
-                                            src="{{ asset('public/assets/frontend') }}/images/user-avatar-placeholder.png"
+                                            src="{{ asset('assets/frontend') }}/images/user-avatar-placeholder.png"
                                             alt=""/>
                                     @endif
                                 </a>
@@ -105,7 +105,7 @@
                                                      alt=""/>
                                             @else
                                                 <img
-                                                    src="{{ asset('public/assets/frontend') }}/images/user-avatar-placeholder.png"
+                                                    src="{{ asset('assets/frontend') }}/images/user-avatar-placeholder.png"
                                                     alt=""/>
                                             @endif
                                         </div>

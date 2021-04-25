@@ -16,7 +16,7 @@
                         <div class="footer-rows-left">
                             <div class="footer-row">
                                 <div class="footer-row-inner footer-logo">
-                                    <img src="{{ asset('public/assets/frontend') }}/images/footer-logo.png" alt="">
+                                    <img src="{{ asset('assets/frontend') }}/images/footer-logo.png" alt="">
                                 </div>
                             </div>
                         </div>
@@ -60,13 +60,18 @@
                             <!-- Language Switcher -->
                             <div class="footer-row">
                                 <div class="footer-row-inner">
-                                    <select class="selectpicker language-switcher" data-selected-text-format="count"
-                                            data-size="5">
-                                        <option selected>English</option>
-                                        <option>Français</option>
-                                        <option>Español</option>
-                                        <option>Deutsch</option>
-                                    </select>
+                                    <form action="{{ route('change.lang') }}" method="post" class="lang-form">
+                                        @csrf
+                                        <select class="selectpicker language-switcher" data-selected-text-format="count"
+                                                data-size="10" name="lang">
+                                            @php
+                                                $langs = languages();
+                                            @endphp
+                                            @foreach($langs as $lang)
+                                            <option value="{{ $lang->language }}" @if(session()->get('lang') == $lang->language) selected @endif>{{ $lang->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -162,19 +167,19 @@
 
 <!-- Scripts
 ================================================== -->
-<script src="{{ asset('public/assets/frontend') }}/js/jquery-3.4.1.min.js"></script>
-<script src="{{ asset('public/assets/frontend') }}/js/jquery-migrate-3.1.0.min.html"></script>
-<script src="{{ asset('public/assets/frontend') }}/js/mmenu.min.js"></script>
-<script src="{{ asset('public/assets/frontend') }}/js/tippy.all.min.js"></script>
-<script src="{{ asset('public/assets/frontend') }}/js/simplebar.min.js"></script>
-<script src="{{ asset('public/assets/frontend') }}/js/bootstrap-slider.min.js"></script>
-<script src="{{ asset('public/assets/frontend') }}/js/bootstrap-select.min.js"></script>
-<script src="{{ asset('public/assets/frontend') }}/js/snackbar.js"></script>
-<script src="{{ asset('public/assets/frontend') }}/js/clipboard.min.js"></script>
-<script src="{{ asset('public/assets/frontend') }}/js/counterup.min.js"></script>
-<script src="{{ asset('public/assets/frontend') }}/js/magnific-popup.min.js"></script>
-<script src="{{ asset('public/assets/frontend') }}/js/slick.min.js"></script>
-<script src="{{ asset('public/assets/frontend') }}/js/custom.js"></script>
+<script src="{{ asset('assets/frontend') }}/js/jquery-3.4.1.min.js"></script>
+<script src="{{ asset('assets/frontend') }}/js/jquery-migrate-3.1.0.min.html"></script>
+<script src="{{ asset('assets/frontend') }}/js/mmenu.min.js"></script>
+<script src="{{ asset('assets/frontend') }}/js/tippy.all.min.js"></script>
+<script src="{{ asset('assets/frontend') }}/js/simplebar.min.js"></script>
+<script src="{{ asset('assets/frontend') }}/js/bootstrap-slider.min.js"></script>
+<script src="{{ asset('assets/frontend') }}/js/bootstrap-select.min.js"></script>
+<script src="{{ asset('assets/frontend') }}/js/snackbar.js"></script>
+<script src="{{ asset('assets/frontend') }}/js/clipboard.min.js"></script>
+<script src="{{ asset('assets/frontend') }}/js/counterup.min.js"></script>
+<script src="{{ asset('assets/frontend') }}/js/magnific-popup.min.js"></script>
+<script src="{{ asset('assets/frontend') }}/js/slick.min.js"></script>
+<script src="{{ asset('assets/frontend') }}/js/custom.js"></script>
 
 <script>
     // Snackbar for user status switcher
@@ -205,7 +210,13 @@
     firebase.initializeApp(firebaseConfig);
 
 </script>
-
+<script>
+    $(document).ready(function () {
+        $('.language-switcher').on('change',function () {
+            $('.lang-form').submit();
+        });
+    });
+</script>
 @yield('script')
 
 </body>

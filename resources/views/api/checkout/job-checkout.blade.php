@@ -10,8 +10,8 @@
 
     <!-- CSS
     ================================================== -->
-    <link rel="stylesheet" href="{{ asset('public/assets/frontend') }}/css/style.css">
-    <link rel="stylesheet" href="{{ asset('public/assets/frontend') }}/css/colors/blue.css">
+    <link rel="stylesheet" href="{{ asset('assets/frontend') }}/css/style.css">
+    <link rel="stylesheet" href="{{ asset('assets/frontend') }}/css/colors/blue.css">
     @yield('style')
 </head>
 <body>
@@ -144,19 +144,19 @@
 </div>
 <!-- Scripts
 ================================================== -->
-<script src="{{ asset('public/assets/frontend') }}/js/jquery-3.4.1.min.js"></script>
-<script src="{{ asset('public/assets/frontend') }}/js/jquery-migrate-3.1.0.min.html"></script>
-<script src="{{ asset('public/assets/frontend') }}/js/mmenu.min.js"></script>
-<script src="{{ asset('public/assets/frontend') }}/js/tippy.all.min.js"></script>
-<script src="{{ asset('public/assets/frontend') }}/js/simplebar.min.js"></script>
-<script src="{{ asset('public/assets/frontend') }}/js/bootstrap-slider.min.js"></script>
-<script src="{{ asset('public/assets/frontend') }}/js/bootstrap-select.min.js"></script>
-<script src="{{ asset('public/assets/frontend') }}/js/snackbar.js"></script>
-<script src="{{ asset('public/assets/frontend') }}/js/clipboard.min.js"></script>
-<script src="{{ asset('public/assets/frontend') }}/js/counterup.min.js"></script>
-<script src="{{ asset('public/assets/frontend') }}/js/magnific-popup.min.js"></script>
-<script src="{{ asset('public/assets/frontend') }}/js/slick.min.js"></script>
-<script src="{{ asset('public/assets/frontend') }}/js/custom.js"></script>
+<script src="{{ asset('assets/frontend') }}/js/jquery-3.4.1.min.js"></script>
+<script src="{{ asset('assets/frontend') }}/js/jquery-migrate-3.1.0.min.html"></script>
+<script src="{{ asset('assets/frontend') }}/js/mmenu.min.js"></script>
+<script src="{{ asset('assets/frontend') }}/js/tippy.all.min.js"></script>
+<script src="{{ asset('assets/frontend') }}/js/simplebar.min.js"></script>
+<script src="{{ asset('assets/frontend') }}/js/bootstrap-slider.min.js"></script>
+<script src="{{ asset('assets/frontend') }}/js/bootstrap-select.min.js"></script>
+<script src="{{ asset('assets/frontend') }}/js/snackbar.js"></script>
+<script src="{{ asset('assets/frontend') }}/js/clipboard.min.js"></script>
+<script src="{{ asset('assets/frontend') }}/js/counterup.min.js"></script>
+<script src="{{ asset('assets/frontend') }}/js/magnific-popup.min.js"></script>
+<script src="{{ asset('assets/frontend') }}/js/slick.min.js"></script>
+<script src="{{ asset('assets/frontend') }}/js/custom.js"></script>
 
 <script>
     // Snackbar for user status switcher
@@ -173,7 +173,7 @@
     });
 </script>
 
-<script type="text/javascript" src="{{ asset('public/assets/frontend/js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/frontend/js/bootstrap.min.js') }}"></script>
 <script type="text/javascript" src="https://js.stripe.com/v2"></script>
 <script type="text/javascript">
     $(function () {

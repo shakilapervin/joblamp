@@ -3,8 +3,8 @@
     {{ __('Post a Job') }}
 @endsection
 @section('style')
-    <link rel="stylesheet" href="{{ asset('public/assets/frontend') }}/vendor/jquery-ui/jquery-ui.min.css">
-    <link rel="stylesheet" href="{{ asset('public/assets/frontend') }}/vendor/rating/dist/star-rating.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/frontend') }}/vendor/jquery-ui/jquery-ui.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/frontend') }}/vendor/rating/dist/star-rating.min.css">
 @endsection
 @section('content')
     <!-- Dashboard Container -->
@@ -265,8 +265,8 @@
     <!-- Dashboard Container / End -->
 @endsection
 @section('script')
-    <script src="{{ asset('public/assets/frontend') }}/vendor/jquery-ui/jquery-ui.min.js"></script>
-    <script src="{{ asset('public/assets/frontend') }}/vendor/rating/dist/star-rating.min.js"></script>
+    <script src="{{ asset('assets/frontend') }}/vendor/jquery-ui/jquery-ui.min.js"></script>
+    <script src="{{ asset('assets/frontend') }}/vendor/rating/dist/star-rating.min.js"></script>
     <script>
         $( function() {
             $( ".startdate" ).datepicker({

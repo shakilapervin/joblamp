@@ -64,10 +64,10 @@
                                         <div class="avatar-wrapper">
                                             @if(!empty($user->profile_pic))
                                                 <img class="profile-pic"
-                                                     src="{{ asset('public/profile') }}/{{ $user->profile_pic }}" alt=""/>
+                                                     src="{{ asset('profile') }}/{{ $user->profile_pic }}" alt=""/>
                                             @else
                                                 <img class="profile-pic"
-                                                     src="{{ asset('public/assets/frontend') }}/images/user-avatar-placeholder.png"
+                                                     src="{{ asset('assets/frontend') }}/images/user-avatar-placeholder.png"
                                                      alt=""/>
                                             @endif
                                         </div>

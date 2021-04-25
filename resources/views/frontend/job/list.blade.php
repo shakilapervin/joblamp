@@ -96,7 +96,7 @@
                                                          alt=""/>
                                                 @else
                                                     <img class="circle-image"
-                                                         src="{{ asset('public/assets/frontend') }}/images/user-avatar-placeholder.png"
+                                                         src="{{ asset('assets/frontend') }}/images/user-avatar-placeholder.png"
                                                          alt=""/>
                                                 @endif
                                             </div>

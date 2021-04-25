@@ -71,10 +71,10 @@
                                                  title="Change Avatar">
                                                 @if(!empty($user->profile_pic))
                                                     <img class="profile-pic"
-                                                         src="{{ asset('public/profile') }}/{{ $user->profile_pic }}" alt=""/>
+                                                         src="{{ asset('profile') }}/{{ $user->profile_pic }}" alt=""/>
                                                 @else
                                                     <img class="profile-pic"
-                                                         src="{{ asset('public/assets/frontend') }}/images/user-avatar-placeholder.png"
+                                                         src="{{ asset('assets/frontend') }}/images/user-avatar-placeholder.png"
                                                          alt=""/>
                                                 @endif
                                                 <div class="upload-button"></div>
@@ -294,6 +294,7 @@
                                                                     <div class="attachments-container margin-top-0 margin-bottom-0">
                                                                         <div class="attachment-box ripple-effect">
                                                                             <span>{{ __('Document 1') }}</span>
+                                                                            <a target="_blank" href="{{ asset(''.$user->doc_1) }}" class="view-attachment" style="margin-right: 33px;"></a>
                                                                             <button type="button" class="remove-attachment" data-tippy-placement="top" data-tippy="" data-original-title="Remove" onclick="removeDoc({{ $user->id }},1);"></button>
                                                                         </div>
                                                                     </div>
@@ -301,10 +302,11 @@
                                                                     <div class="clearfix"></div>
                                                                     <!-- Upload Button -->
                                                                     <div class="uploadButton margin-top-0">
-                                                                        <input class="uploadButton-input" type="file" accept="image/*, application/pdf" id="doc_1" name="doc_1">
-                                                                        <label class="uploadButton-button ripple-effect" for="doc_1">
+                                                                        <input class="uploadButton-input" type="file" accept="image/*, application/pdf" id="uploadButton-input-1" name="doc_1">
+                                                                        <label class="uploadButton-button ripple-effect" for="uploadButton-input-1">
                                                                             {{ __('Upload Files') }}
                                                                         </label>
+                                                                        <span class="uploadButton-file-name" id="uploadButton-file-name-1"></span>
                                                                     </div>
 
                                                                 </div>
@@ -319,6 +321,7 @@
                                                                     <div class="attachments-container margin-top-0 margin-bottom-0">
                                                                         <div class="attachment-box ripple-effect">
                                                                             <span>{{ __('Document 2') }}</span>
+                                                                            <a target="_blank" href="{{ asset(''.$user->doc_2) }}" class="view-attachment" style="margin-right: 33px;"></a>
                                                                             <button type="button" class="remove-attachment" data-tippy-placement="top" data-tippy="" data-original-title="Remove" onclick="removeDoc({{ $user->id }},2);"></button>
                                                                         </div>
                                                                     </div>
@@ -326,10 +329,11 @@
                                                                     <div class="clearfix"></div>
                                                                     <!-- Upload Button -->
                                                                     <div class="uploadButton margin-top-0">
-                                                                        <input class="uploadButton-input" type="file" accept="image/*, application/pdf" id="doc_2" name="doc_2">
-                                                                        <label class="uploadButton-button ripple-effect" for="doc_2">
+                                                                        <input class="uploadButton-input" type="file" accept="image/*, application/pdf" id="uploadButton-input-2" name="doc_2">
+                                                                        <label class="uploadButton-button ripple-effect" for="uploadButton-input-2">
                                                                             {{ __('Upload Files') }}
                                                                         </label>
+                                                                        <span class="uploadButton-file-name" id="uploadButton-file-name-2"></span>
                                                                     </div>
 
                                                                 </div>
@@ -344,6 +348,7 @@
                                                                         <div class="attachments-container margin-top-0 margin-bottom-0">
                                                                             <div class="attachment-box ripple-effect">
                                                                                 <span>{{ __('Document 3') }}</span>
+                                                                                <a target="_blank" href="{{ asset(''.$user->doc_3) }}" class="view-attachment" style="margin-right: 33px;"></a>
                                                                                 <button type="button" class="remove-attachment" data-tippy-placement="top" data-tippy="" data-original-title="Remove" onclick="removeDoc({{ $user->id }},3);"></button>
                                                                             </div>
                                                                         </div>
@@ -351,10 +356,11 @@
                                                                     <div class="clearfix"></div>
                                                                     <!-- Upload Button -->
                                                                     <div class="uploadButton margin-top-0">
-                                                                        <input class="uploadButton-input" type="file" accept="image/*, application/pdf" id="doc_3" name="doc_3">
-                                                                        <label class="uploadButton-button ripple-effect" for="doc_3">
+                                                                        <input class="uploadButton-input" type="file" accept="image/*, application/pdf" id="uploadButton-input-3" name="doc_3">
+                                                                        <label class="uploadButton-button ripple-effect" for="uploadButton-input-3">
                                                                             {{ __('Upload Files') }}
                                                                         </label>
+                                                                        <span class="uploadButton-file-name" id="uploadButton-file-name-3"></span>
                                                                     </div>
 
                                                                 </div>

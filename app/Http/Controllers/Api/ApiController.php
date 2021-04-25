@@ -14,6 +14,7 @@ use App\Skill;
 use App\Slider;
 use App\State;
 use App\User;
+use App\UserChat;
 use App\UserJob;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -1140,5 +1141,46 @@ class ApiController extends Controller
         $data = Job::with('creatorDetails')->where('status', $request->status)->get();
         $status = true;
         return response()->json(compact('status', 'data'));
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Chat list
+    |--------------------------------------------------------------------------
+    */
+    public function chatList(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+        $data = UserChat::with('receiver')->where('sender_id', $request->user_id)->orderBy('created_at', 'desc')->get();
+        $status = true;
+        return response()->json(compact('status', 'data'));
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Upload Chat File
+    |--------------------------------------------------------------------------
+    */
+    public function saveChatFile(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'file' => 'required|mimes:jpg,jpeg,png,bmp,tiff,pdf,zip,doc,docx,txt,svg,gif',
+        ]);
+        if ($validator->fails()) {
+            $status = false;
+            $error = 'Sorry This file is not allowed';
+            return response()->json(compact('error','status'));
+        }else{
+            if ($request->hasFile('file')){
+                $status = true;
+                $file_name = $request->file('file')->store('message');
+                return response()->json(compact('file_name','status'));
+            }
+        }
     }
 }

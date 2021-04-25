@@ -5,7 +5,7 @@
     <div class="hero-banner">
         <div class="hero-slider">
             @foreach($banners as $banner)
-            <div class="hero-item" style="background: url('{{ asset('public/'.$banner->image) }}')">
+            <div class="hero-item" style="background: url('{{ asset(''.$banner->image) }}');background-size: cover;">
                 <div class="hero-title">
                     {{ $banner->title }}
                 </div>
@@ -88,7 +88,7 @@
                                                      alt=""/>
                                             @else
                                                 <img
-                                                    src="{{ asset('public/assets/frontend') }}/images/user-avatar-placeholder.png"
+                                                    src="{{ asset('assets/frontend') }}/images/user-avatar-placeholder.png"
                                                     alt=""/>
                                             @endif
                                         </div>
@@ -166,11 +166,11 @@
                                                 <div class="verified-badge"></div>
                                                 <a href="{{ route('public.profile',encrypt($popularWorker->id)) }}">
                                                     @if(!empty($popularWorker->profile_pic))
-                                                        <img src="{{ asset('public/profile') }}/{{ $popularWorker->profile_pic }}"
+                                                        <img src="{{ asset('profile') }}/{{ $popularWorker->profile_pic }}"
                                                              alt=""/>
                                                     @else
                                                         <img
-                                                            src="{{ asset('public/assets/frontend') }}/images/user-avatar-placeholder.png"
+                                                            src="{{ asset('assets/frontend') }}/images/user-avatar-placeholder.png"
                                                             alt=""/>
                                                     @endif
                                                 </a>

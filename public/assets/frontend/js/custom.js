@@ -1106,20 +1106,33 @@
         /*----------------------------------------------------*/
 
         var uploadButton = {
-            $button: $('.uploadButton-input'),
-            $nameField: $('.uploadButton-file-name')
+            $button1: $('#uploadButton-input-1'),
+            $button2: $('#uploadButton-input-2'),
+            $button3: $('#uploadButton-input-3'),
         };
 
-        uploadButton.$button.on('change', function () {
-            _populateFileField($(this));
+        uploadButton.$button1.on('change', function () {
+            _populateFileField($(this),1);
+        });
+        uploadButton.$button2.on('change', function () {
+            _populateFileField($(this),2);
+        });
+        uploadButton.$button3.on('change', function () {
+            _populateFileField($(this),3);
         });
 
-        function _populateFileField($button) {
+        function _populateFileField($button,id) {
             var selectedFile = [];
             for (var i = 0; i < $button.get(0).files.length; ++i) {
                 selectedFile.push($button.get(0).files[i].name + '<br>');
             }
-            uploadButton.$nameField.html(selectedFile);
+            if (id == 1){
+                $('#uploadButton-file-name-1').html(selectedFile);
+            }else if( id == 2){
+                $('#uploadButton-file-name-2').html(selectedFile);
+            }else {
+                $('#uploadButton-file-name-3').html(selectedFile);
+            }
         }
 
 

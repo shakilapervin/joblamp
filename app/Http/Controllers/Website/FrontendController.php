@@ -33,6 +33,17 @@ class FrontendController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
+    | Change Language
+    |--------------------------------------------------------------------------
+    */
+    public function changeLang(Request $request){
+        $lang = $request->lang;
+        \session()->forget('lang');
+        \session()->put('lang',$lang);
+        return redirect()->back();
+    }
+    /*
+    |--------------------------------------------------------------------------
     | HomePage
     |--------------------------------------------------------------------------
     */
@@ -49,7 +60,7 @@ class FrontendController extends Controller
             ->orderBy('totalJob','desc')
             ->get();
         $popularWorkers = DB::table('users')
-            ->select('users.id','users.first_name','users.last_name','countries.name as country_name',DB::raw('sum(ratings.rating) / count(*) as userRating'),DB::raw('(sum(ratings.rating) / count(*)) + count(*) as score'))
+            ->select('users.id','users.first_name','users.last_name','users.profile_pic','countries.name as country_name',DB::raw('sum(ratings.rating) / count(*) as userRating'),DB::raw('(sum(ratings.rating) / count(*)) + count(*) as score'))
             ->join('countries','countries.id','=','users.country')
             ->join('ratings','ratings.user_id','=','users.id')
             ->where('user_type','service_provider')
@@ -241,6 +252,7 @@ class FrontendController extends Controller
 
     public function dashboard(){
         $user = Auth::user();
+        $notifications = Notification::where('user_id',$user->id)->get();
         if ($user->user_type == 'customer'){
             $notHiredJobs = Job::where('user_id',$user->id)->where('status','opened')->get();
             $hiredJobs = Job::where('user_id',$user->id)->where('status','hired')->get();
@@ -248,7 +260,7 @@ class FrontendController extends Controller
             $completedJobs = Job::where('user_id',$user->id)->where('status','completed')->get();
             $ratings = Rating::where('user_id',$user->id)->count();
             $totalJob = Job::where('user_id',$user->id)->count();
-            return view('frontend.dashboard.customer-dashboard',compact('user','notHiredJobs','hiredJobs','deliveredJobs','completedJobs','ratings','totalJob'));
+            return view('frontend.dashboard.customer-dashboard',compact('user','notHiredJobs','hiredJobs','deliveredJobs','completedJobs','ratings','totalJob','notifications'));
         }else{
             $jobs = Job::where('status','opened')->orderBy('id','desc')->limit(4)->get();
             $jobsApplied = JobApplication::where('candidate_id',$user->id)->where('status','applied')->get();
@@ -256,7 +268,7 @@ class FrontendController extends Controller
             $deliveredJobs = UserJob::with('jobDetails')->where('service_provider_id',$user->id)->where('status','delivered')->get();
             $completedJobs = UserJob::with('jobDetails')->where('service_provider_id',$user->id)->where('status','completed')->get();
             $ratings = Rating::where('user_id',$user->id)->count();
-            return  view('frontend.dashboard.service-provider-dashboard',compact('user','jobsApplied','activeJobs','deliveredJobs','completedJobs','jobs','ratings'));
+            return  view('frontend.dashboard.service-provider-dashboard',compact('user','jobsApplied','activeJobs','deliveredJobs','completedJobs','jobs','ratings','notifications'));
         }
     }
 
@@ -285,20 +297,21 @@ class FrontendController extends Controller
             return redirect('');
         }
         $user = DB::table('users')
-            ->select('users.id','users.first_name','users.last_name','countries.name as country_name',DB::raw('sum(ratings.rating) / count(*) as userRating'),DB::raw('(sum(ratings.rating) / count(*)) + count(*) as score'))
+            ->select('users.id','users.first_name','users.last_name','users.profile_pic','users.skill','countries.name as country_name',DB::raw('sum(ratings.rating) / count(*) as userRating'),DB::raw('(sum(ratings.rating) / count(*)) + count(*) as score'))
             ->join('countries','countries.id','=','users.country')
             ->join('ratings','ratings.user_id','=','users.id')
             ->where('users.id',$id)
             ->groupBy('ratings.user_id')
             ->orderBy('score','desc')
             ->first();
+        $jobDone = UserJob::where('service_provider_id',$id)->count();
         $userFeedbacks = DB::table('ratings')
             ->select('ratings.created_at','jobs.user_id','users.first_name','users.last_name','ratings.rating','ratings.feedback')
             ->join('jobs','jobs.id','=','ratings.job_id')
             ->join('users','users.id','=','jobs.user_id')
             ->where('ratings.user_id',$id)
             ->get();
-        return  view('frontend.profile.public',compact('user','userFeedbacks'));
+        return  view('frontend.profile.public',compact('user','userFeedbacks','jobDone'));
     }
 
     /*
@@ -610,6 +623,7 @@ class FrontendController extends Controller
 
                 if ($status){
                     $mailData = array();
+
                     $headers = array(
                         'Authorization: key=' . env('FIREBASE_API_KEY'),
                         'Content-Type: application/json'

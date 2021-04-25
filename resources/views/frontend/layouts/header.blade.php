@@ -1,5 +1,9 @@
+@php
+    $lang = \session()->get('lang')?: 'en';
+    app()->setLocale($lang);
+@endphp
 <!doctype html>
-<html lang="en">
+<html lang="{{ session()->get('lang')?: 'en' }}">
 <head>
 
     <!-- Basic Page Needs
@@ -10,8 +14,8 @@
 
     <!-- CSS
     ================================================== -->
-    <link rel="stylesheet" href="{{ asset('public/assets/frontend') }}/css/style.css">
-    <link rel="stylesheet" href="{{ asset('public/assets/frontend') }}/css/colors/blue.css">
+    <link rel="stylesheet" href="{{ asset('assets/frontend') }}/css/style.css">
+    <link rel="stylesheet" href="{{ asset('assets/frontend') }}/css/colors/blue.css">
     @yield('style')
 </head>
 <body>
@@ -32,7 +36,7 @@
                     <!-- Logo -->
                     <div id="logo">
                         <a href="{{ url('') }}">
-                            <img src="{{ asset('public/assets/frontend') }}/images/joblamp.png" alt="">
+                            <img src="{{ asset('assets/frontend') }}/images/joblamp.png" alt="">
                         </a>
                     </div>
 
@@ -51,6 +55,15 @@
                                     <li>
                                         <a href="{{ route('contact.us') }}">{{ __('Contact Us') }}</a>
                                     </li>
+                                @else
+                                    <li>
+                                        <a href="{{ route('job-list') }}">
+                                            {{ __('Find Work') }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('contact.us') }}">{{ __('Contact Us') }}</a>
+                                    </li>
                                 @endif
                             @else
                                 <li>
@@ -63,6 +76,9 @@
                                 </li>
                                 <li>
                                     <a href="{{ route('user-login') }}">{{ __('Login') }}</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('contact.us') }}">{{ __('Contact Us') }}</a>
                                 </li>
                             @endauth
 
@@ -230,7 +246,7 @@
                                     <a href="#">
                                         <div class="user-avatar status-online">
                                             <img
-                                                src="{{ asset('public/assets/frontend') }}/images/user-avatar-small-01.jpg"
+                                                src="{{ asset('assets/frontend') }}/images/user-avatar-small-01.jpg"
                                                 alt="">
                                         </div>
                                     </a>
@@ -246,7 +262,7 @@
                                         <div class="user-details">
                                             <div class="user-avatar status-online">
                                                 <img
-                                                    src="{{ asset('public/assets/frontend') }}/images/user-avatar-small-01.jpg"
+                                                    src="{{ asset('assets/frontend') }}/images/user-avatar-small-01.jpg"
                                                     alt="">
                                             </div>
                                             <div class="user-name">

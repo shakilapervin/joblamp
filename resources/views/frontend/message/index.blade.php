@@ -47,11 +47,11 @@
                                                 {{--                                            <i class="status-icon status-online"></i>--}}
                                                 @if(!empty($contact->receiver->profile_pic))
                                                     <img
-                                                        src="{{ asset('public/profile/'.$contact->receiver->profile_pic) }}"
+                                                        src="{{ asset('profile/'.$contact->receiver->profile_pic) }}"
                                                         alt=""/>
                                                 @else
                                                     <img
-                                                        src="{{ asset('public/assets/frontend') }}/images/user-avatar-placeholder.png"
+                                                        src="{{ asset('assets/frontend') }}/images/user-avatar-placeholder.png"
                                                         alt=""/>
                                                 @endif
                                             </div>

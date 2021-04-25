@@ -180,7 +180,7 @@
     </div>
 @endsection
 @section('script')
-    <script type="text/javascript" src="{{ asset('public/assets/frontend/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/frontend/js/bootstrap.min.js') }}"></script>
     <script type="text/javascript" src="https://js.stripe.com/v2"></script>
     <script type="text/javascript">
         $(function () {

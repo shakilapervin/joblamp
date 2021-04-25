@@ -142,6 +142,10 @@ class ComposerStaticInitba11f9484b2be2751f6ff6e4838c5b23
             'Laravel\\Ui\\' => 11,
             'Laravel\\Tinker\\' => 15,
         ),
+        'J' => 
+        array (
+            'JoeDixon\\Translation\\' => 21,
+        ),
         'I' => 
         array (
             'Intervention\\Image\\' => 19,
@@ -451,6 +455,10 @@ class ComposerStaticInitba11f9484b2be2751f6ff6e4838c5b23
         'Laravel\\Tinker\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/tinker/src',
+        ),
+        'JoeDixon\\Translation\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/joedixon/laravel-translation/src',
         ),
         'Intervention\\Image\\' => 
         array (
@@ -2858,6 +2866,32 @@ class ComposerStaticInitba11f9484b2be2751f6ff6e4838c5b23
         'Intervention\\Image\\Point' => __DIR__ . '/..' . '/intervention/image/src/Intervention/Image/Point.php',
         'Intervention\\Image\\Response' => __DIR__ . '/..' . '/intervention/image/src/Intervention/Image/Response.php',
         'Intervention\\Image\\Size' => __DIR__ . '/..' . '/intervention/image/src/Intervention/Image/Size.php',
+        'JoeDixon\\Translation\\Console\\Commands\\AddLanguageCommand' => __DIR__ . '/..' . '/joedixon/laravel-translation/src/Console/Commands/AddLanguageCommand.php',
+        'JoeDixon\\Translation\\Console\\Commands\\AddTranslationKeyCommand' => __DIR__ . '/..' . '/joedixon/laravel-translation/src/Console/Commands/AddTranslationKeyCommand.php',
+        'JoeDixon\\Translation\\Console\\Commands\\BaseCommand' => __DIR__ . '/..' . '/joedixon/laravel-translation/src/Console/Commands/BaseCommand.php',
+        'JoeDixon\\Translation\\Console\\Commands\\ListLanguagesCommand' => __DIR__ . '/..' . '/joedixon/laravel-translation/src/Console/Commands/ListLanguagesCommand.php',
+        'JoeDixon\\Translation\\Console\\Commands\\ListMissingTranslationKeys' => __DIR__ . '/..' . '/joedixon/laravel-translation/src/Console/Commands/ListMissingTranslationKeys.php',
+        'JoeDixon\\Translation\\Console\\Commands\\SynchroniseMissingTranslationKeys' => __DIR__ . '/..' . '/joedixon/laravel-translation/src/Console/Commands/SynchroniseMissingTranslationKeys.php',
+        'JoeDixon\\Translation\\Console\\Commands\\SynchroniseTranslationsCommand' => __DIR__ . '/..' . '/joedixon/laravel-translation/src/Console/Commands/SynchroniseTranslationsCommand.php',
+        'JoeDixon\\Translation\\ContractDatabaseLoader' => __DIR__ . '/..' . '/joedixon/laravel-translation/src/ContractDatabaseLoader.php',
+        'JoeDixon\\Translation\\Drivers\\Database' => __DIR__ . '/..' . '/joedixon/laravel-translation/src/Drivers/Database.php',
+        'JoeDixon\\Translation\\Drivers\\DriverInterface' => __DIR__ . '/..' . '/joedixon/laravel-translation/src/Drivers/DriverInterface.php',
+        'JoeDixon\\Translation\\Drivers\\File' => __DIR__ . '/..' . '/joedixon/laravel-translation/src/Drivers/File.php',
+        'JoeDixon\\Translation\\Drivers\\Translation' => __DIR__ . '/..' . '/joedixon/laravel-translation/src/Drivers/Translation.php',
+        'JoeDixon\\Translation\\Exceptions\\LanguageExistsException' => __DIR__ . '/..' . '/joedixon/laravel-translation/src/Exceptions/LanguageExistsException.php',
+        'JoeDixon\\Translation\\Exceptions\\LanguageKeyExistsException' => __DIR__ . '/..' . '/joedixon/laravel-translation/src/Exceptions/LanguageKeyExistsException.php',
+        'JoeDixon\\Translation\\Http\\Controllers\\LanguageController' => __DIR__ . '/..' . '/joedixon/laravel-translation/src/Http/Controllers/LanguageController.php',
+        'JoeDixon\\Translation\\Http\\Controllers\\LanguageTranslationController' => __DIR__ . '/..' . '/joedixon/laravel-translation/src/Http/Controllers/LanguageTranslationController.php',
+        'JoeDixon\\Translation\\Http\\Requests\\LanguageRequest' => __DIR__ . '/..' . '/joedixon/laravel-translation/src/Http/Requests/LanguageRequest.php',
+        'JoeDixon\\Translation\\Http\\Requests\\TranslationRequest' => __DIR__ . '/..' . '/joedixon/laravel-translation/src/Http/Requests/TranslationRequest.php',
+        'JoeDixon\\Translation\\InterfaceDatabaseLoader' => __DIR__ . '/..' . '/joedixon/laravel-translation/src/InterfaceDatabaseLoader.php',
+        'JoeDixon\\Translation\\Language' => __DIR__ . '/..' . '/joedixon/laravel-translation/src/Language.php',
+        'JoeDixon\\Translation\\Rules\\LanguageNotExists' => __DIR__ . '/..' . '/joedixon/laravel-translation/src/Rules/LanguageNotExists.php',
+        'JoeDixon\\Translation\\Scanner' => __DIR__ . '/..' . '/joedixon/laravel-translation/src/Scanner.php',
+        'JoeDixon\\Translation\\Translation' => __DIR__ . '/..' . '/joedixon/laravel-translation/src/Translation.php',
+        'JoeDixon\\Translation\\TranslationBindingsServiceProvider' => __DIR__ . '/..' . '/joedixon/laravel-translation/src/TranslationBindingsServiceProvider.php',
+        'JoeDixon\\Translation\\TranslationManager' => __DIR__ . '/..' . '/joedixon/laravel-translation/src/TranslationManager.php',
+        'JoeDixon\\Translation\\TranslationServiceProvider' => __DIR__ . '/..' . '/joedixon/laravel-translation/src/TranslationServiceProvider.php',
         'JsonException' => __DIR__ . '/..' . '/symfony/polyfill-php73/Resources/stubs/JsonException.php',
         'Laravel\\Tinker\\ClassAliasAutoloader' => __DIR__ . '/..' . '/laravel/tinker/src/ClassAliasAutoloader.php',
         'Laravel\\Tinker\\Console\\TinkerCommand' => __DIR__ . '/..' . '/laravel/tinker/src/Console/TinkerCommand.php',

@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Session;
 use Illuminate\Support\Facades\Http;
-
+use Mail;
 
 class CustomerDashboardController extends Controller
 {

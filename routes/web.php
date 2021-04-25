@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'Website\FrontendController@index');
 Route::get('/', 'Website\FrontendController@index')->name('home');
 Route::get('contact-us', 'Website\FrontendController@contactPage')->name('contact.us');
+Route::post('change-lang', 'Website\FrontendController@changeLang')->name('change.lang');
 Route::post('submit-contact-form', 'Website\FrontendController@submitContactForm')->name('submit.contact.form');
 Route::get('user-register', 'Website\FrontendController@registrationForm')->name('user-register');
 Route::post('save-register', 'Website\FrontendController@registerUser')->name('save-register');
@@ -310,5 +311,13 @@ Route::group(['middleware' => ['admin']], function () {
     |--------------------------------------------------------------------------
     */
     Route::get('admin-lotto-users', 'Admin\ContractorController@lottoUsers')->name('admin.lotto.users');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Notification
+    |--------------------------------------------------------------------------
+    */
+    Route::get('admin-create-notification', 'Admin\NotificationController@create')->name('admin.create.notification');
+    Route::post('admin-store-notification', 'Admin\NotificationController@store')->name('admin.store.notification');
 });
 

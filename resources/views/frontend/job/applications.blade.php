@@ -17,7 +17,7 @@
                                         <img src="{{ asset('') }}/{{ $job->creatorDetails->profile_pic }}" alt=""/>
                                     @else
                                         <img
-                                            src="{{ asset('public/assets/frontend') }}/images/user-avatar-placeholder.png"
+                                            src="{{ asset('assets/frontend') }}/images/user-avatar-placeholder.png"
                                             alt=""/>
                                     @endif
                                 </a>
@@ -84,10 +84,10 @@
                                         <div class="verified-badge"></div>
                                         <a href="{{ route('public.profile',encrypt($application->id)) }}">
                                             @if(!empty($application->candidateDetails->profile_pic))
-                                                <img src="{{ asset('public/profile/'.$application->candidateDetails->profile_pic) }}" alt=""/>
+                                                <img src="{{ asset('profile/'.$application->candidateDetails->profile_pic) }}" alt=""/>
                                             @else
                                                 <img
-                                                    src="{{ asset('public/assets/frontend') }}/images/user-avatar-placeholder.png"
+                                                    src="{{ asset('assets/frontend') }}/images/user-avatar-placeholder.png"
                                                     alt=""/>
                                             @endif
                                         </a>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Charge;
 use App\City;
 use App\Country;
 use App\Job;
@@ -23,6 +24,7 @@ class JobController extends Controller
     */
     public function index(Request $request)
     {
+        $charge = Charge::latest('id')->first();
         $date = $request->date;
         $status = $request->status;
         $noJob = false;
@@ -46,7 +48,7 @@ class JobController extends Controller
             }
         }
         $jobs = $query->get();
-        return view('admin.job.index', compact('jobs','noJob'));
+        return view('admin.job.index', compact('jobs','noJob','charge'));
     }
 
     /*

@@ -430,5 +430,5 @@
     <!-- Dashboard Container / End -->
 @endsection
 @section('script')
-    <script src="{{ asset('public/assets/frontend') }}/js/bootstrap.min.js"></script>
+    <script src="{{ asset('assets/frontend') }}/js/bootstrap.min.js"></script>
 @endsection

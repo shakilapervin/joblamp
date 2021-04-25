@@ -3,8 +3,8 @@
     {{ $job->title }}
 @endsection
 @section('style')
-    <link rel="stylesheet" href="{{ asset('public/assets/frontend') }}/vendor/rating/dist/star-rating.min.css">
-    <link rel="stylesheet" href="{{ asset('public/assets/frontend/vendor/dropify/css/dropify.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/frontend') }}/vendor/rating/dist/star-rating.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/frontend/vendor/dropify/css/dropify.min.css') }}">
     <style>
         .message-reply {
             position: relative;
@@ -70,7 +70,7 @@
                                         <img src="{{ asset('') }}/{{ $job->creatorDetails->profile_pic }}" alt=""/>
                                     @else
                                         <img
-                                            src="{{ asset('public/assets/frontend') }}/images/user-avatar-placeholder.png"
+                                            src="{{ asset('assets/frontend') }}/images/user-avatar-placeholder.png"
                                             alt=""/>
                                     @endif
                                 </a>
@@ -88,7 +88,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <div class="star-rating" data-rating="4.9"></div>
+                                        <div class="star-rating" data-rating="{{ calculateRating(\App\Rating::where('user_id',$job->creatorDetails->id)->get()) }}"></div>
                                     </li>
                                     <li>
                                         {{ $job->creatorDetails->userCountry->name }}
@@ -146,7 +146,7 @@
                                 <!-- Message Content Inner -->
                                 <div class="message-content-inner"></div>
                                 <!-- Message Content Inner / End -->
-
+                                @if($job->status != 'completed')
                                 <!-- Reply Area -->
                                 <div class="message-reply">
                                 <textarea cols="1" rows="1" placeholder="Your Message" data-autoresize
@@ -158,7 +158,7 @@
                                     </button>
                                     <button class="button ripple-effect" onclick="postChat();">Send</button>
                                 </div>
-
+                                @endif
                             </div>
                             <!-- Message Content -->
 
@@ -344,8 +344,8 @@
     </div>
 @endsection
 @section('script')
-    <script src="{{ asset('public/assets/frontend') }}/vendor/rating/dist/star-rating.min.js"></script>
-    <script src="{{ asset('public/assets/frontend/vendor/dropify/js/dropify.min.js') }}"></script>
+    <script src="{{ asset('assets/frontend') }}/vendor/rating/dist/star-rating.min.js"></script>
+    <script src="{{ asset('assets/frontend/vendor/dropify/js/dropify.min.js') }}"></script>
     <script>
         $(document).ready(function () {
             $('.dropify').dropify();
@@ -362,15 +362,15 @@
         const url = "job_chat_{{ $jobId }}";
 
         @if(!empty($receiver->workerDetails->profile_pic))
-        let receiver_photo = "{{ asset('public/profile/'.$receiver->workerDetails->profile_pic) }}";
+        let receiver_photo = "{{ asset('profile/'.$receiver->workerDetails->profile_pic) }}";
         @else
-        let receiver_photo = "{{ asset('public/assets/frontend') }}/images/user-avatar-placeholder.png";
+        let receiver_photo = "{{ asset('assets/frontend') }}/images/user-avatar-placeholder.png";
         @endif
 
         @if(!empty(\Illuminate\Support\Facades\Auth::user()->profile_pic))
-        let sender_photo = "{{ asset('public/profile/'.\Illuminate\Support\Facades\Auth::user()->profile_pic) }}";
+        let sender_photo = "{{ asset('profile/'.\Illuminate\Support\Facades\Auth::user()->profile_pic) }}";
         @else
-        let sender_photo = "{{ asset('public/assets/frontend') }}/images/user-avatar-placeholder.png";
+        let sender_photo = "{{ asset('assets/frontend') }}/images/user-avatar-placeholder.png";
         @endif
 
         function postChat() {

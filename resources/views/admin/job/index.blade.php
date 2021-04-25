@@ -99,6 +99,10 @@
                                     <th>{{ __('Title') }}</th>
                                     <th>{{ __('Category') }}</th>
                                     <th>{{ __('Date') }}</th>
+                                    <th>{{ __('Job Charge') }}</th>
+                                    <th>{{ __('TG Commission') }}</th>
+                                    <th>{{ __('TW Commission') }}</th>
+                                    <th>{{ __('TW Payment') }}</th>
                                     <th>{{ __('Status') }}</th>
                                     <th width="10%">{{ __('Action') }}</th>
                                 </tr>
@@ -127,6 +131,23 @@
                                             </td>
                                             <td>
                                                 {{ $job->created_at->toDateString() }}
+                                            </td>
+                                            @php
+                                                $jobCharge = \App\JobApplication::where('job_id',$job->id)->where('status','completed')->orWhere('status','hired')->first()->bid_amount;
+                                                $tgCommission = ($jobCharge*$charge->customer_charge)/100;
+                                                $twCommission = ($jobCharge*$charge->worker_charge)/100;
+                                            @endphp
+                                            <td>
+                                                {{ $jobCharge }}
+                                            </td>
+                                            <td>
+                                                {{ $tgCommission }}
+                                            </td>
+                                            <td>
+                                                {{ $twCommission }}
+                                            </td>
+                                            <td>
+                                                {{ $jobCharge-$twCommission }}
                                             </td>
                                             <td>
                                                 @if($job->status == 'opened')

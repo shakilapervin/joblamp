@@ -47,11 +47,11 @@
                                                 {{--                                            <i class="status-icon status-online"></i>--}}
                                                 @if(!empty($contact->receiver->profile_pic))
                                                     <img
-                                                        src="{{ asset('public/profile/'.$contact->receiver->profile_pic) }}"
+                                                        src="{{ asset('profile/'.$contact->receiver->profile_pic) }}"
                                                         alt=""/>
                                                 @else
                                                     <img
-                                                        src="{{ asset('public/assets/frontend') }}/images/user-avatar-placeholder.png"
+                                                        src="{{ asset('assets/frontend') }}/images/user-avatar-placeholder.png"
                                                         alt=""/>
                                                 @endif
                                             </div>
@@ -133,7 +133,7 @@
     </div>
 @endsection
 @section('script')
-    <script src="{{ asset('public/assets/frontend/vendor/dropify/js/dropify.min.js') }}"></script>
+    <script src="{{ asset('assets/frontend/vendor/dropify/js/dropify.min.js') }}"></script>
     <script>
         $(document).ready(function () {
             $('.dropify').dropify();
@@ -142,15 +142,15 @@
         const url = "{{ $receiver->url }}";
 
         @if(!empty($receiver->receiver->profile_pic))
-        let receiver_photo = "{{ asset('public/profile/'.$receiver->receiver->profile_pic) }}";
+        let receiver_photo = "{{ asset('profile/'.$receiver->receiver->profile_pic) }}";
         @else
-        let receiver_photo = "{{ asset('public/assets/frontend') }}/images/user-avatar-placeholder.png";
+        let receiver_photo = "{{ asset('assets/frontend') }}/images/user-avatar-placeholder.png";
         @endif
 
         @if(!empty(\Illuminate\Support\Facades\Auth::user()->profile_pic))
-        let sender_photo = "{{ asset('public/profile/'.\Illuminate\Support\Facades\Auth::user()->profile_pic) }}";
+        let sender_photo = "{{ asset('profile/'.\Illuminate\Support\Facades\Auth::user()->profile_pic) }}";
         @else
-        let sender_photo = "{{ asset('public/assets/frontend') }}/images/user-avatar-placeholder.png";
+        let sender_photo = "{{ asset('assets/frontend') }}/images/user-avatar-placeholder.png";
         @endif
 
         function postChat() {
@@ -296,7 +296,7 @@
     </script>
 @endsection
 @section('style')
-    <link rel="stylesheet" href="{{ asset('public/assets/frontend/vendor/dropify/css/dropify.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/frontend/vendor/dropify/css/dropify.min.css') }}">
     <style>
         .message-reply {
             position: relative;

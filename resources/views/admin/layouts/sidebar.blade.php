@@ -37,72 +37,72 @@
                     </a>
                 </li>
                 @if(\Illuminate\Support\Facades\Auth::user()->user_type == 'admin')
-                <li class="sidebar-dropdown {{ Route::is('admin.country') ? 'active' : '' }} {{ Route::is('admin.states') ? 'active' : '' }} {{ Route::is('admin.add.state') ? 'active' : '' }} {{ Route::is('admin.edit.state') ? 'active' : '' }} {{ Route::is('admin.add.country') ? 'active' : '' }} {{ Route::is('admin.edit.country') ? 'active' : '' }} {{ Route::is('admin.cities') ? 'active' : '' }} {{ Route::is('admin.add.city') ? 'active' : '' }} {{ Route::is('admin.edit.city') ? 'active' : '' }} {{ Route::is('admin.cities') ? 'active' : '' }} {{ Route::is('admin.add.city') ? 'active' : '' }} {{ Route::is('admin.edit.city') ? 'active' : '' }}">
-                    <a href="javascript:void(0);">
-                        <i class="icon-map-pin"></i>
-                        <span class="menu-text">{{ __('Locations') }}</span>
-                    </a>
-                    <div class="sidebar-submenu">
-                        <ul>
-                            <li>
-                                <a class="{{ Route::is('admin.country') ? 'current-page' : '' }} {{ Route::is('admin.add.country') ? 'active' : '' }} {{ Route::is('admin.edit.country') ? 'active' : '' }}"
-                                   href="{{ route('admin.country') }}">{{ __('Countries') }}</a>
-                            </li>
-                            <li>
-                                <a class="{{ Route::is('admin.states') ? 'current-page' : '' }} {{ Route::is('admin.add.state') ? 'current-page' : '' }} {{ Route::is('admin.edit.state') ? 'current-page' : '' }}"
-                                   href="{{ route('admin.states') }} ">{{ __('States') }}</a>
-                            </li>
+                    <li class="sidebar-dropdown {{ Route::is('admin.country') ? 'active' : '' }} {{ Route::is('admin.states') ? 'active' : '' }} {{ Route::is('admin.add.state') ? 'active' : '' }} {{ Route::is('admin.edit.state') ? 'active' : '' }} {{ Route::is('admin.add.country') ? 'active' : '' }} {{ Route::is('admin.edit.country') ? 'active' : '' }} {{ Route::is('admin.cities') ? 'active' : '' }} {{ Route::is('admin.add.city') ? 'active' : '' }} {{ Route::is('admin.edit.city') ? 'active' : '' }} {{ Route::is('admin.cities') ? 'active' : '' }} {{ Route::is('admin.add.city') ? 'active' : '' }} {{ Route::is('admin.edit.city') ? 'active' : '' }}">
+                        <a href="javascript:void(0);">
+                            <i class="icon-map-pin"></i>
+                            <span class="menu-text">{{ __('Locations') }}</span>
+                        </a>
+                        <div class="sidebar-submenu">
+                            <ul>
+                                <li>
+                                    <a class="{{ Route::is('admin.country') ? 'current-page' : '' }} {{ Route::is('admin.add.country') ? 'active' : '' }} {{ Route::is('admin.edit.country') ? 'active' : '' }}"
+                                       href="{{ route('admin.country') }}">{{ __('Countries') }}</a>
+                                </li>
+                                <li>
+                                    <a class="{{ Route::is('admin.states') ? 'current-page' : '' }} {{ Route::is('admin.add.state') ? 'current-page' : '' }} {{ Route::is('admin.edit.state') ? 'current-page' : '' }}"
+                                       href="{{ route('admin.states') }} ">{{ __('States') }}</a>
+                                </li>
 
-                            <li>
-                                <a class="{{ Route::is('admin.cities') ? 'current-page' : '' }} {{ Route::is('admin.add.city') ? 'current-page' : '' }} {{ Route::is('admin.edit.city') ? 'current-page' : '' }}"
-                                   href="{{ route('admin.cities') }} ">{{ __('Cities') }}</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                                <li>
+                                    <a class="{{ Route::is('admin.cities') ? 'current-page' : '' }} {{ Route::is('admin.add.city') ? 'current-page' : '' }} {{ Route::is('admin.edit.city') ? 'current-page' : '' }}"
+                                       href="{{ route('admin.cities') }} ">{{ __('Cities') }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
 
-                <li class="{{ Route::is('admin.customers') ? 'active' : '' }} {{ Route::is('admin.edit.customer') ? 'active' : '' }}">
-                    <a href="{{ route('admin.customers') }}"
-                       class="{{ Route::is('admin.customers') ? 'current-page' : '' }} {{ Route::is('admin.edit.customer') ? 'current-page' : '' }}">
-                        <i class="icon-users"></i>
-                        <span class="menu-text">{{ __('Task Giver') }}</span>
-                    </a>
-                </li>
+                    <li class="{{ Route::is('admin.customers') ? 'active' : '' }} {{ Route::is('admin.edit.customer') ? 'active' : '' }}">
+                        <a href="{{ route('admin.customers') }}"
+                           class="{{ Route::is('admin.customers') ? 'current-page' : '' }} {{ Route::is('admin.edit.customer') ? 'current-page' : '' }}">
+                            <i class="icon-users"></i>
+                            <span class="menu-text">{{ __('Task Giver') }}</span>
+                        </a>
+                    </li>
 
-                <li class="sidebar-dropdown {{ Route::is('admin.job.categories') ? 'active' : '' }} {{ Route::is('admin.edit.job.category') ? 'active' : '' }} {{ Route::is('admin.add.job.category') ? 'active' : '' }}
-                {{ Route::is('admin.job.subcategories') ? 'active' : '' }} {{ Route::is('admin.edit.job.subcategory') ? 'active' : '' }} {{ Route::is('admin.add.job.subcategory') ? 'active' : '' }}
-                    ">
-                    <a href="javascript:void(0);">
-                        <i class="icon-map-pin"></i>
-                        <span class="menu-text">{{ __('Job Category') }}</span>
-                    </a>
-                    <div class="sidebar-submenu">
-                        <ul>
-                            <li>
-                                <a href="{{ route('admin.job.categories') }}"
-                                   class="{{ Route::is('admin.job.categories') ? 'current-page' : '' }} {{ Route::is('admin.edit.job.category') ? 'current-page' : '' }} {{ Route::is('admin.add.job.category') ? 'current-page' : '' }}">
-                                    {{ __('Categories') }}
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('admin.job.subcategories') }}"
-                                   class="{{ Route::is('admin.job.subcategories') ? 'current-page' : '' }} {{ Route::is('admin.edit.job.subcategory') ? 'current-page' : '' }} {{ Route::is('admin.add.job.subcategory') ? 'current-page' : '' }}">
-                                    {{ __('Sub Categories') }}
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    <li class="sidebar-dropdown {{ Route::is('admin.job.categories') ? 'active' : '' }} {{ Route::is('admin.edit.job.category') ? 'active' : '' }} {{ Route::is('admin.add.job.category') ? 'active' : '' }}
+                    {{ Route::is('admin.job.subcategories') ? 'active' : '' }} {{ Route::is('admin.edit.job.subcategory') ? 'active' : '' }} {{ Route::is('admin.add.job.subcategory') ? 'active' : '' }}
+                        ">
+                        <a href="javascript:void(0);">
+                            <i class="icon-map-pin"></i>
+                            <span class="menu-text">{{ __('Job Category') }}</span>
+                        </a>
+                        <div class="sidebar-submenu">
+                            <ul>
+                                <li>
+                                    <a href="{{ route('admin.job.categories') }}"
+                                       class="{{ Route::is('admin.job.categories') ? 'current-page' : '' }} {{ Route::is('admin.edit.job.category') ? 'current-page' : '' }} {{ Route::is('admin.add.job.category') ? 'current-page' : '' }}">
+                                        {{ __('Categories') }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('admin.job.subcategories') }}"
+                                       class="{{ Route::is('admin.job.subcategories') ? 'current-page' : '' }} {{ Route::is('admin.edit.job.subcategory') ? 'current-page' : '' }} {{ Route::is('admin.add.job.subcategory') ? 'current-page' : '' }}">
+                                        {{ __('Sub Categories') }}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
 
-                </li>
+                    </li>
 
-                <li class="{{ Route::is('admin.contractors') ? 'active' : '' }} {{ Route::is('admin.edit.contractor') ? 'active' : '' }}">
-                    <a href="{{ route('admin.contractors') }}"
-                       class="{{ Route::is('admin.contractors') ? 'current-page' : '' }} {{ Route::is('admin.edit.contractor') ? 'current-page' : '' }}">
-                        <i class="icon-user-plus"></i>
-                        <span class="menu-text">{{ __('Task Worker') }}</span>
-                    </a>
+                    <li class="{{ Route::is('admin.contractors') ? 'active' : '' }} {{ Route::is('admin.edit.contractor') ? 'active' : '' }}">
+                        <a href="{{ route('admin.contractors') }}"
+                           class="{{ Route::is('admin.contractors') ? 'current-page' : '' }} {{ Route::is('admin.edit.contractor') ? 'current-page' : '' }}">
+                            <i class="icon-user-plus"></i>
+                            <span class="menu-text">{{ __('Task Worker') }}</span>
+                        </a>
 
-                </li>
+                    </li>
                 @endif
                 <li class="sidebar-dropdown {{ Route::is('admin.jobs') ? 'active' : '' }} {{ Route::is('admin.edit.job') ? 'active' : '' }} {{ Route::is('admin.view.job') ? 'active' : '' }} {{ Route::is('admin.disputed.jobs') ? 'active' : '' }} {{ Route::is('admin.view.dispute.job') ? 'active' : '' }}">
                     <a href="javascript:void(0);">
@@ -128,13 +128,13 @@
                     </div>
                 </li>
                 @if(\Illuminate\Support\Facades\Auth::user()->user_type == 'admin')
-                <li class="{{ Route::is('admin.subscription.plans') ? 'active' : '' }} {{ Route::is('admin.subscription.plan.add') ? 'active' : '' }} {{ Route::is('admin.subscription.plan.edit') ? 'active' : '' }}">
-                    <a href="{{ route('admin.subscription.plans') }}"
-                       class="{{ Route::is('admin.subscription.plans') ? 'current-page' : '' }}  {{ Route::is('admin.subscription.plan.add') ? 'current-page' : '' }} {{ Route::is('admin.subscription.plan.edit') ? 'current-page' : '' }}">
-                        <i class="icon-list"></i>
-                        <span class="menu-text">{{ __('Subscription Plans') }}</span>
-                    </a>
-                </li>
+                    <li class="{{ Route::is('admin.subscription.plans') ? 'active' : '' }} {{ Route::is('admin.subscription.plan.add') ? 'active' : '' }} {{ Route::is('admin.subscription.plan.edit') ? 'active' : '' }}">
+                        <a href="{{ route('admin.subscription.plans') }}"
+                           class="{{ Route::is('admin.subscription.plans') ? 'current-page' : '' }}  {{ Route::is('admin.subscription.plan.add') ? 'current-page' : '' }} {{ Route::is('admin.subscription.plan.edit') ? 'current-page' : '' }}">
+                            <i class="icon-list"></i>
+                            <span class="menu-text">{{ __('Subscription Plans') }}</span>
+                        </a>
+                    </li>
                 @endif
                 <li class="{{ Route::is('admin.transactions') ? 'active' : '' }}">
                     <a href="{{ route('admin.transactions') }}"
@@ -144,20 +144,20 @@
                     </a>
                 </li>
                 @if(\Illuminate\Support\Facades\Auth::user()->user_type == 'admin')
-                <li class="{{ Route::is('edit.charge') ? 'active' : '' }}">
-                    <a href="{{ route('edit.charge') }}"
-                       class="{{ Route::is('edit.charge') ? 'current-page' : '' }}">
-                        <i class="icon-attach_money"></i>
-                        <span class="menu-text">{{ __('Charge and Commission') }}</span>
-                    </a>
-                </li>
-                <li class="{{ Route::is('admin.cs.persons') ? 'active' : '' }} {{ Route::is('admin.edit.cs.person') ? 'active' : '' }} {{ Route::is('admin.create.cs.person') ? 'active' : '' }}">
-                    <a href="{{ route('admin.cs.persons') }}"
-                       class="{{ Route::is('admin.cs.persons') ? 'current-page' : '' }} {{ Route::is('admin.edit.cs.person') ? 'current-page' : '' }} {{ Route::is('admin.create.cs.person') ? 'current-page' : '' }}">
-                        <i class="icon-user-check"></i>
-                        <span class="menu-text">{{ __('Customer Service Person') }}</span>
-                    </a>
-                </li>
+                    <li class="{{ Route::is('edit.charge') ? 'active' : '' }}">
+                        <a href="{{ route('edit.charge') }}"
+                           class="{{ Route::is('edit.charge') ? 'current-page' : '' }}">
+                            <i class="icon-attach_money"></i>
+                            <span class="menu-text">{{ __('Charge and Commission') }}</span>
+                        </a>
+                    </li>
+                    <li class="{{ Route::is('admin.cs.persons') ? 'active' : '' }} {{ Route::is('admin.edit.cs.person') ? 'active' : '' }} {{ Route::is('admin.create.cs.person') ? 'active' : '' }}">
+                        <a href="{{ route('admin.cs.persons') }}"
+                           class="{{ Route::is('admin.cs.persons') ? 'current-page' : '' }} {{ Route::is('admin.edit.cs.person') ? 'current-page' : '' }} {{ Route::is('admin.create.cs.person') ? 'current-page' : '' }}">
+                            <i class="icon-user-check"></i>
+                            <span class="menu-text">{{ __('Customer Service Person') }}</span>
+                        </a>
+                    </li>
                 @endif
                 <li class="{{ Route::is('admin.supports') ? 'active' : '' }}">
                     <a href="{{ route('admin.supports') }}"
@@ -167,37 +167,44 @@
                     </a>
                 </li>
                 @if(\Illuminate\Support\Facades\Auth::user()->user_type == 'admin')
-                <li class="sidebar-dropdown {{ Route::is('admin.banners') ? 'active' : '' }} {{ Route::is('admin.create.banner') ? 'active' : '' }}">
-                    <a href="javascript:void(0);">
-                        <i class="icon-laptop_mac"></i>
-                        <span class="menu-text">{{ __('Frontend') }}</span>
-                    </a>
+                    <li class="sidebar-dropdown {{ Route::is('admin.banners') ? 'active' : '' }} {{ Route::is('admin.create.banner') ? 'active' : '' }}">
+                        <a href="javascript:void(0);">
+                            <i class="icon-laptop_mac"></i>
+                            <span class="menu-text">{{ __('Frontend') }}</span>
+                        </a>
 
-                    <div class="sidebar-submenu">
-                        <ul>
-                            <li>
-                                <a href="{{ route('admin.banners') }}"
-                                   class="{{ Route::is('admin.banners') ? 'current-page' : '' }} {{ Route::is('admin.create.banner') ? 'current-page' : '' }}">
-                                    <span class="menu-text">{{ __('Banner Management') }}</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="{{ Route::is('admin.skills') ? 'active' : '' }}">
-                    <a href="{{ route('admin.skills') }}"
-                       class="{{ Route::is('admin.skills') ? 'current-page' : '' }}">
-                        <i class="icon-account_box"></i>
-                        <span class="menu-text">Skill Management</span>
-                    </a>
-                </li>
-                <li class="{{ Route::is('admin.lotto.users') ? 'active' : '' }}">
-                    <a href="{{ route('admin.lotto.users') }}"
-                       class="{{ Route::is('admin.lotto.users') ? 'current-page' : '' }}">
-                        <i class="icon-user-plus"></i>
-                        <span class="menu-text">{{ __('Lotto Users') }}</span>
-                    </a>
-                </li>
+                        <div class="sidebar-submenu">
+                            <ul>
+                                <li>
+                                    <a href="{{ route('admin.banners') }}"
+                                       class="{{ Route::is('admin.banners') ? 'current-page' : '' }} {{ Route::is('admin.create.banner') ? 'current-page' : '' }}">
+                                        <span class="menu-text">{{ __('Banner Management') }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="{{ Route::is('admin.skills') ? 'active' : '' }}">
+                        <a href="{{ route('admin.skills') }}"
+                           class="{{ Route::is('admin.skills') ? 'current-page' : '' }}">
+                            <i class="icon-account_box"></i>
+                            <span class="menu-text">Skill Management</span>
+                        </a>
+                    </li>
+                    <li class="{{ Route::is('admin.lotto.users') ? 'active' : '' }}">
+                        <a href="{{ route('admin.lotto.users') }}"
+                           class="{{ Route::is('admin.lotto.users') ? 'current-page' : '' }}">
+                            <i class="icon-user-plus"></i>
+                            <span class="menu-text">{{ __('Lotto Users') }}</span>
+                        </a>
+                    </li>
+                    <li class="{{ Route::is('admin.create.notification') ? 'active' : '' }}">
+                        <a href="{{ route('admin.create.notification') }}"
+                           class="{{ Route::is('admin.create.notification') ? 'current-page' : '' }}">
+                            <i class="icon-bell"></i>
+                            <span class="menu-text">{{ __('Create Notification') }}</span>
+                        </a>
+                    </li>
                 @endif
             </ul>
         </div>

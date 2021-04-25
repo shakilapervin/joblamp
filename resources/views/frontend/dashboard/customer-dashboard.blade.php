@@ -194,75 +194,29 @@
                     <div class="col-xl-12">
                         <div class="dashboard-box">
                             <div class="headline">
-                                <h3><i class="icon-material-baseline-notifications-none"></i> Notifications</h3>
-                                <button class="mark-as-read ripple-effect-dark" data-tippy-placement="left"
-                                        title="Mark all as read">
-                                    <i class="icon-feather-check-square"></i>
-                                </button>
+                                <h3><i class="icon-material-baseline-notifications-none"></i> {{ __('Notifications') }}</h3>
+{{--                                <button class="mark-as-read ripple-effect-dark" data-tippy-placement="left"--}}
+{{--                                        title="Mark all as read">--}}
+{{--                                    <i class="icon-feather-check-square"></i>--}}
+{{--                                </button>--}}
                             </div>
                             <div class="content">
                                 <ul class="dashboard-box-list">
-                                    <li>
-                                        <span class="notification-icon"><i
-                                                class="icon-material-outline-group"></i></span>
+                                    @foreach($notifications as $notification)
+                                        <li>
+                                        <span class="notification-icon">
+                                            <i class="icon-material-baseline-notifications-none"></i>
+                                        </span>
                                         <span class="notification-text">
-										<strong>Michael Shannah</strong> applied for a job <a href="#">Full Stack Software Engineer</a>
-									</span>
-                                        <!-- Buttons -->
-                                        <div class="buttons-to-right">
-                                            <a href="#" class="button ripple-effect ico" title="Mark as read"
-                                               data-tippy-placement="left"><i class="icon-feather-check-square"></i></a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span class="notification-icon"><i
-                                                class=" icon-material-outline-gavel"></i></span>
-                                        <span class="notification-text">
-										<strong>Gilber Allanis</strong> placed a bid on your <a href="#">iOS App Development</a> project
-									</span>
-                                        <!-- Buttons -->
-                                        <div class="buttons-to-right">
-                                            <a href="#" class="button ripple-effect ico" title="Mark as read"
-                                               data-tippy-placement="left"><i class="icon-feather-check-square"></i></a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span class="notification-icon"><i class="icon-material-outline-autorenew"></i></span>
-                                        <span class="notification-text">
-										Your job listing <a href="#">Full Stack Software Engineer</a> is expiring
-									</span>
-                                        <!-- Buttons -->
-                                        <div class="buttons-to-right">
-                                            <a href="#" class="button ripple-effect ico" title="Mark as read"
-                                               data-tippy-placement="left"><i class="icon-feather-check-square"></i></a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span class="notification-icon"><i
-                                                class="icon-material-outline-group"></i></span>
-                                        <span class="notification-text">
-										<strong>Sindy Forrest</strong> applied for a job <a href="#">Full Stack Software Engineer</a>
-									</span>
-                                        <!-- Buttons -->
-                                        <div class="buttons-to-right">
-                                            <a href="#" class="button ripple-effect ico" title="Mark as read"
-                                               data-tippy-placement="left"><i class="icon-feather-check-square"></i></a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span class="notification-icon"><i
-                                                class="icon-material-outline-rate-review"></i></span>
-                                        <span class="notification-text">
-										<strong>David Peterson</strong> left you a <span class="star-rating no-stars"
-                                                                                         data-rating="5.0"></span> rating after finishing <a
-                                                href="#">Logo Design</a> task
-									</span>
-                                        <!-- Buttons -->
-                                        <div class="buttons-to-right">
-                                            <a href="#" class="button ripple-effect ico" title="Mark as read"
-                                               data-tippy-placement="left"><i class="icon-feather-check-square"></i></a>
-                                        </div>
-                                    </li>
+                                            {{ $notification->description }}
+                                        </span>
+                                            <!-- Buttons -->
+                                            {{--                                        <div class="buttons-to-right">--}}
+                                            {{--                                            <a href="#" class="button ripple-effect ico" title="Mark as read"--}}
+                                            {{--                                               data-tippy-placement="left"><i class="icon-feather-check-square"></i></a>--}}
+                                            {{--                                        </div>--}}
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -326,7 +280,7 @@
 @endsection
 @section('script')
     <!-- Chart.js // documentation: http://www.chartjs.org/docs/latest/ -->
-    <script src="{{ asset('public/assets/frontend') }}/js/chart.min.js"></script>
+    <script src="{{ asset('assets/frontend') }}/js/chart.min.js"></script>
     <script>
         Chart.defaults.global.defaultFontFamily = "Nunito";
         Chart.defaults.global.defaultFontColor = '#888';

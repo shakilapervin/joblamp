@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="Mobillize" remoteFilesAllowedToDisappearOnAutoupload="false">
+  <component name="PublishConfigData" serverName="Kartless" remoteFilesAllowedToDisappearOnAutoupload="false">
     <serverData>
-      <paths name="Mobillize">
+      <paths name="Kartless">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
