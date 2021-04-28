@@ -319,5 +319,17 @@ Route::group(['middleware' => ['admin']], function () {
     */
     Route::get('admin-create-notification', 'Admin\NotificationController@create')->name('admin.create.notification');
     Route::post('admin-store-notification', 'Admin\NotificationController@store')->name('admin.store.notification');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Lotto Prize
+    |--------------------------------------------------------------------------
+    */
+    Route::get('admin-lotto-prizes', 'Admin\LottoPrizController@index')->name('admin.lotto.prizes');
+    Route::get('admin-create-prize', 'Admin\LottoPrizController@create')->name('admin.create.prize');
+    Route::post('admin-store-prize', 'Admin\LottoPrizController@store')->name('admin.store.prize');
+    Route::get('admin-edit-prize/{id}', 'Admin\LottoPrizController@edit')->name('admin.edit.prize');
+    Route::get('admin-delete-prize/{id}', 'Admin\LottoPrizController@delete')->name('admin.delete.prize');
+    Route::post('admin-update-prize', 'Admin\LottoPrizController@update')->name('admin.update.prize');
 });
 

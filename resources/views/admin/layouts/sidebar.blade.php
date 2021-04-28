@@ -205,6 +205,13 @@
                             <span class="menu-text">{{ __('Create Notification') }}</span>
                         </a>
                     </li>
+                    <li class="{{ Route::is('admin.lotto.prizes') ? 'active' : '' }}">
+                        <a href="{{ route('admin.lotto.prizes') }}"
+                           class="{{ Route::is('admin.lotto.prizes') ? 'current-page' : '' }}">
+                            <i class="icon-gift"></i>
+                            <span class="menu-text">{{ __('Lotto Prizes') }}</span>
+                        </a>
+                    </li>
                 @endif
             </ul>
         </div>

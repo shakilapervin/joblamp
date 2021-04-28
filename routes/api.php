@@ -44,3 +44,4 @@ Route::get('top-rated-workers', 'Api\ApiController@topRatedWorkers');
 Route::post('all-jobs', 'Api\ApiController@allJobList');
 Route::post('chat-list', 'Api\ApiController@chatList');
 Route::post('save-chat-file', 'Api\ApiController@saveChatFile');
+Route::post('get-category-jobs', 'Api\ApiController@categoryJobList');

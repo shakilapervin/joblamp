@@ -1071,7 +1071,7 @@ class ApiController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors());
         }
-        $userType = User::where('id',$request->id)->first()->user_type;
+        $userType = User::where('id',$request->user_id)->first()->user_type;
         if ($userType == 'service_provider'){
             $completeJob = UserJob::where('service_provider_id', $request->user_id)
                 ->where('status', 'completed')
@@ -1182,5 +1182,24 @@ class ApiController extends Controller
                 return response()->json(compact('file_name','status'));
             }
         }
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Get Job By Category
+    |--------------------------------------------------------------------------
+    */
+    public function categoryJobList(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'category_id' => 'required',
+            'status' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+        $data = Job::with('creatorDetails')->where('category', $request->category_id)->where('status', $request->status)->get();
+        $status = true;
+        return response()->json(compact('status', 'data'));
     }
 }
