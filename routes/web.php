@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'Website\FrontendController@index');
 Route::get('/', 'Website\FrontendController@index')->name('home');
 Route::get('contact-us', 'Website\FrontendController@contactPage')->name('contact.us');
+Route::get('lotto-prizes', 'Website\FrontendController@lottoPrizes')->name('lotto.prizes');
 Route::post('change-lang', 'Website\FrontendController@changeLang')->name('change.lang');
 Route::post('submit-contact-form', 'Website\FrontendController@submitContactForm')->name('submit.contact.form');
 Route::get('user-register', 'Website\FrontendController@registrationForm')->name('user-register');

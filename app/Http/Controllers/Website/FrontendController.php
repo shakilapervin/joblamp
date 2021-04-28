@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Job;
 use App\JobApplication;
 use App\JobCategory;
+use App\LottoPriz;
 use App\Notification;
 use App\Rating;
 use App\Skill;
@@ -840,6 +841,16 @@ class FrontendController extends Controller
         );
         ContactSupport::create($data);
         return redirect()->back()->with('success',__('Your message successfully submitted.'));
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Lotto Prizes
+    |--------------------------------------------------------------------------
+    */
+    public function lottoPrizes(){
+        $prizes = LottoPriz::where('status','active')->get();
+        return view('frontend.pages.prize',compact('prizes'));
     }
 
 }

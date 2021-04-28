@@ -219,6 +219,7 @@ class ApiController extends Controller
                 $skills[] = Skill::where('id', $skill)->first()->name;
             }
         }
+        $reviews = Rating::where('user_id', $request->user_id)->get();
         $data = array(
             'first_name' => $user->first_name,
             'last_name' => $user->last_name,
@@ -229,8 +230,9 @@ class ApiController extends Controller
             'city' => City::where('id', $user->city)->first()->name,
             'state' => State::where('id', $user->state)->first()->name,
             'country' => Country::where('id', $user->country)->first()->name,
-            'rating' => calculateRating(Rating::where('user_id', $request->user_id)->get()),
+            'rating' => calculateRating($reviews),
             'skills' => $skills,
+            'total_reviews' => count($reviews),
         );
         return response()->json(compact('status', 'data'));
     }
@@ -403,7 +405,7 @@ class ApiController extends Controller
         }
         $status = true;
         $data = DB::table('ratings')
-            ->select('ratings.feedback', 'ratings.rating', 'users.first_name', 'users.last_name')
+            ->select('ratings.feedback', 'ratings.rating', 'users.first_name', 'users.profile_pic', 'users.last_name','jobs.*')
             ->join('jobs', 'jobs.id', '=', 'ratings.job_id')
             ->join('users', 'users.id', '=', 'jobs.user_id')
             ->where('ratings.user_id', $request->user_id)
@@ -430,7 +432,7 @@ class ApiController extends Controller
         if (!empty($applied)){
             $has_applied = true;
         }
-        $data = Job::with(array('categoryInfo','creatorDetails','jobCountry'))->where('id', $request->job_id)->first();
+        $data = Job::with(array('categoryInfo','creatorDetails','jobCountry','jobCity','jobState'))->where('id', $request->job_id)->first();
         return response()->json(compact('data', 'status','has_applied'));
     }
 

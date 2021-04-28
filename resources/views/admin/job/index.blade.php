@@ -133,7 +133,9 @@
                                                 {{ $job->created_at->toDateString() }}
                                             </td>
                                             @php
-                                                $jobCharge = \App\JobApplication::where('job_id',$job->id)->where('status','completed')->orWhere('status','hired')->first()->bid_amount;
+                                                $jobCharge = \App\JobApplication::where('job_id',$job->id)
+                                                            ->whereIn('status',['hired','completed'])
+                                                            ->first()->bid_amount;
                                                 $tgCommission = ($jobCharge*$charge->customer_charge)/100;
                                                 $twCommission = ($jobCharge*$charge->worker_charge)/100;
                                             @endphp

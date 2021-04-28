@@ -194,7 +194,7 @@
 
         db.ref('messages/' + url).on("child_added", function (snapshot) {
             const messages = snapshot.val();
-            const url = "{{ asset('public') }}/";
+            const url = "{{ asset('') }}/";
             if (messages.sender_id == {{ \Illuminate\Support\Facades\Auth::id() }}) {
                 let type = messages.type;
                 let chatMessage = '';
@@ -224,7 +224,7 @@
                 }else if(type == 'image'){
                     chatMessage = `<a href="`+`{{ url('download-message-file') }}`+'/'+messages.message.replace('message/','')+`"> <img src="`+url+messages.message+`" width="100"></a>`;
                 }else{
-                    chatMessage = `<a style="color:#ffffff;" href="`+`{{ url('download-message-file') }}`+'/'+messages.message.replace('message/','')+`">`+messages.message.replace('message/','')+`</a>`;
+                    chatMessage = `<a style="color:#000000;" href="`+`{{ url('download-message-file') }}`+'/'+messages.message.replace('message/','')+`">`+messages.message.replace('message/','')+`</a>`;
                 }
                 const msg = `<div class="message-bubble">
                             <div class="message-bubble-inner">

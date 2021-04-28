@@ -117,6 +117,7 @@
                             <li><a href="{{ route('contact.us') }}"><span>Contact</span></a></li>
                             <li><a href="#"><span>Privacy Policy</span></a></li>
                             <li><a href="#"><span>Terms of Use</span></a></li>
+                            <li><a href="{{ route('lotto.prizes') }}"><span>{{ __('Lotto Prize') }}</span></a></li>
                         </ul>
                     </div>
                 </div>
