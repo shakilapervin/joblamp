@@ -200,12 +200,13 @@
 <script>
     // Your web app's Firebase configuration
     var firebaseConfig = {
-        apiKey: "AIzaSyA8LL_DjOcCnroXVtddvoIiA09zdObf6eE",
-        authDomain: "chat-8ced9.firebaseapp.com",
-        projectId: "chat-8ced9",
-        storageBucket: "chat-8ced9.appspot.com",
-        messagingSenderId: "734987684302",
-        appId: "1:734987684302:web:0a77d422e02407b4ebc39f"
+        apiKey: "AIzaSyDnxzLj9Iy59RLJTaOW9NbBgIHzwXQM04I",
+        authDomain: "joblamp-964ac.firebaseapp.com",
+        projectId: "joblamp-964ac",
+        storageBucket: "joblamp-964ac.appspot.com",
+        messagingSenderId: "719149380094",
+        appId: "1:719149380094:web:67081c0bb8250ef2e6d0af",
+        measurementId: "G-HF0CPTR6MZ"
     };
     firebase.initializeApp(firebaseConfig);
 
