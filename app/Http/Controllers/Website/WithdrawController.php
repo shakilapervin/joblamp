@@ -5,12 +5,12 @@ namespace App\Http\Controllers\Website;
 
 use App\UserTransaction;
 use App\UserWithdrawMethod;
+use App\WithdrawRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use PragmaRX\Countries\Package\Countries;
-use Stripe;
 
 class WithdrawController extends Controller
 {
@@ -137,6 +137,12 @@ class WithdrawController extends Controller
                     'method' => $request->withdraw_method,
                     'amount' => $request->amount,
                 );
+                WithdrawRequest::create($withdrawData);
+                UserTransaction::create([
+                    'user_id' => $userId,
+                    'debit' => $request->amount
+                ]);
+                return redirect()->back()->with('success', __('Your withdraw request is received!'));
             } else {
                 return redirect()->back()->with('error', __('You don\'t have enough balance'));
             }

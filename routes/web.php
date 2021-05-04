@@ -337,5 +337,15 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('admin-edit-prize/{id}', 'Admin\LottoPrizController@edit')->name('admin.edit.prize');
     Route::get('admin-delete-prize/{id}', 'Admin\LottoPrizController@delete')->name('admin.delete.prize');
     Route::post('admin-update-prize', 'Admin\LottoPrizController@update')->name('admin.update.prize');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Withdraw Requests
+    |--------------------------------------------------------------------------
+    */
+    Route::get('admin-withdraw-not-paid', 'Admin\TransactionController@notPaidRequests')->name('admin.withdraw.not.paid');
+    Route::get('admin-withdraw-paid', 'Admin\TransactionController@paidRequests')->name('admin.withdraw.paid');
+    Route::get('admin-withdraw-details/{id}', 'Admin\TransactionController@withdrawDetails')->name('admin.withdraw.request.view');
+    Route::get('admin-mark-withdraw-request-paid/{id}', 'Admin\TransactionController@markWithdrawRequestPaid')->name('admin.mark.withdraw.request.paid');
 });
 

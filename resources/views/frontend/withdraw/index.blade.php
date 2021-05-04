@@ -368,7 +368,7 @@
                                                                                     title="Select Withdraw Method"
                                                                                     data-live-search="true"
                                                                                     name="withdraw_method">
-                                                                                <option value="bank_account">
+                                                                                <option value="bank">
                                                                                     {{ __('Bank Account') }}
                                                                                 </option>
                                                                                 <option value="paypal">

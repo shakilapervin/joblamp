@@ -212,6 +212,29 @@
                             <span class="menu-text">{{ __('Lotto Prizes') }}</span>
                         </a>
                     </li>
+                    <li class="sidebar-dropdown {{ Route::is('admin.withdraw.not.paid') ? 'active' : '' }} {{ Route::is('admin.withdraw.paid') ? 'active' : '' }}">
+                        <a href="javascript:void(0);">
+                            <i class="icon-attach_money"></i>
+                            <span class="menu-text">{{ __('Withdraw Requests') }}</span>
+                        </a>
+
+                        <div class="sidebar-submenu">
+                            <ul>
+                                <li>
+                                    <a href="{{ route('admin.withdraw.not.paid') }}"
+                                       class="{{ Route::is('admin.withdraw.not.paid') ? 'current-page' : '' }}">
+                                        <span class="menu-text">{{ __('Not Paid') }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('admin.withdraw.paid') }}"
+                                       class="{{ Route::is('admin.withdraw.paid') ? 'current-page' : '' }}">
+                                        {{ __('Paid') }}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
                 @endif
             </ul>
         </div>

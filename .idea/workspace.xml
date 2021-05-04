@@ -5,9 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="102137b5-5205-44c0-83f0-459dcecac978" name="Default Changelist" comment="Latest">
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/withdraw/details.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/withdraw/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/TransactionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/TransactionController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Website/WithdrawController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Website/WithdrawController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/WithdrawRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/WithdrawRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2021_05_04_194730_create_withdraw_requests_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_05_04_194730_create_withdraw_requests_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/layouts/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/layouts/sidebar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/withdraw/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/withdraw/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -197,7 +202,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="dart.analysis.tool.window.visible" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="show.migrate.to.gradle.popup" value="false" />
@@ -205,8 +210,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\wamp64\www\joblamp\resources\views\frontend\pages" />
       <recent name="D:\wamp64\www\joblamp\resources\views\admin" />
+      <recent name="D:\wamp64\www\joblamp\resources\views\frontend\pages" />
       <recent name="D:\wamp64\www\joblamp\resources\views\mail" />
       <recent name="D:\wamp64\www\joblamp\resources\views\admin\contact" />
       <recent name="D:\wamp64\www\joblamp\resources\views\frontend\checkout" />
@@ -380,7 +385,7 @@
       <workItem from="1620063407002" duration="4341000" />
       <workItem from="1620074981378" duration="593000" />
       <workItem from="1620103817931" duration="1466000" />
-      <workItem from="1620152803460" duration="2955000" />
+      <workItem from="1620152803460" duration="6604000" />
     </task>
     <task id="LOCAL-00001" summary="Latest">
       <created>1616691922612</created>
