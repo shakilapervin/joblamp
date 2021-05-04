@@ -5,28 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="102137b5-5205-44c0-83f0-459dcecac978" name="Default Changelist" comment="Latest">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/ApiController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/ApiController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Website/CustomerDashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Website/CustomerDashboardController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Website/MessageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Website/MessageController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Website/ServiceProviderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Website/ServiceProviderController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Website/WithdrawController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Website/WithdrawController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/filesystems.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/filesystems.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/joblamp.zip" beforeDir="false" afterPath="$PROJECT_DIR$/joblamp.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/frontend/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/frontend/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/message/9THJ0jlRsXZXzk0mxBy920gHCvV02MS4rP9cP4j6.docx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/message/DsLn7o6lIZBmMaOeDG1vHjv3q3o65JFZb37qMxM0.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/message/h8TGQoKJdTYkqTupJ5sHPsmhwAi2IuxDlVzWtguD.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/message/wkqu0NWY5HoyfhVl3L7oAO5hYAQ5k0BERd56oDq6.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/message/zleLRLRWj5CZyjZ3jJ0w6p47tElJbUJZ3xvZGhaY.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/frontend/job/customer-manage.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/job/customer-manage.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/frontend/job/service-provider-manage.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/job/service-provider-manage.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/frontend/message/chat.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/message/chat.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/frontend/withdraw/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/withdraw/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_static.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_static.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/WithdrawRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/WithdrawRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_05_04_194730_create_withdraw_requests_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_05_04_194730_create_withdraw_requests_table.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -399,7 +380,7 @@
       <workItem from="1620063407002" duration="4341000" />
       <workItem from="1620074981378" duration="593000" />
       <workItem from="1620103817931" duration="1466000" />
-      <workItem from="1620152803460" duration="2409000" />
+      <workItem from="1620152803460" duration="2955000" />
     </task>
     <task id="LOCAL-00001" summary="Latest">
       <created>1616691922612</created>
