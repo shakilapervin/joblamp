@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 
 use App\Job;
 use App\JobApplication;
+use App\JobDeliveryData;
 use App\Rating;
 use App\User;
 use App\UserJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Validator;
 use Mail;
 use Illuminate\Support\Facades\Auth;
 
@@ -49,8 +51,19 @@ class ServiceProviderController extends Controller
     | Mark Job As Completed
     |--------------------------------------------------------------------------
     */
-    public function markJobComleted($jobId)
+    public function markJobComleted(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'delivery_text' => 'required',
+            'delivery_file' => 'mimes:jpg,jpeg,png,bmp,tiff,pdf,zip,psd,ai'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $jobId = $request->job_id;
         try {
             $jobId = decrypt($jobId);
         } catch (\RuntimeException $e) {
@@ -67,7 +80,21 @@ class ServiceProviderController extends Controller
                 $application = JobApplication::where('job_id',$jobId)->where('candidate_id',Auth::user()->id)->first();
                 $application->status = 'delivered';
                 $application->save();
-
+                if ($request->hasFile('delivery_file')){
+                    $deliveryFile = $request->file('delivery_file')->store('job-delivery-file');
+                    $deliveryData = array(
+                        'job_id' => $jobId,
+                        'delivery_text' => $request->delivery_text,
+                        'delivery_file' => $deliveryFile,
+                    );
+                    JobDeliveryData::create($deliveryData);
+                }else{
+                    $deliveryData = array(
+                        'job_id' => $jobId,
+                        'delivery_text' => $request->delivery_text
+                    );
+                    JobDeliveryData::create($deliveryData);
+                }
                 $headers = array(
                     'Authorization: key=' . env('FIREBASE_API_KEY'),
                     'Content-Type: application/json'

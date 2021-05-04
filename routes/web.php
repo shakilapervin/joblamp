@@ -7,7 +7,11 @@ use Illuminate\Support\Facades\Route;
 | Web Routes
 |--------------------------------------------------------------------------
 */
-
+Route::get('/storage-link', function() {
+    $output = [];
+    \Artisan::call('storage:link', $output);
+    dd('Done');
+});
 Route::get('/', 'Website\FrontendController@index');
 Route::get('/', 'Website\FrontendController@index')->name('home');
 Route::get('contact-us', 'Website\FrontendController@contactPage')->name('contact.us');
@@ -83,6 +87,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('cancel-subs-paypal-payment', 'Website\PaymentController@paymentSubsCancel')->name('subscription.cancel.paypal.payment');
     Route::get('paypal-subs-payment-success', 'Website\PaymentController@paymentSubsSuccess')->name('subscription.success.paypal.payment');
     Route::get('paypal', array('as' => 'status','uses' => 'PaymentController@getPaymentStatus',));
+    Route::get('download-job-delivery-file/{file}', 'Website\CustomerDashboardController@downloadDeliveryFile')->name('download.job.delivery.file');
 
     /*
     |--------------------------------------------------------------------------
@@ -112,7 +117,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('accept-application/{jobId}/{serviceProviderId}', 'Website\CustomerDashboardController@acceptApplication')->name('accept.job.application');
     Route::get('manage-job/{jobId}', 'Website\ServiceProviderController@manageJob')->name('manage.job');
-    Route::get('mark-job-completed/{jobId}', 'Website\ServiceProviderController@markJobComleted')->name('mark.job.completed');
+    Route::post('mark-job-completed', 'Website\ServiceProviderController@markJobComleted')->name('mark.job.completed');
     Route::get('manage-my-job/{jobId}', 'Website\CustomerDashboardController@manageJob')->name('manage.my.job');
     Route::get('approve-job-delivery/{jobId}', 'Website\CustomerDashboardController@approveJobDelivery')->name('approve.job.delivery');
     Route::post('dispute-job-delivery', 'Website\CustomerDashboardController@disputeJobDelivery')->name('dispute.job.delivery');

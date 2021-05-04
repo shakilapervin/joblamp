@@ -11475,6 +11475,7 @@ button.mfp-close {
 #small-dialog-3,
 #small-dialog-4,
 #small-dialog,
+#delivery-dialog,
 #file-dialog{
     background: #fff;
     padding: 40px;
@@ -11876,6 +11877,7 @@ img.mfp-img {
 .dialog-with-tabs#small-dialog-3,
 .dialog-with-tabs#small-dialog-4,
 .dialog-with-tabs#small-dialog,
+.dialog-with-tabs#delivery-dialog,
 .dialog-with-tabs#file-dialog {
     padding: 0;
     color: #666;
@@ -11887,6 +11889,7 @@ img.mfp-img {
 #sign-in-dialog.dialog-with-tabs .mfp-close,
 #small-dialog.dialog-with-tabs .mfp-close,
 #file-dialog.dialog-with-tabs .mfp-close,
+#delivery-dialog.dialog-with-tabs .mfp-close,
 #small-dialog-1.dialog-with-tabs .mfp-close,
 #small-dialog-2.dialog-with-tabs .mfp-close,
 #small-dialog-3.dialog-with-tabs .mfp-close,

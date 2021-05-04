@@ -99,7 +99,7 @@ class MessageController extends Controller
             return response()->json(compact('error','status'));
         }else{
             if ($request->hasFile('chat_file')){
-                $file_name = $request->file('chat_file')->store('message');
+                $file_name = $request->file('chat_file')->store('chat-file');
                 if ($request->file('chat_file')->extension() == 'jpg' || $request->file('chat_file')->extension() == 'jpeg' || $request->file('chat_file')->extension() == 'png' || $request->file('chat_file')->extension() == 'svg' || $request->file('chat_file')->extension() == 'gif'){
                     $file_type = 'image';
                 }else{
@@ -118,6 +118,6 @@ class MessageController extends Controller
     |--------------------------------------------------------------------------
     */
     public function downloadChatFile($file){
-        return Storage::download('message/'.$file);
+        return Storage::download('chat-file/'.$file);
     }
 }

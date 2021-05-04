@@ -65,7 +65,7 @@
                     <div class="single-page-header-inner">
                         <div class="left-side">
                             <div class="header-image">
-                                <a href="single-company-profile.html">
+                                <a href="javascript:void(0);">
                                     @if(!empty($job->jobDetails->creatorDetails->profile_pic))
                                         <img src="{{ asset('') }}/{{ $job->jobDetails->creatorDetails->profile_pic }}"
                                              alt=""/>
@@ -83,7 +83,7 @@
                                 </h5>
                                 <ul>
                                     <li>
-                                        <a href="single-company-profile.html">
+                                        <a href="javascript:void(0);">
                                             <i class="icon-material-outline-business"></i>
                                             {{ $job->jobDetails->creatorDetails->first_name }} {{ $job->jobDetails->creatorDetails->last_name }}
                                         </a>
@@ -175,11 +175,11 @@
             <div class="col-xl-4 col-lg-4">
                 <div class="sidebar-container">
                     @if ($job->status == 'opened')
-                        <a href="{{ route('mark.job.completed',encrypt($jobId)) }}" class="apply-now-button">
-                            {{ __('Mark Job Completed') }}
-                            <i class="icon-material-outline-arrow-right-alt"></i>
-                        </a>
-                @endif
+                            <a href="#delivery-dialog" class="apply-now-button popup-with-zoom-anim">
+                                {{ __('Mark Job Completed') }}
+                                <i class="icon-material-outline-arrow-right-alt"></i>
+                            </a>
+                    @endif
                 @if ($job->status == 'completed' && $rated == false)
                     <!-- Sidebar Widget -->
                         <div class="sidebar-widget">
@@ -281,6 +281,39 @@
                     <!-- Welcome Text -->
                         <div class="welcome-text">
                             <input type="file" class="dropify chat-file" style="margin-top: 20px;" name="chat_file" required>
+                        </div>
+                        <button class="button margin-top-35 full-width button-sliding-icon ripple-effect" type="submit">
+                            {{ __('Send') }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="delivery-dialog" class="zoom-anim-dialog mfp-hide dialog-with-tabs">
+        <!--Tabs -->
+        <div class="sign-in-form">
+            <div class="popup-tabs-container">
+                <!-- Tab -->
+                <div class="popup-tab-content" id="tab">
+                    <form method="post" id="send-file-form" action="{{ route('mark.job.completed') }}" enctype="multipart/form-data">
+                        <input type="hidden" name="job_id" value="{{ encrypt($jobId) }}">
+                    @csrf
+                    <!-- Welcome Text -->
+                        <div class="input-with-icon-left">
+                            <label for="">{{ __('Delivery Message') }}</label>
+                            <textarea name="delivery_text"
+                                      class="input-text with-border @error('delivery_text') is-invalid @enderror"
+                                      cols="30" rows="5" required></textarea>
+                            @error('delivery_text')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                        <div class="welcome-text">
+                            <label for="">{{ __('Delivery File') }}</label>
+                            <input type="file" class="dropify chat-file" style="margin-top: 20px;" name="delivery_file">
                         </div>
                         <button class="button margin-top-35 full-width button-sliding-icon ripple-effect" type="submit">
                             {{ __('Send') }}

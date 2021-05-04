@@ -88,7 +88,8 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <div class="star-rating" data-rating="{{ calculateRating(\App\Rating::where('user_id',$job->creatorDetails->id)->get()) }}"></div>
+                                        <div class="star-rating"
+                                             data-rating="{{ calculateRating(\App\Rating::where('user_id',$job->creatorDetails->id)->get()) }}"></div>
                                     </li>
                                     <li>
                                         {{ $job->creatorDetails->userCountry->name }}
@@ -146,18 +147,18 @@
                                 <!-- Message Content Inner -->
                                 <div class="message-content-inner"></div>
                                 <!-- Message Content Inner / End -->
-                                @if($job->status != 'completed')
+                            @if($job->status != 'completed')
                                 <!-- Reply Area -->
-                                <div class="message-reply">
+                                    <div class="message-reply">
                                 <textarea cols="1" rows="1" placeholder="Your Message" data-autoresize
                                           class="message-data"></textarea>
-                                    <button class="button apply-now-button popup-with-zoom-anim"
-                                            style="background: transparent; color: #D5152F;padding: 10px; position: absolute;top: 85%;"
-                                            href="#file-dialog">
-                                        <i class="icon-feather-paperclip"></i>
-                                    </button>
-                                    <button class="button ripple-effect" onclick="postChat();">Send</button>
-                                </div>
+                                        <button class="button apply-now-button popup-with-zoom-anim"
+                                                style="background: transparent; color: #D5152F;padding: 10px; position: absolute;top: 85%;"
+                                                href="#file-dialog">
+                                            <i class="icon-feather-paperclip"></i>
+                                        </button>
+                                        <button class="button ripple-effect" onclick="postChat();">Send</button>
+                                    </div>
                                 @endif
                             </div>
                             <!-- Message Content -->
@@ -172,16 +173,32 @@
             <div class="col-xl-4 col-lg-4">
                 <div class="sidebar-container">
                     @if ($job->status == 'delivered')
-                        <a href="{{ route('approve.job.delivery',encrypt($jobId)) }}"
-                           class="apply-now-button bg-success">
-                            {{ __('Approve') }}
-                            <i class="icon-material-outline-arrow-right-alt"></i>
-                        </a>
-                        <a href="#small-dialog" class="apply-now-button bg-danger popup-with-zoom-anim">
-                            {{ __('Dispute') }}
-                            <i class="icon-material-outline-arrow-right-alt"></i>
-                        </a>
-                @endif
+                            <a href="{{ route('approve.job.delivery',encrypt($jobId)) }}"
+                               class="apply-now-button bg-success">
+                                {{ __('Approve') }}
+                                <i class="icon-material-outline-arrow-right-alt"></i>
+                            </a>
+                            <a href="#small-dialog" class="apply-now-button bg-danger popup-with-zoom-anim">
+                                {{ __('Dispute') }}
+                                <i class="icon-material-outline-arrow-right-alt"></i>
+                            </a>
+                        <div class="sidebar-widget">
+                            <div class="job-overview">
+                                <div class="job-overview-headline">
+                                    {{ __('Job Delivery Details') }}
+                                </div>
+                                <div class="job-overview-inner">
+                                    <p>{{ $deliveryData->delivery_text }}</p>
+                                    @if(!empty($deliveryData->delivery_file))
+                                        <a href="{{ route('download.job.delivery.file',str_replace('job-delivery-file/','',$deliveryData->delivery_file)) }}" class="apply-now-button">
+                                            {{ __('Download Delivery File') }}
+                                            <i class="icon-material-outline-arrow-right-alt"></i>
+                                        </a>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    @endif
 
                 @if ($job->status == 'completed' && $rated == false)
                     <!-- Sidebar Widget -->
@@ -234,7 +251,24 @@
                             </div>
                         </div>
                 @endif
-
+                        @if ($job->status == 'delivered' || $job->status == 'completed')
+                            <div class="sidebar-widget">
+                                <div class="job-overview">
+                                    <div class="job-overview-headline">
+                                        {{ __('Job Delivery Details') }}
+                                    </div>
+                                    <div class="job-overview-inner">
+                                        <p>{{ $deliveryData->delivery_text }}</p>
+                                        @if(!empty($deliveryData->delivery_file))
+                                            <a href="{{ route('download.job.delivery.file',str_replace('job-delivery-file/','',$deliveryData->delivery_file)) }}" class="apply-now-button">
+                                                {{ __('Download Delivery File') }}
+                                                <i class="icon-material-outline-arrow-right-alt"></i>
+                                            </a>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                    @endif
                 <!-- Sidebar Widget -->
                     <div class="sidebar-widget">
                         <div class="job-overview">
@@ -328,11 +362,13 @@
             <div class="popup-tabs-container">
                 <!-- Tab -->
                 <div class="popup-tab-content" id="tab">
-                    <form method="post" id="send-file-form" action="{{ route('apply-job') }}" enctype="multipart/form-data">
+                    <form method="post" id="send-file-form" action="{{ route('apply-job') }}"
+                          enctype="multipart/form-data">
                     @csrf
                     <!-- Welcome Text -->
                         <div class="welcome-text">
-                            <input type="file" class="dropify chat-file" style="margin-top: 20px;" name="chat_file" required>
+                            <input type="file" class="dropify chat-file" style="margin-top: 20px;" name="chat_file"
+                                   required>
                         </div>
                         <button class="button margin-top-35 full-width button-sliding-icon ripple-effect" type="submit">
                             {{ __('Send') }}
@@ -418,12 +454,12 @@
             if (messages.sender_id == {{ \Illuminate\Support\Facades\Auth::id() }}) {
                 let type = messages.type;
                 let chatMessage = '';
-                if (type == 'text'){
-                    chatMessage = `<p>`+messages.message+`</p>`;
-                }else if(type == 'image'){
-                    chatMessage = `<a href="`+`{{ url('download-message-file') }}`+'/'+messages.message.replace('message/','')+`"> <img src="`+url+messages.message+`" width="100"></a>`;
-                }else{
-                    chatMessage = `<a style="color:#ffffff;" href="`+`{{ url('download-message-file') }}`+'/'+messages.message.replace('message/','')+`">`+messages.message.replace('message/','')+`</a>`;
+                if (type == 'text') {
+                    chatMessage = `<p>` + messages.message + `</p>`;
+                } else if (type == 'image') {
+                    chatMessage = `<a href="` + `{{ url('download-message-file') }}` + '/' + messages.message.replace('chat-file/', '') + `"> <img src="` + url + messages.message + `" width="100"></a>`;
+                } else {
+                    chatMessage = `<a style="color:#ffffff;" href="` + `{{ url('download-message-file') }}` + '/' + messages.message.replace('chat-file/', '') + `">` + messages.message.replace('message/', '') + `</a>`;
                 }
                 const msg = `<div class="message-bubble me">
                             <div class="message-bubble-inner">
@@ -439,12 +475,12 @@
             } else {
                 let type = messages.type;
                 let chatMessage = '';
-                if (type == 'text'){
-                    chatMessage = `<p>`+messages.message+`</p>`;
-                }else if(type == 'image'){
-                    chatMessage = `<a href="`+`{{ url('download-message-file') }}`+'/'+messages.message.replace('message/','')+`"> <img src="`+url+messages.message+`" width="100"></a>`;
-                }else{
-                    chatMessage = `<a style="color:#000000;" href="`+`{{ url('download-message-file') }}`+'/'+messages.message.replace('message/','')+`">`+messages.message.replace('message/','')+`</a>`;
+                if (type == 'text') {
+                    chatMessage = `<p>` + messages.message + `</p>`;
+                } else if (type == 'image') {
+                    chatMessage = `<a href="` + `{{ url('download-message-file') }}` + '/' + messages.message.replace('chat-file/', '') + `"> <img src="` + url + messages.message + `" width="100"></a>`;
+                } else {
+                    chatMessage = `<a style="color:#000000;" href="` + `{{ url('download-message-file') }}` + '/' + messages.message.replace('chat-file/', '') + `">` + messages.message.replace('message/', '') + `</a>`;
                 }
                 const msg = `<div class="message-bubble">
                             <div class="message-bubble-inner">
@@ -462,22 +498,21 @@
     </script>
 
     <script>
-        $(document).ready(function(){
-            $('#send-file-form').on('submit', function(event){
+        $(document).ready(function () {
+            $('#send-file-form').on('submit', function (event) {
                 event.preventDefault();
                 $.ajax({
-                    url:"{{ route('save.chat.file') }}",
-                    method:"POST",
-                    data:new FormData(this),
-                    dataType:'JSON',
+                    url: "{{ route('save.chat.file') }}",
+                    method: "POST",
+                    data: new FormData(this),
+                    dataType: 'JSON',
                     contentType: false,
                     cache: false,
                     processData: false,
-                    success:function(data)
-                    {
-                        if(data.status == false){
+                    success: function (data) {
+                        if (data.status == false) {
                             alert(data.error)
-                        }else {
+                        } else {
                             db.ref("messages/" + url).push().set({
                                 "message": data.file_name,
                                 "type": data.file_type,

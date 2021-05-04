@@ -8,6 +8,7 @@ use App\Country;
 use App\Job;
 use App\JobApplication;
 use App\JobCategory;
+use App\JobDeliveryData;
 use App\Notification;
 use App\Rating;
 use App\Skill;
@@ -802,10 +803,27 @@ class ApiController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'user_id' => 'required',
+            'delivery_text' => 'required',
             'job_id' => 'required',
+            'delivery_file' => 'mimes:jpg,jpeg,png,bmp,tiff,pdf,zip,psd,ai'
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors());
+        }
+        if ($request->hasFile('delivery_file')){
+            $deliveryFile = $request->file('delivery_file')->store('job-delivery-file');
+            $deliveryData = array(
+                'job_id' => $request->job_id,
+                'delivery_text' => $request->delivery_text,
+                'delivery_file' => $deliveryFile,
+            );
+            JobDeliveryData::create($deliveryData);
+        }else{
+            $deliveryData = array(
+                'job_id' => $request->job_id,
+                'delivery_text' => $request->delivery_text
+            );
+            JobDeliveryData::create($deliveryData);
         }
         $userJob = UserJob::where('job_id', $request->job_id)->where('service_provider_id', $request->user_id)->first();
         $userJob->status = 'delivered';
@@ -1180,7 +1198,7 @@ class ApiController extends Controller
         }else{
             if ($request->hasFile('file')){
                 $status = true;
-                $file_name = $request->file('file')->store('message');
+                $file_name = $request->file('file')->store('chat-file');
                 return response()->json(compact('file_name','status'));
             }
         }
@@ -1203,5 +1221,66 @@ class ApiController extends Controller
         $data = Job::with('creatorDetails')->where('category', $request->category_id)->where('status', $request->status)->get();
         $status = true;
         return response()->json(compact('status', 'data'));
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Chat
+    |--------------------------------------------------------------------------
+    */
+    public function generateChat(Request $request)
+    {
+        $sender_id = $request->sender_id;
+        $receiver_id = $request->receiver_id;
+        $sender = Auth::user();
+        $chat = UserChat::where('sender_id', $sender_id)->where('receiver_id', $receiver_id)->first();
+        $receiver = UserChat::where('sender_id', $receiver_id)->where('receiver_id', $sender_id)->first();
+        if (empty($chat)) {
+            $data = array(
+                'sender_id' => $sender_id,
+                'receiver_id' => $receiver_id,
+                'url' => 'user_' . $sender_id . '_' . $receiver_id
+            );
+            UserChat::create($data);
+        }
+        if (empty($receiver)) {
+            $data = array(
+                'sender_id' => $receiver_id,
+                'receiver_id' => $sender_id,
+                'url' => 'user_' . $sender_id . '_' . $receiver_id
+            );
+            UserChat::create($data);
+        }
+        $status = true;
+        $message = 'Success';
+        return response()->json(compact('status', 'message'));
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Update Skill
+    |--------------------------------------------------------------------------
+    */
+    public function updateSkill(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required',
+            'skills' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+        $user = User::where('id',$request->id)->first();
+        $skills = array();
+        if ($request->has('skills') && count($request->skills) > 0) {
+            foreach ($request->skills as $key => $no) {
+                array_push($skills, $no);
+            }
+            $user->skill = $skills;
+        }
+        $user->save();
+        $status = true;
+        $message = 'Success';
+        return response()->json(compact('status', 'message'));
     }
 }

@@ -45,3 +45,5 @@ Route::post('all-jobs', 'Api\ApiController@allJobList');
 Route::post('chat-list', 'Api\ApiController@chatList');
 Route::post('save-chat-file', 'Api\ApiController@saveChatFile');
 Route::post('get-category-jobs', 'Api\ApiController@categoryJobList');
+Route::post('generate-chat', 'Api\ApiController@generateChat');
+Route::post('update-skill', 'Api\ApiController@updateSkill');

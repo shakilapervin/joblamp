@@ -201,9 +201,9 @@
                 if (type == 'text'){
                     chatMessage = `<p>`+messages.message+`</p>`;
                 }else if(type == 'image'){
-                    chatMessage = `<a href="`+`{{ url('download-message-file') }}`+'/'+messages.message.replace('message/','')+`"> <img src="`+url+messages.message+`" width="100"></a>`;
+                    chatMessage = `<a href="`+`{{ url('download-message-file') }}`+'/'+messages.message.replace('chat-file/','')+`"> <img src="`+url+messages.message+`" width="100"></a>`;
                 }else{
-                    chatMessage = `<a style="color:#ffffff;" href="`+`{{ url('download-message-file') }}`+'/'+messages.message.replace('message/','')+`">`+messages.message.replace('message/','')+`</a>`;
+                    chatMessage = `<a style="color:#ffffff;" href="`+`{{ url('download-message-file') }}`+'/'+messages.message.replace('chat-file/','')+`">`+messages.message.replace('message/','')+`</a>`;
                 }
                 const msg = `<div class="message-bubble me">
                             <div class="message-bubble-inner">
@@ -222,9 +222,9 @@
                 if (type == 'text'){
                     chatMessage = `<p>`+messages.message+`</p>`;
                 }else if(type == 'image'){
-                    chatMessage = `<a href="`+`{{ url('download-message-file') }}`+'/'+messages.message.replace('message/','')+`"> <img src="`+url+messages.message+`" width="100"></a>`;
+                    chatMessage = `<a href="`+`{{ url('download-message-file') }}`+'/'+messages.message.replace('chat-file/','')+`"> <img src="`+url+messages.message+`" width="100"></a>`;
                 }else{
-                    chatMessage = `<a style="color:#000000;" href="`+`{{ url('download-message-file') }}`+'/'+messages.message.replace('message/','')+`">`+messages.message.replace('message/','')+`</a>`;
+                    chatMessage = `<a style="color:#000000;" href="`+`{{ url('download-message-file') }}`+'/'+messages.message.replace('chat-file/','')+`">`+messages.message.replace('message/','')+`</a>`;
                 }
                 const msg = `<div class="message-bubble">
                             <div class="message-bubble-inner">

@@ -7,6 +7,7 @@ use App\City;
 use App\Country;
 use App\Job;
 use App\JobApplication;
+use App\JobDeliveryData;
 use App\JobDispute;
 use App\Notification;
 use App\Rating;
@@ -18,6 +19,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Session;
 use Illuminate\Support\Facades\Http;
@@ -117,10 +119,11 @@ class CustomerDashboardController extends Controller
                 ->first();
             $rated = false;
             $rating = Rating::where('job_id', $jobId)->where('user_id', '!=', Auth::user()->id)->get();
+            $deliveryData = JobDeliveryData::where('job_id',$jobId)->first();
             if ($rating->count() > 0) {
                 $rated = true;
             }
-            return view('frontend.job.customer-manage', compact('job', 'jobId', 'rated','receiver'));
+            return view('frontend.job.customer-manage', compact('job', 'jobId', 'rated','receiver','deliveryData'));
         } else {
             return redirect('')->home();
         }
@@ -390,5 +393,14 @@ class CustomerDashboardController extends Controller
         $user = Auth::user();
         $jobs = Job::where('user_id', $user->id)->where('status', 'completed')->get();
         return view('frontend.customer.completed-jobs', compact('jobs'));
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Download Delivery File
+    |--------------------------------------------------------------------------
+    */
+    public function downloadDeliveryFile($file){
+        return Storage::download('job-delivery-file/'.$file);
     }
 }

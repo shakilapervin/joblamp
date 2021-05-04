@@ -77,9 +77,9 @@
                                 <div class="tab-pane fade show active" id="bank" role="tabpanel">
                                     <form action="{{ route('update.withdraw.method') }}" method="post"
                                           enctype="multipart/form-data">
-                                    @csrf
-                                        <input type="hidden" name="type" value="stripe">
-                                    <!-- Row -->
+                                        @csrf
+                                        <input type="hidden" name="type" value="bank_account">
+                                        <!-- Row -->
                                         <div class="row">
 
                                             <!-- Dashboard Box -->
@@ -105,17 +105,16 @@
                                                                                     class="selectpicker with-border @error('country') is-invalid @enderror"
                                                                                     data-size="7" title="Select Country"
                                                                                     data-live-search="true"
-                                                                                    name="country"
-                                                                                    onchange="getStates();">
+                                                                                    name="country">
                                                                                 @foreach($countries as $country)
                                                                                     <option
                                                                                         value="{{ $country['cca2'] }}"
-                                                                                    @if (!empty($bank))
+                                                                                        @if (!empty($bank))
                                                                                         @if ($bank->country == $country['cca2'])
-                                                                                            selected
+                                                                                        selected
 
                                                                                         @endif
-                                                                                    @endif
+                                                                                        @endif
                                                                                     >
                                                                                         {{ $country['name']['common'] }}
                                                                                     </option>
@@ -133,14 +132,15 @@
                                                                             <h5>{{ __('Currency') }}</h5>
                                                                             <select id="currency"
                                                                                     class="selectpicker with-border @error('currency') is-invalid @enderror"
-                                                                                    data-size="7" title="Select Currency"
+                                                                                    data-size="7"
+                                                                                    title="Select Currency"
                                                                                     data-live-search="true"
                                                                                     name="currency">
                                                                                 @foreach($currencies as $key => $currency)
                                                                                     <option
                                                                                         value="{{ $key }}"
                                                                                         @if (!empty($bank))
-                                                                                            @if (strtoupper($bank->currency) == $key) selected @endif
+                                                                                        @if (strtoupper($bank->currency) == $key) selected @endif
                                                                                         @endif
                                                                                     >
                                                                                         {{ $key }}
@@ -210,14 +210,14 @@
                                                                                     {{ __('Select Account Type') }}
                                                                                 </option>
                                                                                 <option value="individual"
-                                                                                @if (!empty($bank))
-                                                                                    @if ($bank->account_holder_type == 'individual') selected @endif
-                                                                                @endif
+                                                                                        @if (!empty($bank))
+                                                                                        @if ($bank->account_holder_type == 'individual') selected @endif
+                                                                                    @endif
                                                                                 >
                                                                                     {{ __('Individual') }}
                                                                                 </option>
                                                                                 <option value="company"
-                                                                                    @if (!empty($bank))
+                                                                                        @if (!empty($bank))
                                                                                         @if ($bank->account_holder_type == 'company') selected @endif
                                                                                     @endif
                                                                                 >
@@ -281,7 +281,7 @@
                                                                             <input name="paypal_email"
                                                                                    type="text"
                                                                                    class="with-border @error('paypal_email') is-invalid @enderror"
-                                                                                   value="@if (!empty($bank->account_number)) {{ $bank->account_number }} @endif">
+                                                                                   value="@if(!empty($paypal->account_number)) {{ $paypal->account_number }} @endif">
                                                                             @error('paypal_email')
                                                                             <div class="invalid-feedback">
                                                                                 {{ $message }}
@@ -294,7 +294,8 @@
                                                                             <h5>{{ __('Currency') }}</h5>
                                                                             <select id="currency"
                                                                                     class="selectpicker with-border @error('currency') is-invalid @enderror"
-                                                                                    data-size="7" title="Select Currency"
+                                                                                    data-size="7"
+                                                                                    title="Select Currency"
                                                                                     data-live-search="true"
                                                                                     name="currency">
                                                                                 @foreach($currencies as $key => $currency)
@@ -363,7 +364,8 @@
                                                                             <h5>{{ __('Withdraw Method') }}</h5>
                                                                             <select id="country"
                                                                                     class="selectpicker with-border @error('withdraw_method') is-invalid @enderror"
-                                                                                    data-size="7" title="Select Withdraw Method"
+                                                                                    data-size="7"
+                                                                                    title="Select Withdraw Method"
                                                                                     data-live-search="true"
                                                                                     name="withdraw_method">
                                                                                 <option value="bank_account">
