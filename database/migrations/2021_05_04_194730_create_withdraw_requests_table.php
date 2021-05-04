@@ -15,6 +15,9 @@ class CreateWithdrawRequestsTable extends Migration
     {
         Schema::create('withdraw_requests', function (Blueprint $table) {
             $table->id();
+            $table->string('user_id');
+            $table->string('amount');
+            $table->string('status')->default('not_paid');
             $table->timestamps();
         });
     }
