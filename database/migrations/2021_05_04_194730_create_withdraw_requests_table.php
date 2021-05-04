@@ -17,6 +17,7 @@ class CreateWithdrawRequestsTable extends Migration
             $table->id();
             $table->string('user_id');
             $table->string('amount');
+            $table->string('method');
             $table->string('status')->default('not_paid');
             $table->timestamps();
         });
