@@ -126,66 +126,22 @@ class WithdrawController extends Controller
                 ->withInput();
         }
         $userId = Auth::id();
-        $uId = rand(5, 10);
         $account = UserWithdrawMethod::where('user_id', $userId)->where('type', $request->withdraw_method)->first();
         if (!empty($account)) {
-            $environment = env('PAYPAL_MODE');
-            if ($environment == 'sandbox') {
-                $paypal = new SandboxEnvironment(env('PAYPAL_SANDBOX_API_CLIENT_ID'), env('PAYPAL_SANDBOX_API_SECRET'));
+            $cashIn = UserTransaction::where('user_id', $userId)->sum('credit');
+            $cashOut = UserTransaction::where('user_id', $userId)->sum('debit');
+            $balance = $cashIn - $cashOut;
+            if ($request->amount <= $balance) {
+                $withdrawData = array(
+                    'user_id' => $userId,
+                    'method' => $request->withdraw_method,
+                    'amount' => $request->amount,
+                );
             } else {
-                $paypal = new ProductionEnvironment(env('PAYPAL_SANDBOX_API_CLIENT_ID'), env('PAYPAL_SANDBOX_API_SECRET'));
+                return redirect()->back()->with('error', __('You don\'t have enough balance'));
             }
-            $client = new PayPalHttpClient($paypal);
-            $request = new PayoutsPostRequest();
-            $body = json_decode(
-                '{
-                "sender_batch_header":
-                {
-                  "email_subject": "Joblamp Payout"
-                },
-                "items": [
-                {
-                  "recipient_type": "EMAIL",
-                  "receiver": "' . $account->account_number . '",
-                  "note": "Joblamp payout",
-                  "sender_item_id": "' . $uId . '",
-                  "amount":
-                  {
-                    "currency": "' . $account->currency . '",
-                    "value": "' . number_format($request->amount, 2, '.') . '"
-                  }
-                }]
-              }',
-                true);
-            $request->body = $body;
-            $response = $client->execute($body);
-            dd($response->statusCode);
         } else {
             return redirect()->back()->with('error', __('Please setup your withdraw method first'));
-        }
-
-
-        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-        $cashIn = UserTransaction::where('user_id', $userId)->sum('credit');
-        $cashOut = UserTransaction::where('user_id', $userId)->sum('debit');
-        $balance = $cashIn - $cashOut;
-        if ($request->amount <= $balance) {
-            $response = Stripe\Payout::create([
-                'amount' => $request->amount * 100,
-                'currency' => 'inr',
-                'destination' => UserWithdrawMethod::where('user_id', $userId)->first()->token
-            ]);
-            if ($response->status == 'in_transit') {
-                UserTransaction::create(array(
-                    'user_id' => $userId,
-                    'debit' => $request->amount
-                ));
-                return redirect()->back()->with('success', __('Your withdraw request is taken'));
-            } else {
-                return redirect()->back()->with('error', __('An error occurred! Please contact support center'));
-            }
-        } else {
-            return redirect()->back()->with('error', __('You don\'t have enough balance'));
         }
     }
 }
