@@ -167,7 +167,7 @@
                     </a>
                 </li>
                 @if(\Illuminate\Support\Facades\Auth::user()->user_type == 'admin')
-                    <li class="sidebar-dropdown {{ Route::is('admin.banners') ? 'active' : '' }} {{ Route::is('admin.create.banner') ? 'active' : '' }}">
+                    <li class="sidebar-dropdown {{ Route::is('admin.banners') ? 'active' : '' }} {{ Route::is('admin.create.banner') ? 'active' : '' }} {{ Route::is('admin.page.privacy.policy') ? 'active' : '' }} {{ Route::is('admin.page.terms.conditions') ? 'active' : '' }} {{ Route::is('admin.page.about.us') ? 'active' : '' }}">
                         <a href="javascript:void(0);">
                             <i class="icon-laptop_mac"></i>
                             <span class="menu-text">{{ __('Frontend') }}</span>
@@ -179,6 +179,24 @@
                                     <a href="{{ route('admin.banners') }}"
                                        class="{{ Route::is('admin.banners') ? 'current-page' : '' }} {{ Route::is('admin.create.banner') ? 'current-page' : '' }}">
                                         <span class="menu-text">{{ __('Banner Management') }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('admin.page.privacy.policy') }}"
+                                       class="{{ Route::is('admin.page.privacy.policy') ? 'current-page' : '' }}">
+                                        <span class="menu-text">{{ __('Privacy Policy') }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('admin.page.terms.conditions') }}"
+                                       class="{{ Route::is('admin.page.terms.conditions') ? 'current-page' : '' }}">
+                                        <span class="menu-text">{{ __('Terms and Conditions') }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('admin.page.about.us') }}"
+                                       class="{{ Route::is('admin.page.about.us') ? 'current-page' : '' }}">
+                                        <span class="menu-text">{{ __('About Us') }}</span>
                                     </a>
                                 </li>
                             </ul>
@@ -234,6 +252,12 @@
                                 </li>
                             </ul>
                         </div>
+                    </li>
+                    <li>
+                        <a href="{{ url('/languages') }}">
+                            <i class="icon-attach_money"></i>
+                            <span class="menu-text">{{ __('Languages') }}</span>
+                        </a>
                     </li>
                 @endif
             </ul>

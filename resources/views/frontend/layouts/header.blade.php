@@ -1,7 +1,3 @@
-@php
-    $lang = \session()->get('lang')?: 'en';
-    app()->setLocale($lang);
-@endphp
 <!doctype html>
 <html lang="{{ session()->get('lang')?: 'en' }}">
 <head>
@@ -53,6 +49,9 @@
                                         <a href="{{ route('job-post') }}">{{ __('Post a Job') }}</a>
                                     </li>
                                     <li>
+                                        <a href="{{ route('about.us') }}">{{ __('About Us') }}</a>
+                                    </li>
+                                    <li>
                                         <a href="{{ route('contact.us') }}">{{ __('Contact Us') }}</a>
                                     </li>
                                 @else
@@ -60,6 +59,9 @@
                                         <a href="{{ route('job-list') }}">
                                             {{ __('Find Work') }}
                                         </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('about.us') }}">{{ __('About Us') }}</a>
                                     </li>
                                     <li>
                                         <a href="{{ route('contact.us') }}">{{ __('Contact Us') }}</a>
@@ -78,6 +80,9 @@
                                     <a href="{{ route('user-login') }}">{{ __('Login') }}</a>
                                 </li>
                                 <li>
+                                    <a href="{{ route('about.us') }}">{{ __('About Us') }}</a>
+                                </li>
+                                <li>
                                     <a href="{{ route('contact.us') }}">{{ __('Contact Us') }}</a>
                                 </li>
                             @endauth
@@ -93,13 +98,13 @@
 
                                         <!-- Search Field -->
                                         <div class="intro-search-field with-label">
-                                            <input id="intro-keywords" type="text" placeholder="Task worker name"
+                                            <input id="intro-keywords" type="text" placeholder="{{ __('Task worker name') }}"
                                                    name="keyword">
                                         </div>
 
                                         <!-- Button -->
                                         <div class="intro-search-button">
-                                            <button class="button ripple-effect" type="submit">Search</button>
+                                            <button class="button ripple-effect" type="submit">{{ __('Search') }}</button>
                                         </div>
                                     </div>
                                 </form>
@@ -109,7 +114,7 @@
 
                                         <!-- Search Field -->
                                         <div class="intro-search-field with-label">
-                                            <input id="intro-keywords" type="text" placeholder="Job Title or Keywords"
+                                            <input id="intro-keywords" type="text" placeholder="{{ __('Job Title or Keywords') }}"
                                                    name="keyword">
                                         </div>
 

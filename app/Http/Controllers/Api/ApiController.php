@@ -10,6 +10,7 @@ use App\JobApplication;
 use App\JobCategory;
 use App\JobDeliveryData;
 use App\Notification;
+use App\Page;
 use App\Rating;
 use App\Skill;
 use App\Slider;
@@ -231,6 +232,10 @@ class ApiController extends Controller
             'city' => City::where('id', $user->city)->first()->name,
             'state' => State::where('id', $user->state)->first()->name,
             'country' => Country::where('id', $user->country)->first()->name,
+            'city_id' => $user->city,
+            'state_id' => $user->state,
+            'country_id' => $user->country,
+            'pincode' => $user->pincode,
             'rating' => calculateRating($reviews),
             'skills' => $skills,
             'total_reviews' => count($reviews),
@@ -1251,10 +1256,13 @@ class ApiController extends Controller
             );
             UserChat::create($data);
         }
+
+        $result = array('sender' => $chat,'receiver' => $receiver);
         $status = true;
         $message = 'Success';
-        return response()->json(compact('status', 'message'));
+        return response()->json(compact('status', 'message','result'));
     }
+
 
     /*
     |--------------------------------------------------------------------------
@@ -1272,8 +1280,9 @@ class ApiController extends Controller
         }
         $user = User::where('id',$request->id)->first();
         $skills = array();
-        if ($request->has('skills') && count($request->skills) > 0) {
-            foreach ($request->skills as $key => $no) {
+        $dataSkill = json_decode($request->skills);
+        if (count($dataSkill) > 0) {
+            foreach ($request->skills as $no) {
                 array_push($skills, $no);
             }
             $user->skill = $skills;
@@ -1283,4 +1292,51 @@ class ApiController extends Controller
         $message = 'Success';
         return response()->json(compact('status', 'message'));
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Get All Skill
+    |--------------------------------------------------------------------------
+    */
+    public function getAllSkills(Request $request)
+    {
+        $status = true;
+        $data = Skill::all();
+        return response()->json(compact('status', 'data'));
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | About Us Page
+    |--------------------------------------------------------------------------
+    */
+    public function aboutUs()
+    {
+        $status = true;
+        $data = Page::where('page_name','about_us')->first();
+        return response()->json(compact('status', 'data'));
+    }
+    /*
+    |--------------------------------------------------------------------------
+    | Privacy Policy Page
+    |--------------------------------------------------------------------------
+    */
+    public function privacyPolicy()
+    {
+        $status = true;
+        $data = Page::where('page_name','privacy_policy')->first();
+        return response()->json(compact('status', 'data'));
+    }
+    /*
+    |--------------------------------------------------------------------------
+    | Terms and Conditions Page
+    |--------------------------------------------------------------------------
+    */
+    public function termsConditions()
+    {
+        $status = true;
+        $data = Page::where('page_name','terms_conditions')->first();
+        return response()->json(compact('status', 'data'));
+    }
+
 }

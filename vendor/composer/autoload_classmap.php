@@ -62,6 +62,7 @@ return array(
     'App\\LottoPriz' => $baseDir . '/app/LottoPriz.php',
     'App\\LottoUser' => $baseDir . '/app/LottoUser.php',
     'App\\Notification' => $baseDir . '/app/Notification.php',
+    'App\\Page' => $baseDir . '/app/Page.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',
     'App\\Providers\\BroadcastServiceProvider' => $baseDir . '/app/Providers/BroadcastServiceProvider.php',

@@ -15,6 +15,9 @@ Route::get('/storage-link', function() {
 Route::get('/', 'Website\FrontendController@index');
 Route::get('/', 'Website\FrontendController@index')->name('home');
 Route::get('contact-us', 'Website\FrontendController@contactPage')->name('contact.us');
+Route::get('privacy-policy', 'Website\FrontendController@privacyPolicyPage')->name('privacy.policy');
+Route::get('terms-and-conditions', 'Website\FrontendController@termsConditionsPage')->name('terms.conditions');
+Route::get('about-us', 'Website\FrontendController@aboutUs')->name('about.us');
 Route::get('lotto-prizes', 'Website\FrontendController@lottoPrizes')->name('lotto.prizes');
 Route::post('change-lang', 'Website\FrontendController@changeLang')->name('change.lang');
 Route::post('submit-contact-form', 'Website\FrontendController@submitContactForm')->name('submit.contact.form');
@@ -42,6 +45,13 @@ Route::post('api-capture-job-payment', 'Website\PaymentController@apiCaptureJobP
 Route::get('api-capture-job-paypal-payment/{user_id}/{job_id}/{applicant_id}', 'Website\PaymentController@apiCaptureJobPaypalPayment')->name('api.make.job.paypal.payment');
 Route::get('api-job-cancel-paypal-payment', 'Website\PaymentController@apiJobPaymentCancel')->name('api.job.cancel.paypal.payment');
 Route::get('api-job-paypal-payment-success', 'Website\PaymentController@apiJobPaymentSuccess')->name('api.job.success.paypal.payment');
+
+Route::get('api-job-application-checkout/{user_id}/{job_id}', 'Website\PaymentController@apiJobApplyCheckout');
+Route::post('api-capture-stripe-job-apply-payment', 'Website\PaymentController@apiCaptureStripeJobApplicationPayment')->name('api.capture.stripe.job.application.payment');
+
+Route::get('api-capture-job-application-paypal-payment/{user_id}/{job_id}', 'Website\PaymentController@apiCaptureJobApplicationPaypalPayment')->name('api.make.job.application.paypal.payment');
+Route::get('api-paypal-job-application-payment-success', 'Website\PaymentController@apiPaymentJobApplicationSuccess')->name('api.success.job.application.paypal.payment');
+Route::get('api-cancel-job-application-paypal-payment', 'Website\PaymentController@apiPaymentJobApplicationCancel')->name('api.cancel.job.application.paypal.payment');
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('task-worker-list', 'Website\FrontendController@taskWorkerList')->name('task-worker-list');
@@ -347,5 +357,19 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('admin-withdraw-paid', 'Admin\TransactionController@paidRequests')->name('admin.withdraw.paid');
     Route::get('admin-withdraw-details/{id}', 'Admin\TransactionController@withdrawDetails')->name('admin.withdraw.request.view');
     Route::get('admin-mark-withdraw-request-paid/{id}', 'Admin\TransactionController@markWithdrawRequestPaid')->name('admin.mark.withdraw.request.paid');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Page Management Routes
+    |--------------------------------------------------------------------------
+    */
+    Route::get('admin-page-privacy-policy', 'Admin\PageController@privacyPolicy')->name('admin.page.privacy.policy');
+    Route::post('admin-page-update-privacy-policy', 'Admin\PageController@updatePrivacyPolicy')->name('admin.update.privacy.policy');
+
+    Route::get('admin-page-terms-conditions', 'Admin\PageController@termsConditions')->name('admin.page.terms.conditions');
+    Route::post('admin-page-update-terms-conditions', 'Admin\PageController@updateTermsConditions')->name('admin.update.terms.conditions');
+
+    Route::get('admin-page-about-us', 'Admin\PageController@aboutUs')->name('admin.page.about.us');
+    Route::post('admin-page-update-about-us', 'Admin\PageController@updateAboutUs')->name('admin.update.about.us');
 });
 

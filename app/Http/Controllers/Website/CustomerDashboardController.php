@@ -34,6 +34,8 @@ class CustomerDashboardController extends Controller
     */
     public function jobApplications($id)
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         try {
             $id = decrypt($id);
         } catch (\RuntimeException $e) {
@@ -57,6 +59,8 @@ class CustomerDashboardController extends Controller
     */
     public function acceptApplication($jobId, $serviceProviderId)
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         try {
             $jobId = decrypt($jobId);
         } catch (\RuntimeException $e) {
@@ -107,6 +111,8 @@ class CustomerDashboardController extends Controller
     */
     public function manageJob($jobId)
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         try {
             $jobId = decrypt($jobId);
         } catch (\RuntimeException $e) {
@@ -136,6 +142,8 @@ class CustomerDashboardController extends Controller
     */
     public function approveJobDelivery($jobId)
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         try {
             $jobId = decrypt($jobId);
         } catch (\RuntimeException $e) {
@@ -176,6 +184,8 @@ class CustomerDashboardController extends Controller
     */
     public function saveJobFeedback(Request $request)
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         try {
             $jobId = decrypt($request->job_id);
         } catch (\RuntimeException $e) {
@@ -265,6 +275,8 @@ class CustomerDashboardController extends Controller
     */
     public function disputeJobDelivery(Request $request)
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         try {
             $jobId = decrypt($request->id);
         } catch (\RuntimeException $e) {
@@ -354,6 +366,8 @@ class CustomerDashboardController extends Controller
     */
     public function postedJobs()
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $user = Auth::user();
         $jobs = Job::where('user_id', $user->id)->where('status', 'opened')->get();
         return view('frontend.customer.posted-jobs', compact('jobs'));
@@ -366,6 +380,8 @@ class CustomerDashboardController extends Controller
     */
     public function hiredJobs()
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $user = Auth::user();
         $jobs = Job::where('user_id', $user->id)->where('status', 'hired')->get();
         return view('frontend.customer.hired-jobs', compact('jobs'));
@@ -378,6 +394,8 @@ class CustomerDashboardController extends Controller
     */
     public function deliveredJobs()
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $user = Auth::user();
         $jobs = Job::where('user_id', $user->id)->where('status', 'delivered')->get();
         return view('frontend.customer.delivered-jobs', compact('jobs'));
@@ -390,6 +408,8 @@ class CustomerDashboardController extends Controller
     */
     public function completedJobs()
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $user = Auth::user();
         $jobs = Job::where('user_id', $user->id)->where('status', 'completed')->get();
         return view('frontend.customer.completed-jobs', compact('jobs'));
@@ -401,6 +421,8 @@ class CustomerDashboardController extends Controller
     |--------------------------------------------------------------------------
     */
     public function downloadDeliveryFile($file){
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         return Storage::download('job-delivery-file/'.$file);
     }
 }

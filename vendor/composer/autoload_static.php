@@ -682,6 +682,7 @@ class ComposerStaticInitba11f9484b2be2751f6ff6e4838c5b23
         'App\\LottoPriz' => __DIR__ . '/../..' . '/app/LottoPriz.php',
         'App\\LottoUser' => __DIR__ . '/../..' . '/app/LottoUser.php',
         'App\\Notification' => __DIR__ . '/../..' . '/app/Notification.php',
+        'App\\Page' => __DIR__ . '/../..' . '/app/Page.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',

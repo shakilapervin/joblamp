@@ -11,6 +11,7 @@ use App\JobApplication;
 use App\JobCategory;
 use App\LottoPriz;
 use App\Notification;
+use App\Page;
 use App\Rating;
 use App\Skill;
 use App\Slider;
@@ -30,6 +31,7 @@ use Illuminate\Support\Facades\Validator;
 use Image;
 use Illuminate\View\View;
 use Mail;
+
 class FrontendController extends Controller
 {
     /*
@@ -37,39 +39,44 @@ class FrontendController extends Controller
     | Change Language
     |--------------------------------------------------------------------------
     */
-    public function changeLang(Request $request){
+    public function changeLang(Request $request)
+    {
         $lang = $request->lang;
         \session()->forget('lang');
-        \session()->put('lang',$lang);
+        \session()->put('lang', $lang);
         return redirect()->back();
     }
+
     /*
     |--------------------------------------------------------------------------
     | HomePage
     |--------------------------------------------------------------------------
     */
-    public function index(){
-        $banners = Slider::where('status','active')->get();
-        $jobs = Job::where('status','opened')->limit(10)->get();
-        $subscriptionPlans = SubscriptionPlan::with('features')->where('status','active')->get();
+    public function index()
+    {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
+        $banners = Slider::where('status', 'active')->get();
+        $jobs = Job::where('status', 'opened')->limit(10)->get();
+        $subscriptionPlans = SubscriptionPlan::with('features')->where('status', 'active')->get();
         $jobcategories = DB::table('job_categories')
             ->select('job_categories.*', DB::raw('count(*) as totalJob'))
-            ->join('jobs','jobs.category','=','job_categories.id')
-            ->where('job_categories.status',1)
-            ->where('jobs.status','opened')
+            ->join('jobs', 'jobs.category', '=', 'job_categories.id')
+            ->where('job_categories.status', 1)
+            ->where('jobs.status', 'opened')
             ->groupBy('jobs.category')
-            ->orderBy('totalJob','desc')
+            ->orderBy('totalJob', 'desc')
             ->get();
         $popularWorkers = DB::table('users')
-            ->select('users.id','users.first_name','users.last_name','users.profile_pic','countries.name as country_name',DB::raw('sum(ratings.rating) / count(*) as userRating'),DB::raw('(sum(ratings.rating) / count(*)) + count(*) as score'))
-            ->join('countries','countries.id','=','users.country')
-            ->join('ratings','ratings.user_id','=','users.id')
-            ->where('user_type','service_provider')
+            ->select('users.id', 'users.first_name', 'users.last_name', 'users.profile_pic', 'countries.name as country_name', DB::raw('sum(ratings.rating) / count(*) as userRating'), DB::raw('(sum(ratings.rating) / count(*)) + count(*) as score'))
+            ->join('countries', 'countries.id', '=', 'users.country')
+            ->join('ratings', 'ratings.user_id', '=', 'users.id')
+            ->where('user_type', 'service_provider')
             ->groupBy('ratings.user_id')
-            ->orderBy('score','desc')
+            ->orderBy('score', 'desc')
             ->limit(20)
             ->get();
-        return view('frontend.home.index',compact('jobs','jobcategories','popularWorkers','subscriptionPlans','banners'));
+        return view('frontend.home.index', compact('jobs', 'jobcategories', 'popularWorkers', 'subscriptionPlans', 'banners'));
     }
 
     /*
@@ -77,11 +84,14 @@ class FrontendController extends Controller
     | Registration Form
     |--------------------------------------------------------------------------
     */
-    public function registrationForm(){
-        $countries = Country::where('status',1)->get();
-        $states = State::where('status',1)->get();
-        $cities = City::where('status',1)->get();
-        return view('frontend.auth.register',compact('countries','states','cities'));
+    public function registrationForm()
+    {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
+        $countries = Country::where('status', 1)->get();
+        $states = State::where('status', 1)->get();
+        $cities = City::where('status', 1)->get();
+        return view('frontend.auth.register', compact('countries', 'states', 'cities'));
     }
 
     /*
@@ -89,8 +99,10 @@ class FrontendController extends Controller
     | Save Registration Data
     |--------------------------------------------------------------------------
     */
-    public function registerUser(Request $request){
-
+    public function registerUser(Request $request)
+    {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $validator = Validator::make($request->all(), [
             'first_name' => 'required',
             'last_name' => 'required',
@@ -109,9 +121,9 @@ class FrontendController extends Controller
                 ->withInput();
         }
 
-        if ($request->user_type == 'service_provider'){
+        if ($request->user_type == 'service_provider') {
             $status = 3;
-        }else{
+        } else {
             $status = 1;
         }
 
@@ -130,22 +142,22 @@ class FrontendController extends Controller
 
         $success = User::create($data);
         $data = array(
-            'name' => $request->first_name.' '.$request->last_name,
+            'name' => $request->first_name . ' ' . $request->last_name,
             'email' => $request->email,
         );
         $mailAddress = $request->email;
-        try{
+        try {
             Mail::send('mail.signup', $data, function ($message) use ($mailAddress) {
                 $message->to($mailAddress)->subject('Welcome to Joblamp');
                 $message->from(env('MAIL_FROM_ADDRESS'), 'Joblamp');
             });
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
 
         }
-        if ($success){
-            return redirect('user-login')->with('success',__('Successfully Registered!'));
-        }else{
-            return redirect()->back()->with('error',__('An error occurred, Please try again!'));
+        if ($success) {
+            return redirect('user-login')->with('success', __('Successfully Registered!'));
+        } else {
+            return redirect()->back()->with('error', __('An error occurred, Please try again!'));
         }
     }
 
@@ -154,10 +166,13 @@ class FrontendController extends Controller
     | Login Form
     |--------------------------------------------------------------------------
     */
-    public function loginForm(){
+    public function loginForm()
+    {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         if (Auth::user()) {
             return redirect('/dashboard');
-        }else{
+        } else {
             return view('frontend.auth.login');
         }
 
@@ -168,7 +183,10 @@ class FrontendController extends Controller
     | Check Login Credential
     |--------------------------------------------------------------------------
     */
-    public function checkLogin(Request $request){
+    public function checkLogin(Request $request)
+    {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $validator = Validator::make($request->all(), [
             'password' => 'required',
             'email' => 'required',
@@ -192,7 +210,10 @@ class FrontendController extends Controller
     | Check Login Credential From Checkout
     |--------------------------------------------------------------------------
     */
-    public function checkLoginSubscription(Request $request){
+    public function checkLoginSubscription(Request $request)
+    {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $validator = Validator::make($request->all(), [
             'password' => 'required',
             'email' => 'required',
@@ -216,7 +237,10 @@ class FrontendController extends Controller
     | Logout
     |--------------------------------------------------------------------------
     */
-    public function userLogout(Request $request){
+    public function userLogout(Request $request)
+    {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $this->guard()->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
@@ -231,7 +255,10 @@ class FrontendController extends Controller
     | Admin Logout
     |--------------------------------------------------------------------------
     */
-    public function adminLogout(Request $request){
+    public function adminLogout(Request $request)
+    {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $this->guard()->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
@@ -240,6 +267,7 @@ class FrontendController extends Controller
             ? new JsonResponse([], 204)
             : redirect('/admin/login');
     }
+
     protected function guard()
     {
         return Auth::guard();
@@ -251,25 +279,28 @@ class FrontendController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function dashboard(){
+    public function dashboard()
+    {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $user = Auth::user();
-        $notifications = Notification::where('user_id',$user->id)->get();
-        if ($user->user_type == 'customer'){
-            $notHiredJobs = Job::where('user_id',$user->id)->where('status','opened')->get();
-            $hiredJobs = Job::where('user_id',$user->id)->where('status','hired')->get();
-            $deliveredJobs = Job::where('user_id',$user->id)->where('status','delivered')->get();
-            $completedJobs = Job::where('user_id',$user->id)->where('status','completed')->get();
-            $ratings = Rating::where('user_id',$user->id)->count();
-            $totalJob = Job::where('user_id',$user->id)->count();
-            return view('frontend.dashboard.customer-dashboard',compact('user','notHiredJobs','hiredJobs','deliveredJobs','completedJobs','ratings','totalJob','notifications'));
-        }else{
-            $jobs = Job::where('status','opened')->orderBy('id','desc')->limit(4)->get();
-            $jobsApplied = JobApplication::where('candidate_id',$user->id)->where('status','applied')->get();
-            $activeJobs = UserJob::with('jobDetails')->where('service_provider_id',$user->id)->where('status','opened')->get();
-            $deliveredJobs = UserJob::with('jobDetails')->where('service_provider_id',$user->id)->where('status','delivered')->get();
-            $completedJobs = UserJob::with('jobDetails')->where('service_provider_id',$user->id)->where('status','completed')->get();
-            $ratings = Rating::where('user_id',$user->id)->count();
-            return  view('frontend.dashboard.service-provider-dashboard',compact('user','jobsApplied','activeJobs','deliveredJobs','completedJobs','jobs','ratings','notifications'));
+        $notifications = Notification::where('user_id', $user->id)->get();
+        if ($user->user_type == 'customer') {
+            $notHiredJobs = Job::where('user_id', $user->id)->where('status', 'opened')->get();
+            $hiredJobs = Job::where('user_id', $user->id)->where('status', 'hired')->get();
+            $deliveredJobs = Job::where('user_id', $user->id)->where('status', 'delivered')->get();
+            $completedJobs = Job::where('user_id', $user->id)->where('status', 'completed')->get();
+            $ratings = Rating::where('user_id', $user->id)->count();
+            $totalJob = Job::where('user_id', $user->id)->count();
+            return view('frontend.dashboard.customer-dashboard', compact('user', 'notHiredJobs', 'hiredJobs', 'deliveredJobs', 'completedJobs', 'ratings', 'totalJob', 'notifications'));
+        } else {
+            $jobs = Job::where('status', 'opened')->orderBy('id', 'desc')->limit(4)->get();
+            $jobsApplied = JobApplication::where('candidate_id', $user->id)->where('status', 'applied')->get();
+            $activeJobs = UserJob::with('jobDetails')->where('service_provider_id', $user->id)->where('status', 'opened')->get();
+            $deliveredJobs = UserJob::with('jobDetails')->where('service_provider_id', $user->id)->where('status', 'delivered')->get();
+            $completedJobs = UserJob::with('jobDetails')->where('service_provider_id', $user->id)->where('status', 'completed')->get();
+            $ratings = Rating::where('user_id', $user->id)->count();
+            return view('frontend.dashboard.service-provider-dashboard', compact('user', 'jobsApplied', 'activeJobs', 'deliveredJobs', 'completedJobs', 'jobs', 'ratings', 'notifications'));
         }
     }
 
@@ -279,10 +310,13 @@ class FrontendController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function myProfile(){
+    public function myProfile()
+    {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $id = Auth::id();
-        $user = User::where('id',$id)->first();
-        return  view('frontend.profile.profile',compact('user'));
+        $user = User::where('id', $id)->first();
+        return view('frontend.profile.profile', compact('user'));
     }
 
     /*
@@ -291,28 +325,31 @@ class FrontendController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function publicProfile($id){
+    public function publicProfile($id)
+    {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         try {
             $id = decrypt($id);
-        } catch(\RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             return redirect('');
         }
         $user = DB::table('users')
-            ->select('users.id','users.first_name','users.last_name','users.profile_pic','users.skill','countries.name as country_name',DB::raw('sum(ratings.rating) / count(*) as userRating'),DB::raw('(sum(ratings.rating) / count(*)) + count(*) as score'))
-            ->join('countries','countries.id','=','users.country')
-            ->join('ratings','ratings.user_id','=','users.id')
-            ->where('users.id',$id)
+            ->select('users.id', 'users.first_name', 'users.last_name', 'users.profile_pic', 'users.skill', 'countries.name as country_name', DB::raw('sum(ratings.rating) / count(*) as userRating'), DB::raw('(sum(ratings.rating) / count(*)) + count(*) as score'))
+            ->join('countries', 'countries.id', '=', 'users.country')
+            ->join('ratings', 'ratings.user_id', '=', 'users.id')
+            ->where('users.id', $id)
             ->groupBy('ratings.user_id')
-            ->orderBy('score','desc')
+            ->orderBy('score', 'desc')
             ->first();
-        $jobDone = UserJob::where('service_provider_id',$id)->count();
+        $jobDone = UserJob::where('service_provider_id', $id)->count();
         $userFeedbacks = DB::table('ratings')
-            ->select('ratings.created_at','jobs.user_id','users.first_name','users.last_name','ratings.rating','ratings.feedback')
-            ->join('jobs','jobs.id','=','ratings.job_id')
-            ->join('users','users.id','=','jobs.user_id')
-            ->where('ratings.user_id',$id)
+            ->select('ratings.created_at', 'jobs.user_id', 'users.first_name', 'users.last_name', 'ratings.rating', 'ratings.feedback')
+            ->join('jobs', 'jobs.id', '=', 'ratings.job_id')
+            ->join('users', 'users.id', '=', 'jobs.user_id')
+            ->where('ratings.user_id', $id)
             ->get();
-        return  view('frontend.profile.public',compact('user','userFeedbacks','jobDone'));
+        return view('frontend.profile.public', compact('user', 'userFeedbacks', 'jobDone'));
     }
 
     /*
@@ -321,13 +358,16 @@ class FrontendController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function editprofileForm(){
+    public function editprofileForm()
+    {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $user = Auth::user();
         $countries = Country::where('status', 1)->get();
         $states = State::where('status', 1)->get();
         $cities = City::where('status', 1)->get();
         $skills = Skill::where('status', 'active')->get();
-        return  view('frontend.profile.edit-profile',compact('user', 'countries','states','cities','skills'));
+        return view('frontend.profile.edit-profile', compact('user', 'countries', 'states', 'cities', 'skills'));
     }
 
     /*
@@ -336,14 +376,17 @@ class FrontendController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function jobPostForm(){
-        if (Auth::user()->user_type == 'customer'){
-            $jobCategories = JobCategory::where('status',1)->get();
-            $countries = Country::where('status',1)->get();
-            $states = State::where('status',1)->get();
-            $cities = City::where('status',1)->get();
-            return  view('frontend.job.create',compact('jobCategories','countries','states','cities'));
-        }else{
+    public function jobPostForm()
+    {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
+        if (Auth::user()->user_type == 'customer') {
+            $jobCategories = JobCategory::where('status', 1)->get();
+            $countries = Country::where('status', 1)->get();
+            $states = State::where('status', 1)->get();
+            $cities = City::where('status', 1)->get();
+            return view('frontend.job.create', compact('jobCategories', 'countries', 'states', 'cities'));
+        } else {
             return redirect('/');
         }
 
@@ -354,9 +397,11 @@ class FrontendController extends Controller
     | Save Job Data
     |--------------------------------------------------------------------------
     */
-    public function saveJob(Request $request){
-
-        if (Auth::user()->user_type == 'customer'){
+    public function saveJob(Request $request)
+    {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
+        if (Auth::user()->user_type == 'customer') {
             $validator = Validator::make($request->all(), [
                 'title' => 'required',
                 'description' => 'required',
@@ -399,12 +444,12 @@ class FrontendController extends Controller
 
             $success = Job::create($data);
 
-            if ($success){
-                return redirect('post-job')->with('success',__('Successfully Posted!'));
-            }else{
-                return redirect()->back()->with('error',__('An error occurred, Please try again!'));
+            if ($success) {
+                return redirect('post-job')->with('success', __('Successfully Posted!'));
+            } else {
+                return redirect()->back()->with('error', __('An error occurred, Please try again!'));
             }
-        }else{
+        } else {
             return redirect('')->home();
         }
     }
@@ -415,44 +460,47 @@ class FrontendController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function jobList(Request $request){
+    public function jobList(Request $request)
+    {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $noJob = false;
         $location = $request->location;
         $keyword = $request->keyword;
         $category_id = $request->category_id;
-        $query = Job::with('creatorDetails')->where('status','opened')->orderBy('id','desc');
+        $query = Job::with('creatorDetails')->where('status', 'opened')->orderBy('id', 'desc');
 
-        if (!empty($location)){
-            $city = City::where('name',$location)->first();
-            if (!empty($city)){
-                $query = $query->where('city',$city->id);
-            }else{
+        if (!empty($location)) {
+            $city = City::where('name', $location)->first();
+            if (!empty($city)) {
+                $query = $query->where('city', $city->id);
+            } else {
                 $noJob = true;
             }
         }
 
-        if (!empty($keyword)){
-            $job = $query->where('title','like','%'.$keyword.'%')->get();
-            if (!empty($job)){
-                $query = $query->where('title','like','%'.$keyword.'%');
-            }else{
+        if (!empty($keyword)) {
+            $job = $query->where('title', 'like', '%' . $keyword . '%')->get();
+            if (!empty($job)) {
+                $query = $query->where('title', 'like', '%' . $keyword . '%');
+            } else {
                 $noJob = true;
             }
         }
 
-        if (!empty($category_id)){
-            $cat = $query->where('category',$category_id)->get();
-            if (!empty($cat)){
-                $query = $query->where('category',$category_id);
-            }else{
+        if (!empty($category_id)) {
+            $cat = $query->where('category', $category_id)->get();
+            if (!empty($cat)) {
+                $query = $query->where('category', $category_id);
+            } else {
                 $noJob = true;
             }
         }
 
         $jobs = $query->get();
 
-        $jobCategories = JobCategory::where('status',1)->get();
-        return  view('frontend.job.list',compact('jobs','jobCategories','noJob','location','keyword','category_id'));
+        $jobCategories = JobCategory::where('status', 1)->get();
+        return view('frontend.job.list', compact('jobs', 'jobCategories', 'noJob', 'location', 'keyword', 'category_id'));
 
     }
 
@@ -462,11 +510,14 @@ class FrontendController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function getStates(Request $request){
+    public function getStates(Request $request)
+    {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $states = State::where('country_id', $request->country)->get();
         $user = Auth::user();
         $for = $request->for;
-        return  view('frontend.partials.states',compact('user','states','for'));
+        return view('frontend.partials.states', compact('user', 'states', 'for'));
     }
 
     /*
@@ -475,11 +526,14 @@ class FrontendController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function getCities(Request $request){
+    public function getCities(Request $request)
+    {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $cities = City::where('country_id', $request->country)->where('state_id', $request->state)->get();
         $user = Auth::user();
         $for = $request->for;
-        return  view('frontend.partials.cities',compact('user','cities','for'));
+        return view('frontend.partials.cities', compact('user', 'cities', 'for'));
     }
 
     /*
@@ -488,9 +542,12 @@ class FrontendController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function adminGetStates(Request $request){
+    public function adminGetStates(Request $request)
+    {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $states = State::where('country_id', $request->country)->get();
-        return  view('admin.partials.states',compact('states'));
+        return view('admin.partials.states', compact('states'));
     }
 
     /*
@@ -499,9 +556,12 @@ class FrontendController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function adminGetCities(Request $request){
+    public function adminGetCities(Request $request)
+    {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $cities = City::where('country_id', $request->country)->where('state_id', $request->state)->get();
-        return  view('admin.partials.cities',compact('cities'));
+        return view('admin.partials.cities', compact('cities'));
     }
 
     /*
@@ -510,7 +570,10 @@ class FrontendController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function updateProfile(Request $request){
+    public function updateProfile(Request $request)
+    {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $validator = Validator::make($request->all(), [
             'first_name' => 'required',
             'last_name' => 'required',
@@ -530,7 +593,7 @@ class FrontendController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-        $user = User::where('id',$request->id)->first();
+        $user = User::where('id', $request->id)->first();
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         $user->email = $request->email;
@@ -541,23 +604,23 @@ class FrontendController extends Controller
         $user->address_line_1 = $request->address_line_1;
         $user->address_line_2 = $request->address_line_2;
         $user->mobile_number = $request->mobile_number;
-        if ($request->hasFile('profile_pic')){
+        if ($request->hasFile('profile_pic')) {
             $photo = $request->file('profile_pic');
-            $photoName = uniqid().'.'.$photo->extension();
+            $photoName = uniqid() . '.' . $photo->extension();
             $dPath = storage_path('app/profile/');
             $img = Image::make($photo->path());
-            $img->resize(470,570,function ($constraint){
+            $img->resize(470, 570, function ($constraint) {
                 $constraint->aspectRatio();
-            })->save($dPath.$photoName);
+            })->save($dPath . $photoName);
             $user->profile_pic = $photoName;
         }
-        if ($request->hasFile('doc_1')){
+        if ($request->hasFile('doc_1')) {
             $user->doc_1 = $request->file('doc_1')->store('documents');
         }
-        if ($request->hasFile('doc_2')){
+        if ($request->hasFile('doc_2')) {
             $user->doc_2 = $request->file('doc_2')->store('documents');
         }
-        if ($request->hasFile('doc_3')){
+        if ($request->hasFile('doc_3')) {
             $user->doc_3 = $request->file('doc_3')->store('documents');
         }
         $skills = array();
@@ -568,7 +631,7 @@ class FrontendController extends Controller
             $user->skill = $skills;
         }
         $user->save();
-        return redirect('/edit-profile')->with('success',__('Profile Updated'));
+        return redirect('/edit-profile')->with('success', __('Profile Updated'));
     }
 
     /*
@@ -576,17 +639,20 @@ class FrontendController extends Controller
     | Job Details
     |--------------------------------------------------------------------------
     */
-    public function jobDetails($id){
+    public function jobDetails($id)
+    {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         try {
             $id = decrypt($id);
-        } catch(\RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             return redirect('');
         }
-        $job = Job::where('id',$id)->first();
-        if ($job){
-            $similarJobs = Job::where('category',$job->category)->whereNotIn('id',array($id))->where('status','opened')->limit(2)->get();
-            return view('frontend.job.single',compact('job','similarJobs'));
-        }else{
+        $job = Job::where('id', $id)->first();
+        if ($job) {
+            $similarJobs = Job::where('category', $job->category)->whereNotIn('id', array($id))->where('status', 'opened')->limit(2)->get();
+            return view('frontend.job.single', compact('job', 'similarJobs'));
+        } else {
             return redirect('');
         }
 
@@ -597,10 +663,13 @@ class FrontendController extends Controller
     | Apply Job
     |--------------------------------------------------------------------------
     */
-    public function applyJob(Request $request){
+    public function applyJob(Request $request)
+    {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $id = Auth::id();
-        $user = User::where('id',$id)->first();
-        if ($user->user_type == 'service_provider'){
+        $user = User::where('id', $id)->first();
+        if ($user->user_type == 'service_provider') {
             $validator = Validator::make($request->all(), [
                 'cover_letter' => 'required',
                 'bid_amount' => 'required',
@@ -617,12 +686,12 @@ class FrontendController extends Controller
                 'cover_letter' => $request->cover_letter,
                 'bid_amount' => $request->bid_amount,
             );
-            $job = Job::with('creatorDetails')->where('id',decrypt($request->id))->first();
+            $job = Job::with('creatorDetails')->where('id', decrypt($request->id))->first();
             if ($user->remain_job > 0 && $user->reamin_job != 'unlimited') {
-                $user->decrement('remain_job',1);
+                $user->decrement('remain_job', 1);
                 $status = JobApplication::create($data);
 
-                if ($status){
+                if ($status) {
                     $mailData = array();
 
                     $headers = array(
@@ -640,17 +709,17 @@ class FrontendController extends Controller
                         'data' => "A new candidate applied on your job"
                     );
                     try {
-                        Http::withHeaders($headers)->post('https://fcm.googleapis.com/fcm/send',$fields);
-                    }catch (\Exception $e){
+                        Http::withHeaders($headers)->post('https://fcm.googleapis.com/fcm/send', $fields);
+                    } catch (\Exception $e) {
 
                     }
                     $mailAddress = $job->creatorDetails->email;
-                    try{
+                    try {
                         Mail::send('mail.application-submitted', $mailData, function ($message) use ($mailAddress) {
                             $message->to($mailAddress)->subject('A new candidate applied on your job');
                             $message->from(env('MAIL_FROM_ADDRESS'), 'Joblamp');
                         });
-                    }catch(\Exception $e){
+                    } catch (\Exception $e) {
 
                     }
                     $notification = array(
@@ -658,13 +727,13 @@ class FrontendController extends Controller
                         'description' => 'A new candidate applied on your job',
                     );
                     Notification::create($notification);
-                    return redirect()->back()->with('success',__('Successfully Applied!'));
-                }else{
-                    return redirect()->back()->with('error',__('Error try again!'));
+                    return redirect()->back()->with('success', __('Successfully Applied!'));
+                } else {
+                    return redirect()->back()->with('error', __('Error try again!'));
                 }
-            }elseif ($user->reamin_job == 'unlimited'){
+            } elseif ($user->reamin_job == 'unlimited') {
                 $status = JobApplication::create($data);
-                if ($status){
+                if ($status) {
                     $data = array();
 
                     $headers = array(
@@ -682,17 +751,17 @@ class FrontendController extends Controller
                         'data' => "A new candidate applied on your job"
                     );
                     try {
-                        Http::withHeaders($headers)->post('https://fcm.googleapis.com/fcm/send',$fields);
-                    }catch (\Exception $e){
+                        Http::withHeaders($headers)->post('https://fcm.googleapis.com/fcm/send', $fields);
+                    } catch (\Exception $e) {
 
                     }
                     $mailAddress = $job->creatorDetails->email;
-                    try{
+                    try {
                         Mail::send('mail.application-submitted', $data, function ($message) use ($mailAddress) {
                             $message->to($mailAddress)->subject('A new candidate applied on your job');
                             $message->from(env('MAIL_FROM_ADDRESS'), 'Joblamp');
                         });
-                    }catch(\Exception $e){
+                    } catch (\Exception $e) {
 
                     }
                     $notification = array(
@@ -700,15 +769,15 @@ class FrontendController extends Controller
                         'description' => 'A new candidate applied on your job',
                     );
                     Notification::create($notification);
-                    return redirect()->back()->with('success',__('Successfully Applied!'));
-                }else{
-                    return redirect()->back()->with('error',__('Error try again!'));
+                    return redirect()->back()->with('success', __('Successfully Applied!'));
+                } else {
+                    return redirect()->back()->with('error', __('Error try again!'));
                 }
-            }else{
-                Session::put('jobData',$data);
+            } else {
+                Session::put('jobData', $data);
                 return redirect('job-apply/checkout');
             }
-        }else{
+        } else {
             return redirect('');
         }
     }
@@ -720,6 +789,8 @@ class FrontendController extends Controller
     */
     public function subscriptionCheckout($id)
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         try {
             $id = decrypt($id);
         } catch (\RuntimeException $e) {
@@ -734,7 +805,10 @@ class FrontendController extends Controller
     | Free Subscription Confirm
     |--------------------------------------------------------------------------
     */
-    public function subscriptionConfirm($id){
+    public function subscriptionConfirm($id)
+    {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         try {
             $id = decrypt($id);
         } catch (\RuntimeException $e) {
@@ -750,36 +824,44 @@ class FrontendController extends Controller
         $user->save();
         return redirect('dashboard')->with('success', __('Successfully Subscribed'));
     }
+
     /*
     |--------------------------------------------------------------------------
-    | Free Subscription Confirm
+    | Job Application Checkout
     |--------------------------------------------------------------------------
     */
-    public function jobApplyCheckout(){
+    public function jobApplyCheckout()
+    {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $data = Session::get('jobData');
         if (!empty($data)) {
             return view('frontend.checkout.checkout-job-application');
-        }else{
+        } else {
             return redirect('dashboard');
         }
     }
+
 
     /*
     |--------------------------------------------------------------------------
     | Remove Doc
     |--------------------------------------------------------------------------
     */
-    public function removeDoc(Request $request){
-        $user = User::where('id',$request->user_id)->first();
+    public function removeDoc(Request $request)
+    {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
+        $user = User::where('id', $request->user_id)->first();
         $doc = $request->doc;
-        if ($doc == 1){
-            $user->doc_1 ='';
+        if ($doc == 1) {
+            $user->doc_1 = '';
             $user->save();
-        }elseif ($doc == 2){
-            $user->doc_2 ='';
+        } elseif ($doc == 2) {
+            $user->doc_2 = '';
             $user->save();
-        }else{
-            $user->doc_3 ='';
+        } else {
+            $user->doc_3 = '';
             $user->save();
         }
     }
@@ -790,18 +872,21 @@ class FrontendController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function taskWorkerList(Request $request){
+    public function taskWorkerList(Request $request)
+    {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $query = User::with('userRating')
-            ->select('users.*','countries.name as country_name')
-            ->join('countries','countries.id','=','users.country')
-            ->where('users.user_type','service_provider');
-        if (!empty($request->keyword)){
-            $query->where('first_name','like','%'.$request->keyword.'%');
-            $query->orWhere('last_name','like','%'.$request->keyword.'%');
+            ->select('users.*', 'countries.name as country_name')
+            ->join('countries', 'countries.id', '=', 'users.country')
+            ->where('users.user_type', 'service_provider');
+        if (!empty($request->keyword)) {
+            $query->where('first_name', 'like', '%' . $request->keyword . '%');
+            $query->orWhere('last_name', 'like', '%' . $request->keyword . '%');
         }
-        $workers = $query->orderBy('promotion_expire','desc')
+        $workers = $query->orderBy('promotion_expire', 'desc')
             ->paginate(27);
-        return view('frontend.freelancer.list',compact('workers'));
+        return view('frontend.freelancer.list', compact('workers'));
     }
 
     /*
@@ -810,7 +895,10 @@ class FrontendController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function contactPage(){
+    public function contactPage()
+    {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         return view('frontend.pages.contact');
     }
 
@@ -820,7 +908,10 @@ class FrontendController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function submitContactForm(Request $request){
+    public function submitContactForm(Request $request)
+    {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required',
@@ -840,7 +931,7 @@ class FrontendController extends Controller
             'description' => $request->description,
         );
         ContactSupport::create($data);
-        return redirect()->back()->with('success',__('Your message successfully submitted.'));
+        return redirect()->back()->with('success', __('Your message successfully submitted.'));
     }
 
     /*
@@ -848,9 +939,54 @@ class FrontendController extends Controller
     | Lotto Prizes
     |--------------------------------------------------------------------------
     */
-    public function lottoPrizes(){
-        $prizes = LottoPriz::where('status','active')->get();
-        return view('frontend.pages.prize',compact('prizes'));
+    public function lottoPrizes()
+    {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
+        $title = 'title_'.$lang;
+        $details = 'details_'.$lang;
+        $prizes = LottoPriz::select("$title as title","$details as details")->where('status', 'active')->get();
+        return view('frontend.pages.prize', compact('prizes'));
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Privacy Policy
+    |--------------------------------------------------------------------------
+    */
+    public function privacyPolicyPage()
+    {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
+        $content = 'content_'.$lang;
+        $content = Page::select("$content as data")->where('page_name','privacy_policy')->first();
+        return view('frontend.pages.privacy-policy', compact('content'));
+    }
+    /*
+    |--------------------------------------------------------------------------
+    | Terms and conditions
+    |--------------------------------------------------------------------------
+    */
+    public function termsConditionsPage()
+    {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
+        $content = 'content_'.$lang;
+        $content = Page::select("$content as data")->where('page_name','terms_conditions')->first();
+        return view('frontend.pages.terms-conditions', compact('content'));
+    }
+    /*
+    |--------------------------------------------------------------------------
+    | About Us
+    |--------------------------------------------------------------------------
+    */
+    public function aboutUs()
+    {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
+        $content = 'content_'.$lang;
+        $content = Page::select("$content as data")->where('page_name','about_us')->first();
+        return view('frontend.pages.about-us', compact('content'));
     }
 
 }

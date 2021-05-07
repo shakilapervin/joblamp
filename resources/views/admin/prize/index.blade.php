@@ -79,7 +79,7 @@
                                             {{ $sl }}
                                         </td>
                                         <td>
-                                            {{ $prize->title }}
+                                            {{ $prize->title_en }}
                                         </td>
                                         <td>
                                             @if($prize->status == 'active')

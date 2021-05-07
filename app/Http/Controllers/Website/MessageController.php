@@ -19,6 +19,8 @@ class MessageController extends Controller
     */
     public function index()
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $id = Auth::id();
         $contacts = UserChat::with('receiver')->where('sender_id', $id)->orderBy('created_at', 'desc')->get();
         return view('frontend.message.index', compact('contacts'));
@@ -31,6 +33,8 @@ class MessageController extends Controller
     */
     public function chat($id)
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $sender = Auth::user();
         $chat = UserChat::where('sender_id', $sender->id)->where('receiver_id', $id)->first();
         $receiver2 = UserChat::where('sender_id', $id)->where('receiver_id', $sender->id)->first();
@@ -61,6 +65,8 @@ class MessageController extends Controller
     |--------------------------------------------------------------------------
     */
     public function getCurrentTime(){
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $date = date('M d, Y');
         $time = date('h:i A');
         return response()->json(compact('date','time'));
@@ -72,6 +78,8 @@ class MessageController extends Controller
     */
     public function chatUpdateTime(Request $request)
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         UserChat::where('sender_id', $request->sender_id)
             ->where('receiver_id', $request->receiver_id)
             ->update(array('created_at' => date('Y-m-d H:i:s')));
@@ -90,6 +98,8 @@ class MessageController extends Controller
     */
     public function saveChatFile(Request $request)
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $validator = Validator::make($request->all(), [
             'chat_file' => 'required|mimes:jpg,jpeg,png,bmp,tiff,pdf,zip,doc,docx,txt,svg,gif',
         ]);
@@ -118,6 +128,8 @@ class MessageController extends Controller
     |--------------------------------------------------------------------------
     */
     public function downloadChatFile($file){
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         return Storage::download('chat-file/'.$file);
     }
 }

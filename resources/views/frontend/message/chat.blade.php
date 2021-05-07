@@ -32,12 +32,12 @@
 
                         <!-- Messages -->
                         <div class="messages-inbox">
-                            <div class="messages-headline">
-                                <div class="input-with-icon">
-                                    <input id="autocomplete-input" type="text" placeholder="Search">
-                                    <i class="icon-material-outline-search"></i>
-                                </div>
-                            </div>
+{{--                            <div class="messages-headline">--}}
+{{--                                <div class="input-with-icon">--}}
+{{--                                    <input id="autocomplete-input" type="text" placeholder="Search">--}}
+{{--                                    <i class="icon-material-outline-search"></i>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
                             <ul class="contact-list">
                                 @foreach($contacts as $contact)

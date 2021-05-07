@@ -41,6 +41,8 @@ class PaymentController extends Controller
     */
     public function jobCheckout($jobId, $serviceProviderId)
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         try {
             $jobId = decrypt($jobId);
         } catch (\RuntimeException $e) {
@@ -65,6 +67,8 @@ class PaymentController extends Controller
     */
     public function captureJobPayment(Request $request)
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $userId = Auth::id();
         $user = User::where('id', $userId)->first();
         $amount = JobApplication::where('job_id', $request->jobId)->where('candidate_id', $request->candidateId)->first();
@@ -123,6 +127,8 @@ class PaymentController extends Controller
     */
     public function apiJobCheckout($user_id, $job_id, $applicant_id)
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $userId = $user_id;
         $jobId = $job_id;
         $serviceProviderId = $applicant_id;
@@ -139,6 +145,8 @@ class PaymentController extends Controller
     */
     public function apiCaptureJobPayment(Request $request)
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $userId = $request->user_id;
         $user = User::where('id', $userId)->first();
         $amount = JobApplication::where('job_id', $request->jobId)->where('candidate_id', $request->candidateId)->first();
@@ -185,6 +193,8 @@ class PaymentController extends Controller
 
     public function apiCaptureJobPaypalPayment($user_id, $job_id, $applicant_id)
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         session()->put('jobId', $job_id);
         session()->put('candidateId', $applicant_id);
         session()->put('userId', $user_id);
@@ -212,6 +222,8 @@ class PaymentController extends Controller
 
     public function apiJobPaymentCancel()
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $status = false;
         $message = 'Payment error';
         return response()->json(compact('status', 'message'));
@@ -219,6 +231,8 @@ class PaymentController extends Controller
 
     public function apiJobPaymentSuccess(Request $request)
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $jobId = session()->get('jobId');
         $userId = session()->get('userId');
         $user = User::where(id, $userId)->first();
@@ -276,6 +290,8 @@ class PaymentController extends Controller
 
     public function handlePaypalPayment($jobId, $serviceProviderId)
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         try {
             $jobId = decrypt($jobId);
         } catch (\RuntimeException $e) {
@@ -316,11 +332,15 @@ class PaymentController extends Controller
 
     public function paymentCancel()
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         return redirect()->back()->with('error', __('An error occurred, Please try again!'));
     }
 
     public function paymentSuccess(Request $request)
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $jobId = session()->get('jobId');
         $user = Auth::user();
         $candidateId = session()->get('candidateId');
@@ -384,6 +404,8 @@ class PaymentController extends Controller
     */
     public function captureSubscriptionPayment(Request $request)
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $userId = Auth::id();
         $user = User::where('id', $userId)->first();
         $amount = SubscriptionPlanPrice::where('plan_id', $request->planId)->where('country_id', $user->country)->first();
@@ -428,6 +450,8 @@ class PaymentController extends Controller
     */
     public function captureSubscriptionPaypalPayment($planId)
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         try {
             $id = decrypt($planId);
         } catch (\RuntimeException $e) {
@@ -459,6 +483,8 @@ class PaymentController extends Controller
 
     public function paymentSubsSuccess(Request $request)
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $userId = Auth::id();
         $user = User::where('id', $userId)->first();
         $plan = SubscriptionPlan::where('id', $request->planId)->first();
@@ -503,6 +529,8 @@ class PaymentController extends Controller
 
     public function paymentSubsCancel()
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         return redirect()->back()->with('error', __('Payment canceled'));
     }
 
@@ -513,6 +541,8 @@ class PaymentController extends Controller
     */
     public function captureJobApplicationPayment(Request $request)
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $user = Auth::user();
         $amount = 2;
         Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
@@ -563,7 +593,8 @@ class PaymentController extends Controller
     */
     public function handleJobApplicationPaypalPayment()
     {
-
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         try {
             $response = $this->gateway->purchase(array(
                 'amount' => 2,
@@ -584,6 +615,8 @@ class PaymentController extends Controller
 
     public function paymentJobApplicationSuccess(Request $request)
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $user = Auth::user();
         if ($request->input('paymentId') && $request->input('PayerID')) {
             $transaction = $this->gateway->completePurchase(array(
@@ -634,6 +667,8 @@ class PaymentController extends Controller
 
     public function paymentJobApplicationCancel()
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         return redirect()->back()->with('error', __('Payment canceled'));
     }
 
@@ -644,6 +679,8 @@ class PaymentController extends Controller
     */
     public function promoteProfileCheckout()
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $cost = Charge::latest('id')->first()->promote;
         return view('frontend.checkout.checkout-promote-profile', compact('cost'));
     }
@@ -655,6 +692,8 @@ class PaymentController extends Controller
     */
     public function stripePaymentForProfilePromote(Request $request)
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $userId = Auth::id();
         $user = User::where('id', $userId)->first();
         $amount = Charge::latest('id')->first()->promote;
@@ -689,6 +728,8 @@ class PaymentController extends Controller
     */
     public function paypalPaymentForProfilePromote()
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $amount = Charge::latest('id')->first()->promote;
         try {
             $response = $this->gateway->purchase(array(
@@ -710,6 +751,8 @@ class PaymentController extends Controller
 
     public function paymentPromoteSuccess(Request $request)
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $userId = Auth::id();
         $user = User::where('id', $userId)->first();
         // Once the transaction has been approved, we need to complete it.
@@ -744,6 +787,150 @@ class PaymentController extends Controller
 
     public function paymentPromoteCancel()
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         return redirect()->back()->with('error', __('Payment canceled'));
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Job Application Checkout Api
+    |--------------------------------------------------------------------------
+    */
+    public function apiJobApplyCheckout($user_id, $job_id)
+    {
+        Session::put('user_id', $user_id);
+        Session::put('job_id', $job_id);
+        return view('api.checkout.job-application-checkout', compact('job_id', 'user_id'));
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Capture Card Job Application Application Payment
+    |--------------------------------------------------------------------------
+    */
+    public function apiCaptureStripeJobApplicationPayment(Request $request)
+    {
+        $userId = Session::get('user_id');
+        $jobId = Session::get('job_id');
+        $user = User::where('id', $userId)->first();
+        $amount = 2;
+        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        $tx = Stripe\Charge::create([
+            "amount" => $amount * 100,
+            "currency" => env('CURRENCY'),
+            "source" => $request->stripeToken,
+            "description" => "Joblamp",
+        ]);
+        $transaction = array(
+            'transaction_id' => $tx->id,
+            'payment_method' => 'Stripe',
+            'user_id' => $user->id,
+            'narration' => $user->first_name . ' ' . $user->last_name . '- Job application charge',
+        );
+        Transaction::create($transaction);
+        $job = Job::with('creatorDetails')->where('id', $jobId)->first();
+        $mailData = array();
+        $mailAddress = $job->creatorDetails->email;
+        try {
+            Mail::send('mail.application-submitted', $mailData, function ($message) use ($mailAddress) {
+                $message->to($mailAddress)->subject('A new candidate applied on your job');
+                $message->from(env('MAIL_FROM_ADDRESS'), 'Joblamp');
+            });
+        } catch (\Exception $e) {
+
+        }
+        $notification = array(
+            'user_id' => $job->creatorDetails->id,
+            'description' => 'A new candidate applied on your job',
+        );
+        Notification::create($notification);
+        $status = true;
+        $message = __('Payment Done');
+        return response()->json(compact('status', 'message'));
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Capture Paypal Job Application Payment
+    |--------------------------------------------------------------------------
+    */
+    public function apiCaptureJobApplicationPaypalPayment()
+    {
+        try {
+            $response = $this->gateway->purchase(array(
+                'amount' => 2,
+                'currency' => env('PAYPAL_CURRENCY'),
+                'returnUrl' => route('api.success.job.application.paypal.payment'),
+                'cancelUrl' => route('api.cancel.job.application.paypal.payment'),
+            ))->send();
+
+            if ($response->isRedirect()) {
+                $response->redirect();
+            } else {
+                return $response->getMessage();
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function apiPaymentJobApplicationSuccess(Request $request)
+    {
+        $userId = Session::get('user_id');
+        $jobId = Session::get('job_id');
+        $user = User::where('id', $userId)->first();
+        if ($request->input('paymentId') && $request->input('PayerID')) {
+            $transaction = $this->gateway->completePurchase(array(
+                'payer_id' => $request->input('PayerID'),
+                'transactionReference' => $request->input('paymentId'),
+            ));
+            $response = $transaction->send();
+
+            if ($response->isSuccessful()) {
+                $transaction = array(
+                    'transaction_id' => $request->input('paymentId'),
+                    'payment_method' => 'Paypal',
+                    'user_id' => $user->id,
+                    'narration' => $user->first_name . ' ' . $user->last_name . '- Job application charge',
+                );
+                Transaction::create($transaction);
+                $job = Job::with('creatorDetails')->where('id', $jobId)->first();
+                $mailData = array();
+                $mailAddress = $job->creatorDetails->email;
+                try {
+                    Mail::send('mail.application-submitted', $mailData, function ($message) use ($mailAddress) {
+                        $message->to($mailAddress)->subject('A new candidate applied on your job');
+                        $message->from(env('MAIL_FROM_ADDRESS'), 'Joblamp');
+                    });
+                } catch (\Exception $e) {
+
+                }
+                $notification = array(
+                    'user_id' => $job->creatorDetails->id,
+                    'description' => 'A new candidate applied on your job',
+                );
+                Notification::create($notification);
+                $status = true;
+                $message = __('Payment Done');
+                return response()->json(compact('status','message'));
+            } else {
+                $status = false;
+                $message = $response->getMessage();
+                return response()->json(compact('status','message'));
+            }
+        } else {
+            $status = false;
+            $message = __('Payment Failed');
+            return response()->json(compact('status','message'));
+        }
+    }
+
+    public function apiPaymentJobApplicationCancel()
+    {
+        $status = false;
+        $message = __('Payment Failed');
+        return response()->json(compact('status','message'));
     }
 }

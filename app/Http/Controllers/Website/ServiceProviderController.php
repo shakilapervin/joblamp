@@ -25,6 +25,8 @@ class ServiceProviderController extends Controller
     */
     public function manageJob($jobId)
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         try {
             $jobId = decrypt($jobId);
         } catch (\RuntimeException $e) {
@@ -53,6 +55,8 @@ class ServiceProviderController extends Controller
     */
     public function markJobComleted(Request $request)
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $validator = Validator::make($request->all(), [
             'delivery_text' => 'required',
             'delivery_file' => 'mimes:jpg,jpeg,png,bmp,tiff,pdf,zip,psd,ai'
@@ -139,6 +143,8 @@ class ServiceProviderController extends Controller
     |--------------------------------------------------------------------------
     */
     public function appliedJobs(){
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $user = Auth::user();
         $jobs = JobApplication::where('candidate_id',$user->id)->where('status','applied')->get();
         return view('frontend.freelancer.applied-jobs',compact('jobs'));
@@ -149,6 +155,8 @@ class ServiceProviderController extends Controller
     |--------------------------------------------------------------------------
     */
     public function activeJobs(){
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $user = Auth::user();
         $jobs = UserJob::with('jobDetails')->where('service_provider_id',$user->id)->where('status','opened')->get();
         return view('frontend.freelancer.active-jobs',compact('jobs'));
@@ -159,6 +167,8 @@ class ServiceProviderController extends Controller
     |--------------------------------------------------------------------------
     */
     public function deliveredJobs(){
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $user = Auth::user();
         $jobs = UserJob::with('jobDetails')->where('service_provider_id',$user->id)->where('status','delivered')->get();
         return view('frontend.freelancer.delivered-jobs',compact('jobs'));

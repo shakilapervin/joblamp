@@ -46,8 +46,18 @@ class LottoPrizController extends Controller
             return redirect()->route('admin.dashboard');
         }
         $validator = Validator::make($request->all(), [
-            'title' => 'required',
-            'details' => 'required',
+            'title_en' => 'required',
+            'title_es' => 'required',
+            'title_fr' => 'required',
+            'title_de' => 'required',
+            'title_pt' => 'required',
+            'title_ro' => 'required',
+            'details_en' => 'required',
+            'details_es' => 'required',
+            'details_fr' => 'required',
+            'details_de' => 'required',
+            'details_pt' => 'required',
+            'details_ro' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -56,8 +66,18 @@ class LottoPrizController extends Controller
                 ->withInput();
         }
         $data = array(
-            'title' => $request->title,
-            'details' => $request->details,
+            'title_en' => $request->title_en,
+            'title_es' => $request->title_es,
+            'title_fr' => $request->title_fr,
+            'title_de' => $request->title_de,
+            'title_pt' => $request->title_pt,
+            'title_ro' => $request->title_ro,
+            'details_en' => $request->details_en,
+            'details_es' => $request->details_es,
+            'details_fr' => $request->details_fr,
+            'details_de' => $request->details_de,
+            'details_pt' => $request->details_pt,
+            'details_ro' => $request->details_ro,
         );
         LottoPriz::create($data);
         return redirect()->route('admin.lotto.prizes')->with('success',__('Successfully Added!'));
@@ -86,8 +106,18 @@ class LottoPrizController extends Controller
             return redirect()->route('admin.dashboard');
         }
         $validator = Validator::make($request->all(), [
-            'title' => 'required',
-            'details' => 'required',
+            'title_en' => 'required',
+            'title_es' => 'required',
+            'title_fr' => 'required',
+            'title_de' => 'required',
+            'title_pt' => 'required',
+            'title_ro' => 'required',
+            'details_en' => 'required',
+            'details_es' => 'required',
+            'details_fr' => 'required',
+            'details_de' => 'required',
+            'details_pt' => 'required',
+            'details_ro' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -96,11 +126,21 @@ class LottoPrizController extends Controller
                 ->withInput();
         }
         $prize = LottoPriz::where('id',$request->id)->first();
-        $prize->title = $request->title;
-        $prize->details = $request->details;
+        $prize->title_en = $request->title_en;
+        $prize->title_es = $request->title_es;
+        $prize->title_fr = $request->title_fr;
+        $prize->title_de = $request->title_de;
+        $prize->title_pt = $request->title_pt;
+        $prize->title_ro = $request->title_ro;
+        $prize->details_en = $request->details_en;
+        $prize->details_es = $request->details_es;
+        $prize->details_fr = $request->details_fr;
+        $prize->details_de = $request->details_de;
+        $prize->details_pt = $request->details_pt;
+        $prize->details_ro = $request->details_ro;
         $prize->status = $request->status;
         $prize->save();
-        return redirect()->route('admin.banners')->with('success',__('Successfully Added!'));
+        return redirect()->route('admin.lotto.prizes')->with('success',__('Successfully Added!'));
     }
 
     /*

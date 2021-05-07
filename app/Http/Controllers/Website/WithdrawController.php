@@ -21,6 +21,8 @@ class WithdrawController extends Controller
     */
     public function index()
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $countryList = new Countries();
         $countries = $countryList->all()->toArray();
         $currencies = $countryList->currencies();
@@ -40,6 +42,8 @@ class WithdrawController extends Controller
     */
     public function updateWithdrawMethod(Request $request)
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $user = Auth::user();
         if ($request->type == 'bank_account') {
             $validator = Validator::make($request->all(), [
@@ -115,6 +119,8 @@ class WithdrawController extends Controller
     */
     public function withdrawRequest(Request $request)
     {
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
         $validator = Validator::make($request->all(), [
             'withdraw_method' => 'required',
             'amount' => 'required',

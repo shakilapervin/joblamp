@@ -19,8 +19,8 @@
                     <!-- Breadcrumbs -->
                     <nav id="breadcrumbs" class="dark">
                         <ul>
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">Dashboard</a></li>
+                            <li><a href="{{ route('home') }}">{{__('Home')}}</a></li>
+                            <li><a href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a></li>
                             <li>Messages</li>
                         </ul>
                     </nav>
@@ -32,12 +32,12 @@
 
                         <!-- Messages -->
                         <div class="messages-inbox">
-                            <div class="messages-headline">
-                                <div class="input-with-icon">
-                                    <input id="autocomplete-input" type="text" placeholder="Search">
-                                    <i class="icon-material-outline-search"></i>
-                                </div>
-                            </div>
+{{--                            <div class="messages-headline">--}}
+{{--                                <div class="input-with-icon">--}}
+{{--                                    <input id="autocomplete-input" type="text" placeholder="Search">--}}
+{{--                                    <i class="icon-material-outline-search"></i>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
                             <ul>
                                 @foreach($contacts as $contact)
@@ -59,9 +59,7 @@
                                             <div class="message-by">
                                                 <div class="message-by-headline">
                                                     <h5>{{ $contact->receiver->first_name }} {{ $contact->receiver->last_name }}</h5>
-                                                    <span>2 days ago</span>
                                                 </div>
-                                                <p>Yes, I received payment. Thanks for cooperation!</p>
                                             </div>
                                         </a>
                                     </li>

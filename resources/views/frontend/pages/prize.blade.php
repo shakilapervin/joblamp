@@ -41,7 +41,8 @@
                 <div class="pricing-plans-container">
                 @foreach($prizes as $prize)
                     <!-- Prize -->
-                        <div class="pricing-plan" style="border-left: 1px solid;border-bottom: 1px solid; border-top: 1px solid;">
+                        <div class="pricing-plan"
+                             style="border-left: 1px solid;border-bottom: 1px solid; border-top: 1px solid;">
                             <h3>{{ $prize->title }}</h3>
                             <div class="pricing-plan-features">
                                 <p>

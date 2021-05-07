@@ -114,9 +114,9 @@
                     <div class="footer-links">
                         <h3>Helpful Links</h3>
                         <ul>
-                            <li><a href="{{ route('contact.us') }}"><span>Contact</span></a></li>
-                            <li><a href="#"><span>Privacy Policy</span></a></li>
-                            <li><a href="#"><span>Terms of Use</span></a></li>
+                            <li><a href="{{ route('contact.us') }}"><span>{{ __('Contact') }}</span></a></li>
+                            <li><a href="{{ route('privacy.policy') }}"><span>{{ __('Privacy Policy') }}</span></a></li>
+                            <li><a href="{{ route('terms.conditions') }}"><span>{{ __('Terms and Conditions') }}</span></a></li>
                             <li><a href="{{ route('lotto.prizes') }}"><span>{{ __('Lotto Prize') }}</span></a></li>
                         </ul>
                     </div>
