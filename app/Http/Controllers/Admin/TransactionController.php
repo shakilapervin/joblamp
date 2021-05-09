@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Transaction;
 use App\User;
+use App\UserTransaction;
 use App\UserWithdrawMethod;
 use App\WithdrawRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use PragmaRX\Countries\Package\Countries;
+use Illuminate\Support\Facades\DB;
 class TransactionController extends Controller
 {
     /*
@@ -63,5 +65,19 @@ class TransactionController extends Controller
     public function paidRequests(){
         $rows = WithdrawRequest::where('status','paid')->get();
         return view('admin.withdraw.index',compact('rows'));
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Pending Payouts
+    |--------------------------------------------------------------------------
+    */
+    public function pendingPayouts(){
+        $rows = DB::table('user_transactions')
+                ->select('users.*',DB::raw('sum(user_transactions.credit) - sum(user_transactions.debit) as amount'))
+                ->join('users','user_transactions.user_id','=','users.id')
+                ->groupBy('user_transactions.user_id')
+                ->paginate(50);
+        return view('admin.withdraw.pending-payouts',compact('rows'));
     }
 }

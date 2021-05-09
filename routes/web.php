@@ -355,6 +355,7 @@ Route::group(['middleware' => ['admin']], function () {
     */
     Route::get('admin-withdraw-not-paid', 'Admin\TransactionController@notPaidRequests')->name('admin.withdraw.not.paid');
     Route::get('admin-withdraw-paid', 'Admin\TransactionController@paidRequests')->name('admin.withdraw.paid');
+    Route::get('admin-pending-payouts', 'Admin\TransactionController@pendingPayouts')->name('admin.withdraw.pending.payouts');
     Route::get('admin-withdraw-details/{id}', 'Admin\TransactionController@withdrawDetails')->name('admin.withdraw.request.view');
     Route::get('admin-mark-withdraw-request-paid/{id}', 'Admin\TransactionController@markWithdrawRequestPaid')->name('admin.mark.withdraw.request.paid');
 
