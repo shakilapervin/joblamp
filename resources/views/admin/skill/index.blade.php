@@ -79,7 +79,7 @@
                                             {{ $sl }}
                                         </td>
                                         <td>
-                                            {{ $skill->name }}
+                                            {{ $skill->name_en }}
                                         </td>
                                         <td>
                                             @if($skill->status == 'active')

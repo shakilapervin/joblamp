@@ -5,7 +5,7 @@
     <div class="hero-banner">
         <div class="hero-slider">
             @foreach($banners as $banner)
-            <div class="hero-item" style="background: url('{{ asset(''.$banner->image) }}');background-size: cover;">
+            <div class="hero-item" style="background: url('{{ asset($banner->image) }}');background-size: cover;">
                 <div class="hero-title">
                     {{ $banner->title }}
                 </div>
@@ -242,9 +242,15 @@
                     @foreach($subscriptionPlans as $plan)
                         <!-- Plan -->
                             <div class="pricing-plan @if($plan->recommended == 1) recommended @endif">
-                                <h3>{{ __($plan->title) }}</h3>
+                                @php
+                                    $lang = session()->get('lang')?: 'en';
+                                    $title = 'title_'.$lang;
+                                    $description = 'description_'.$lang;
+                                    $content = 'content_'.$lang;
+                                @endphp
+                                <h3>{{ __($plan[$title]) }}</h3>
                                 <p class="margin-top-10">
-                                    {{ __($plan->description) }}
+                                    {{ __($plan[$description]) }}
                                 </p>
                                 <div class="pricing-plan-label billed-monthly-label">
                                     <strong>${{ $plan->default_price }}</strong>/ {{ __('monthly') }}
@@ -252,10 +258,10 @@
                                 <div class="pricing-plan-label billed-yearly-label">
                                     <strong>${{ $plan->default_price*12 }}</strong>/ {{ __('yearly') }}</div>
                                 <div class="pricing-plan-features">
-                                    <strong>{{ __('Features of') }} {{ __($plan->title) }}</strong>
+                                    <strong>{{ __('Features of') }} {{ $plan[$title] }}</strong>
                                     <ul>
                                         @foreach($plan->features as  $feature)
-                                            <li>{{ __($feature->content) }}</li>
+                                            <li>{{ $feature[$content] }}</li>
                                         @endforeach
                                     </ul>
                                 </div>

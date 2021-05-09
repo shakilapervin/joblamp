@@ -1,4 +1,7 @@
 <?php
+
+use Illuminate\Support\Facades\DB;
+
 function admin_asset($path, $secure = null)
 {
     return app('url')->asset('assets/admin/' . $path, $secure);
@@ -24,7 +27,11 @@ function calculateRating($ratings)
     return $ratingAverage;
 }
 function jobcategories(){
-    $jobCategories = \App\JobCategory::where('status',1)->get();
+    $lang = session()->get('lang')?: 'en';
+    app()->setLocale($lang);
+    $categoryNameLang = 'name_'.$lang;
+    $categoryDescriptionLang = 'description_'.$lang;
+    $jobCategories = \App\JobCategory::select("$categoryNameLang as name","$categoryDescriptionLang as description",'job_categories.id','job_categories.icon')->where('status',1)->get();
     return $jobCategories;
 }
 function languages(){

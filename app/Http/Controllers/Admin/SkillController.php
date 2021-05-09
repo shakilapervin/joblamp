@@ -46,7 +46,12 @@ class SkillController extends Controller
             return redirect()->route('admin.dashboard');
         }
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'name_en' => 'required',
+            'name_es' => 'required',
+            'name_fr' => 'required',
+            'name_de' => 'required',
+            'name_ro' => 'required',
+            'name_pt' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -55,7 +60,12 @@ class SkillController extends Controller
                 ->withInput();
         }
         $data = array(
-            'name' => $request->name
+            'name_en' => $request->name_en,
+            'name_es' => $request->name_es,
+            'name_fr' => $request->name_fr,
+            'name_de' => $request->name_de,
+            'name_ro' => $request->name_ro,
+            'name_pt' => $request->name_pt,
         );
         Skill::create($data);
         return redirect()->route('admin.skills')->with('success',__('Successfully Added!'));
@@ -84,7 +94,12 @@ class SkillController extends Controller
             return redirect()->route('admin.dashboard');
         }
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'name_en' => 'required',
+            'name_es' => 'required',
+            'name_fr' => 'required',
+            'name_de' => 'required',
+            'name_ro' => 'required',
+            'name_pt' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -93,7 +108,12 @@ class SkillController extends Controller
                 ->withInput();
         }
         $skill = Skill::where('id',$request->id)->first();
-        $skill->name = $request->name;
+        $skill->name_en = $request->name_en;
+        $skill->name_es = $request->name_es;
+        $skill->name_fr = $request->name_fr;
+        $skill->name_de = $request->name_de;
+        $skill->name_ro = $request->name_ro;
+        $skill->name_pt = $request->name_pt;
         $skill->status = $request->status;
         $skill->save();
         return redirect()->route('admin.skills')->with('success',__('Successfully Updated!'));

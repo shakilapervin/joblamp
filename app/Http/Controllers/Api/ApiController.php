@@ -195,7 +195,12 @@ class ApiController extends Controller
                 ->count();
             $data[] = array(
                 'category_id' => $category->id,
-                'name' => $category->name,
+                'name_en' => $category->name_en,
+                'name_es' => $category->name_es,
+                'name_de' => $category->name_de,
+                'name_fr' => $category->name_fr,
+                'name_pt' => $category->name_pt,
+                'name_ro' => $category->name_ro,
                 'total_job' => $jobCount,
             );
         }
@@ -207,6 +212,7 @@ class ApiController extends Controller
     | Profile
     |--------------------------------------------------------------------------
     */
+
     public function profile(Request $request)
     {
         $status = true;
@@ -218,7 +224,7 @@ class ApiController extends Controller
         $userSkills = json_decode($user->skill);
         if (!empty($userSkills)) {
             foreach ($userSkills as $skill) {
-                $skills[] = Skill::where('id', $skill)->first()->name;
+                $skills[] = Skill::where('id', $skill)->first();
             }
         }
         $reviews = Rating::where('user_id', $request->user_id)->get();
@@ -239,9 +245,11 @@ class ApiController extends Controller
             'rating' => calculateRating($reviews),
             'skills' => $skills,
             'total_reviews' => count($reviews),
+            'remaining_jobs' => $user->remain_job,
         );
         return response()->json(compact('status', 'data'));
     }
+
 
     /*
     |--------------------------------------------------------------------------
@@ -792,9 +800,51 @@ class ApiController extends Controller
 
             }
             return response()->json(compact('status', 'message'));
-        } else {
+        }
+        else if($request->single_payment == true)
+        {
+            JobApplication::create($data);
+            $status = true;
+            $message = 'Successfully Applied!';
+            $mailData = array();
+            $mailAddress = $job->creatorDetails->email;
+            try {
+                Mail::send('mail.application-submitted', $mailData, function ($message) use ($mailAddress) {
+                    $message->to($mailAddress)->subject('A new candidate applied on your job');
+                    $message->from(env('MAIL_FROM_ADDRESS'), 'Joblamp');
+                });
+            } catch (\Exception $e) {
+
+            }
+            $notification = array(
+                'user_id' => $job->creatorDetails->id,
+                'description' => 'A new candidate applied on your job',
+            );
+            Notification::create($notification);
+            $headers = array(
+                'Authorization: key=' . env('FIREBASE_API_KEY'),
+                'Content-Type: application/json'
+            );
+            $msg = array(
+                'title' => 'A new candidate applied on your job',
+                'body' => "A new candidate applied on your job",
+            );
+
+            $fields = array(
+                'registration_ids' => $job->creatorDetails->device_token,
+                'notification' => $msg,
+                'data' => "A new candidate applied on your job"
+            );
+            try {
+                Http::withHeaders($headers)->post('https://fcm.googleapis.com/fcm/send', $fields);
+            } catch (\Exception $e) {
+
+            }
+            return response()->json(compact('status', 'message'));
+        }
+        else {
             $status = false;
-            $message = 'Your job application limit exceed! please subscribe our subscription plan';
+            $message = 'Your job application limit exceeded! please subscribe our subscription plan';
             return response()->json(compact('status', 'message'));
         }
     }
@@ -1055,7 +1105,7 @@ class ApiController extends Controller
             foreach ($banners as $banner){
                 $data[] = array(
                     'title' => $banner->title,
-                    'image' => asset('public/'.$banner->image),
+                    'image' => asset($banner->image),
                 );
             }
             return response()->json(compact('data'));
@@ -1278,11 +1328,11 @@ class ApiController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors());
         }
-        $user = User::where('id',$request->id)->first();
+        $user = User::where('id',$request->user_id)->first();
         $skills = array();
         $dataSkill = json_decode($request->skills);
         if (count($dataSkill) > 0) {
-            foreach ($request->skills as $no) {
+            foreach ($dataSkill as $no) {
                 array_push($skills, $no);
             }
             $user->skill = $skills;
@@ -1290,7 +1340,8 @@ class ApiController extends Controller
         $user->save();
         $status = true;
         $message = 'Success';
-        return response()->json(compact('status', 'message'));
+        return response()->json(compact('status', 'message','user'));
+
     }
 
     /*

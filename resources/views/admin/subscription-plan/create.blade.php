@@ -56,14 +56,149 @@
                     <div class="card-body">
                         <div class="form-group row">
                             <label for="colFormLabelSm"
-                                   class="col-sm-12 col-form-label">{{ __('Title') }}</label>
-                            <div class="col-sm-12">
+                                   class="col-md-2 col-form-label">{{ __('Title English') }}</label>
+                            <div class="col-sm-4">
                                 <input type="text"
-                                       class="form-control form-control @error('title') is-invalid @enderror"
-                                       id="colFormLabelSm" placeholder="{{ __('Plan title') }}" name="title"
+                                       class="form-control form-control @error('title_en') is-invalid @enderror"
+                                       id="colFormLabelSm" name="title_en"
                                        required
-                                       value="{{ old('title') }}">
-                                @error('title')
+                                       value="{{ old('title_en') }}">
+                                @error('title_en')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <label for="colFormLabelSm"
+                                   class="col-md-2 col-form-label">{{ __('Description English') }}</label>
+                            <div class="col-md-4">
+                                <textarea name="description_en"
+                                          class="form-control @error('description_en') is-invalid @enderror" cols="30"
+                                          rows="10" required>{{ old('description_en') }}</textarea>
+                                @error('description_en')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="colFormLabelSm"
+                                   class="col-md-2 col-form-label">{{ __('Title Spanish') }}</label>
+                            <div class="col-sm-4">
+                                <input type="text"
+                                       class="form-control form-control @error('title_es') is-invalid @enderror"
+                                       id="colFormLabelSm" name="title_es"
+                                       required
+                                       value="{{ old('title_es') }}">
+                                @error('title_es')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <label for="colFormLabelSm"
+                                   class="col-md-2 col-form-label">{{ __('Description English') }}</label>
+                            <div class="col-md-4">
+                                <textarea name="description_es"
+                                          class="form-control @error('description_es') is-invalid @enderror" cols="30"
+                                          rows="10" required>{{ old('description_es') }}</textarea>
+                                @error('description_es')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="colFormLabelSm"
+                                   class="col-md-2 col-form-label">{{ __('Title German') }}</label>
+                            <div class="col-sm-4">
+                                <input type="text"
+                                       class="form-control form-control @error('title_de') is-invalid @enderror"
+                                       id="colFormLabelSm" name="title_de"
+                                       required
+                                       value="{{ old('title_de') }}">
+                                @error('title_de')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <label for="colFormLabelSm"
+                                   class="col-md-2 col-form-label">{{ __('Description German') }}</label>
+                            <div class="col-md-4">
+                                <textarea name="description_de"
+                                          class="form-control @error('description_de') is-invalid @enderror" cols="30"
+                                          rows="10" required>{{ old('description_de') }}</textarea>
+                                @error('description_de')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="colFormLabelSm"
+                                   class="col-md-2 col-form-label">{{ __('Title French') }}</label>
+                            <div class="col-sm-4">
+                                <input type="text"
+                                       class="form-control form-control @error('title_fr') is-invalid @enderror"
+                                       id="colFormLabelSm" name="title_fr"
+                                       required
+                                       value="{{ old('title_fr') }}">
+                                @error('title_fr')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <label for="colFormLabelSm"
+                                   class="col-md-2 col-form-label">{{ __('Description French') }}</label>
+                            <div class="col-md-4">
+                                <textarea name="description_fr"
+                                          class="form-control @error('description_fr') is-invalid @enderror" cols="30"
+                                          rows="10" required>{{ old('description_fr') }}</textarea>
+                                @error('description_fr')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="colFormLabelSm"
+                                   class="col-md-2 col-form-label">{{ __('Title Romania') }}</label>
+                            <div class="col-sm-4">
+                                <input type="text"
+                                       class="form-control form-control @error('title_ro') is-invalid @enderror"
+                                       id="colFormLabelSm" name="title_ro"
+                                       required
+                                       value="{{ old('title_ro') }}">
+                                @error('title_ro')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <label for="colFormLabelSm"
+                                   class="col-md-2 col-form-label">{{ __('Description Romania') }}</label>
+                            <div class="col-md-4">
+                                <textarea name="description_ro"
+                                          class="form-control @error('description_ro') is-invalid @enderror" cols="30"
+                                          rows="10" required>{{ old('description_ro') }}</textarea>
+                                @error('description_ro')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="colFormLabelSm"
+                                   class="col-md-2 col-form-label">{{ __('Title Portuguese') }}</label>
+                            <div class="col-sm-4">
+                                <input type="text"
+                                       class="form-control form-control @error('title_pt') is-invalid @enderror"
+                                       id="colFormLabelSm" name="title_pt"
+                                       required
+                                       value="{{ old('title_pt') }}">
+                                @error('title_pt')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <label for="colFormLabelSm"
+                                   class="col-md-2 col-form-label">{{ __('Description Portuguese') }}</label>
+                            <div class="col-md-4">
+                                <textarea name="description_pt"
+                                          class="form-control @error('description_pt') is-invalid @enderror" cols="30"
+                                          rows="10" required>{{ old('description_pt') }}</textarea>
+                                @error('description_pt')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -101,19 +236,6 @@
                             </div>
                         </div>
 
-
-                        <div class="form-group row">
-                            <label for="colFormLabelSm"
-                                   class="col-sm-12 col-form-label">{{ __('Description') }}</label>
-                            <div class="col-sm-12">
-                                <textarea name="description"
-                                          class="form-control @error('description') is-invalid @enderror" cols="30"
-                                          rows="10" required>{{ old('description') }}</textarea>
-                                @error('description')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
                         <div class="form-group row">
                             <label for="recommended"
                                    class="col-sm-12 col-form-label">{{ __('Recommended') }}</label>
@@ -182,26 +304,66 @@
         <!-- Row end -->
 
     </div>
-@endsection
-@section('script')
+@endsection@section('script')
     <script src="{{ admin_asset('/vendor/select2/dist/js/select2.min.js') }}"></script>
     <script>
         $(document).ready(function () {
             $('.select2').select2();
         });
         function addFeature(){
-            var html = `<div class="form-group row">
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="colFormLabelSm" name="feature[]">
+            var html = `<div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group row">
+                                    <label for="colFormLabelSm"
+                                           class="col-sm-2 col-form-label">{{ __('Feature English') }}</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="colFormLabelSm" name="feature_en[]" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="colFormLabelSm"
+                                           class="col-sm-2 col-form-label">{{ __('Feature Spanish') }}</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="colFormLabelSm" name="feature_es[]" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="colFormLabelSm"
+                                           class="col-sm-2 col-form-label">{{ __('Feature German') }}</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="colFormLabelSm" name="feature_de[]" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="colFormLabelSm"
+                                           class="col-sm-2 col-form-label">{{ __('Feature French') }}</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="colFormLabelSm" name="feature_fr[]" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="colFormLabelSm"
+                                           class="col-sm-2 col-form-label">{{ __('Feature Romania') }}</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="colFormLabelSm" name="feature_ro[]" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="colFormLabelSm"
+                                           class="col-sm-2 col-form-label">{{ __('Feature Portuguese') }}</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="colFormLabelSm" name="feature_pt[]" required>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-sm-2">
+                            <div class="col-md-2">
                                 <button type="button" class="btn btn-danger btn-lg" onclick="removeFeature(this);">{{ __('Remove Feature') }}</button>
                             </div>
                         </div>`;
             $('.feature-list').append(html);
         }
         function removeFeature(){
-            $(event.currentTarget).closest('.form-group').remove();
+            $(event.currentTarget).closest('.row').remove();
         }
     </script>
     <script>

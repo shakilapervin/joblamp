@@ -48,8 +48,18 @@ class JobCategoryController extends Controller
             return redirect()->route('admin.dashboard');
         }
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'description' => 'required',
+            'name_en' => 'required',
+            'name_es' => 'required',
+            'name_fr' => 'required',
+            'name_ro' => 'required',
+            'name_de' => 'required',
+            'name_pt' => 'required',
+            'description_en' => 'required',
+            'description_es' => 'required',
+            'description_fr' => 'required',
+            'description_de' => 'required',
+            'description_ro' => 'required',
+            'description_pt' => 'required',
             'icon' => 'required',
         ]);
 
@@ -59,8 +69,18 @@ class JobCategoryController extends Controller
                 ->withInput();
         }
         $data = array(
-            'name' => $request->name,
-            'description' => $request->description,
+            'name_en' => $request->name_en,
+            'name_es' => $request->name_es,
+            'name_fr' => $request->name_fr,
+            'name_ro' => $request->name_ro,
+            'name_de' => $request->name_de,
+            'name_pt' => $request->name_pt,
+            'description_en' => $request->description_en,
+            'description_es' => $request->description_es,
+            'description_fr' => $request->description_fr,
+            'description_de' => $request->description_de,
+            'description_ro' => $request->description_ro,
+            'description_pt' => $request->description_pt,
             'icon' => $request->icon
         );
 
@@ -95,8 +115,18 @@ class JobCategoryController extends Controller
             return redirect()->route('admin.dashboard');
         }
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'description' => 'required',
+            'name_en' => 'required',
+            'name_es' => 'required',
+            'name_fr' => 'required',
+            'name_ro' => 'required',
+            'name_de' => 'required',
+            'name_pt' => 'required',
+            'description_en' => 'required',
+            'description_es' => 'required',
+            'description_fr' => 'required',
+            'description_de' => 'required',
+            'description_ro' => 'required',
+            'description_pt' => 'required',
             'icon' => 'required',
         ]);
 
@@ -106,8 +136,19 @@ class JobCategoryController extends Controller
                 ->withInput();
         }
         $category = JobCategory::where('id',$request->id)->first();
-        $category->name = $request->name;
-        $category->description = $request->description;
+        $category->name_en = $request->name_en;
+        $category->name_es = $request->name_es;
+        $category->name_fr = $request->name_fr;
+        $category->name_ro = $request->name_ro;
+        $category->name_de = $request->name_de;
+        $category->name_pt = $request->name_pt;
+
+        $category->description_en = $request->description_en;
+        $category->description_es = $request->description_es;
+        $category->description_fr = $request->description_fr;
+        $category->description_de = $request->description_de;
+        $category->description_ro = $request->description_ro;
+        $category->description_pt = $request->description_pt;
         $category->icon = $request->icon;
         $category->status = $request->status;
         $category->save();

@@ -79,7 +79,7 @@
                                             {{ $sl }}
                                         </td>
                                         <td>
-                                            {{ $category->name }}
+                                            {{ $category->name_en }}
                                         </td>
                                         <td>
                                             @if($category->status == 1)

@@ -8,6 +8,11 @@ class SubscriptionPlanFeature extends Model
 {
     protected $fillable = [
         'plan_id',
-        'content',
+        'content_en',
+        'content_es',
+        'content_de',
+        'content_fr',
+        'content_ro',
+        'content_pt',
     ];
 }

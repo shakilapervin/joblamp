@@ -59,8 +59,10 @@ class FrontendController extends Controller
         $banners = Slider::where('status', 'active')->get();
         $jobs = Job::where('status', 'opened')->limit(10)->get();
         $subscriptionPlans = SubscriptionPlan::with('features')->where('status', 'active')->get();
+        $categoryNameLang = 'name_'.$lang;
+        $categoryDescriptionLang = 'description_'.$lang;
         $jobcategories = DB::table('job_categories')
-            ->select('job_categories.*', DB::raw('count(*) as totalJob'))
+            ->select("$categoryNameLang as name","$categoryDescriptionLang as description",'job_categories.id','job_categories.icon', DB::raw('count(*) as totalJob'))
             ->join('jobs', 'jobs.category', '=', 'job_categories.id')
             ->where('job_categories.status', 1)
             ->where('jobs.status', 'opened')
@@ -362,11 +364,12 @@ class FrontendController extends Controller
     {
         $lang = session()->get('lang')?: 'en';
         app()->setLocale($lang);
+        $name = 'name_'.$lang;
         $user = Auth::user();
         $countries = Country::where('status', 1)->get();
         $states = State::where('status', 1)->get();
         $cities = City::where('status', 1)->get();
-        $skills = Skill::where('status', 'active')->get();
+        $skills = Skill::select("$name as name")->where('status', 'active')->get();
         return view('frontend.profile.edit-profile', compact('user', 'countries', 'states', 'cities', 'skills'));
     }
 
@@ -380,8 +383,10 @@ class FrontendController extends Controller
     {
         $lang = session()->get('lang')?: 'en';
         app()->setLocale($lang);
+        $categoryNameLang = 'name_'.$lang;
+        $categoryDescriptionLang = 'description_'.$lang;
+        $jobCategories = \App\JobCategory::select("$categoryNameLang as name","$categoryDescriptionLang as description",'job_categories.id','job_categories.icon')->where('status',1)->get();
         if (Auth::user()->user_type == 'customer') {
-            $jobCategories = JobCategory::where('status', 1)->get();
             $countries = Country::where('status', 1)->get();
             $states = State::where('status', 1)->get();
             $cities = City::where('status', 1)->get();
@@ -499,7 +504,9 @@ class FrontendController extends Controller
 
         $jobs = $query->get();
 
-        $jobCategories = JobCategory::where('status', 1)->get();
+        $categoryNameLang = 'name_'.$lang;
+        $categoryDescriptionLang = 'description_'.$lang;
+        $jobCategories = \App\JobCategory::select("$categoryNameLang as name","$categoryDescriptionLang as description",'job_categories.id','job_categories.icon')->where('status',1)->get();
         return view('frontend.job.list', compact('jobs', 'jobCategories', 'noJob', 'location', 'keyword', 'category_id'));
 
     }

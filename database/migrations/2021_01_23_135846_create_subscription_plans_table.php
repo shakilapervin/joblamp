@@ -15,11 +15,21 @@ class CreateSubscriptionPlansTable extends Migration
     {
         Schema::create('subscription_plans', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('description')->nullable();
-            $table->string('duration');
-            $table->string('default_price');
-            $table->string('number_of_jobs');
+            $table->string('title_en');
+            $table->string('title_es');
+            $table->string('title_fr');
+            $table->string('title_de');
+            $table->string('title_ro');
+            $table->string('title_pt');
+            $table->text('description_en')->nullable();
+            $table->text('description_es')->nullable();
+            $table->text('description_de')->nullable();
+            $table->text('description_fr')->nullable();
+            $table->text('description_ro')->nullable();
+            $table->text('description_pt')->nullable();
+            $table->text('duration');
+            $table->text('default_price');
+            $table->text('number_of_jobs');
             $table->tinyInteger('recommended');
             $table->string('status')->default('active');
             $table->timestamps();

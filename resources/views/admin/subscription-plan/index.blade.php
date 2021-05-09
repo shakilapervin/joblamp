@@ -79,7 +79,7 @@
                                             {{ $sl }}
                                         </td>
                                         <td>
-                                            {{ $plan->title }}
+                                            {{ $plan->title_en }}
                                         </td>
                                         <td>
                                             @if($plan->status == 'active')

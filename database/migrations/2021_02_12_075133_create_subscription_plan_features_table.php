@@ -16,7 +16,12 @@ class CreateSubscriptionPlanFeaturesTable extends Migration
         Schema::create('subscription_plan_features', function (Blueprint $table) {
             $table->id();
             $table->string('plan_id');
-            $table->text('content');
+            $table->text('content_en');
+            $table->text('content_es');
+            $table->text('content_fr');
+            $table->text('content_de');
+            $table->text('content_pt');
+            $table->text('content_ro');
             $table->timestamps();
         });
     }
