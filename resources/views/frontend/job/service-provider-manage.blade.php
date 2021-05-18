@@ -94,9 +94,6 @@
                                     <li>
                                         {{ $job->jobDetails->creatorDetails->userCountry->name }}
                                     </li>
-                                    <li>
-                                        <div class="verified-badge-with-title">Verified</div>
-                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -159,7 +156,7 @@
                                             href="#file-dialog">
                                         <i class="icon-feather-paperclip"></i>
                                     </button>
-                                    <button class="button ripple-effect" onclick="postChat();">Send</button>
+                                    <button class="button ripple-effect" onclick="postChat();">{{ __('Send') }}</button>
                                 </div>
                                 @endif
                             </div>
@@ -265,6 +262,26 @@
                             </div>
                         </div>
                     </div>
+
+                        @if ($job->status == 'completed')
+                            <div class="sidebar-widget">
+                                <div class="job-overview">
+                                    <div class="job-overview-headline">
+                                        {{ __('Customer Feedback') }}
+                                    </div>
+                                    <div class="job-overview-inner">
+                                        @if(empty($feedback))
+                                            {{ __('No feedback given yet') }}
+                                        @else
+                                            <div class="star-rating" data-rating="{{ $feedback->rating }}"></div>
+                                            <p>
+                                                {{ $feedback->feedback }}
+                                            </p>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                 </div>
             </div>
 

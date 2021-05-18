@@ -158,7 +158,7 @@
 
                                 <!-- Headline -->
                                 <div class="headline">
-                                    <h3><i class="icon-line-awesome-map"></i> Address</h3>
+                                    <h3><i class="icon-line-awesome-map"></i> {{ __('Address') }}</h3>
                                 </div>
 
                                 <div class="content">
@@ -247,7 +247,7 @@
 
                                         <!-- Headline -->
                                         <div class="headline">
-                                            <h3><i class="icon-line-awesome-bookmark"></i> Skills</h3>
+                                            <h3><i class="icon-line-awesome-bookmark"></i> {{ __('Skills') }}</h3>
                                         </div>
 
                                         <div class="content">
@@ -261,7 +261,8 @@
                                                                         class="selectpicker with-border @error('city') is-invalid @enderror" data-size="10" title="Select Your Skills" data-live-search="true" name="skills[]" multiple>
                                                                     @foreach($skills as $skill)
                                                                         <option value="{{ $skill->id }}"
-                                                                        <?php if ( $user->skill != null and in_array($skill->id, json_decode($user->skill))) echo 'selected'?>>{{ $skill->name }}</option>
+                                                                        <?php
+                                                                            if ( $user->skill != null and in_array($skill->id, json_decode($user->skill))) echo 'selected'?>>{{ $skill->name }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -278,7 +279,7 @@
 
                                         <!-- Headline -->
                                         <div class="headline">
-                                            <h3><i class="icon-line-awesome-book"></i> Documents</h3>
+                                            <h3><i class="icon-line-awesome-book"></i> {{ __('Documents') }}</h3>
                                         </div>
 
                                         <div class="content">

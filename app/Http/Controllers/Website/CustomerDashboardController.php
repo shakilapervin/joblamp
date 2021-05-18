@@ -34,7 +34,7 @@ class CustomerDashboardController extends Controller
     */
     public function jobApplications($id)
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         try {
             $id = decrypt($id);
@@ -59,7 +59,7 @@ class CustomerDashboardController extends Controller
     */
     public function acceptApplication($jobId, $serviceProviderId)
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         try {
             $jobId = decrypt($jobId);
@@ -111,7 +111,7 @@ class CustomerDashboardController extends Controller
     */
     public function manageJob($jobId)
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         try {
             $jobId = decrypt($jobId);
@@ -119,17 +119,18 @@ class CustomerDashboardController extends Controller
             return redirect('');
         }
         if (Auth::user()->user_type == 'customer') {
-            $receiver = UserJob::with('workerDetails')->where('job_id',$jobId)->first();
+            $receiver = UserJob::with('workerDetails')->where('job_id', $jobId)->first();
             $job = Job::with('creatorDetails')->where('user_id', Auth::user()->id)
                 ->where('id', $jobId)
                 ->first();
             $rated = false;
             $rating = Rating::where('job_id', $jobId)->where('user_id', '!=', Auth::user()->id)->get();
-            $deliveryData = JobDeliveryData::where('job_id',$jobId)->first();
+            $feedback = Rating::where('job_id', $jobId)->where('user_id', Auth::user()->id)->first();
+            $deliveryData = JobDeliveryData::where('job_id', $jobId)->first();
             if ($rating->count() > 0) {
                 $rated = true;
             }
-            return view('frontend.job.customer-manage', compact('job', 'jobId', 'rated','receiver','deliveryData'));
+            return view('frontend.job.customer-manage', compact('job','jobId', 'rated', 'receiver', 'deliveryData', 'feedback'));
         } else {
             return redirect('')->home();
         }
@@ -142,7 +143,7 @@ class CustomerDashboardController extends Controller
     */
     public function approveJobDelivery($jobId)
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         try {
             $jobId = decrypt($jobId);
@@ -163,10 +164,10 @@ class CustomerDashboardController extends Controller
                 $application->status = 'completed';
                 $application->save();
                 $charge = Charge::latest('id')->first()->customer_charge;
-                $credit = ($application->bid_amount*$charge)/100;
+                $credit = ($application->bid_amount * $charge) / 100;
                 UserTransaction::create(array(
                     'user_id' => $application->candidate_id,
-                    'credit' => $application->bid_amount-$credit,
+                    'credit' => $application->bid_amount - $credit,
                 ));
                 return redirect()->back()->with('success', __('Job successfully mark as completed.'));
             } else {
@@ -184,7 +185,7 @@ class CustomerDashboardController extends Controller
     */
     public function saveJobFeedback(Request $request)
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         try {
             $jobId = decrypt($request->job_id);
@@ -240,8 +241,8 @@ class CustomerDashboardController extends Controller
                 'data' => "Job owner provided $request->rating Star Rating"
             );
             try {
-                Http::withHeaders($headers)->post('https://fcm.googleapis.com/fcm/send',$fields);
-            }catch (\Exception $e){
+                Http::withHeaders($headers)->post('https://fcm.googleapis.com/fcm/send', $fields);
+            } catch (\Exception $e) {
 
             }
 
@@ -275,7 +276,7 @@ class CustomerDashboardController extends Controller
     */
     public function disputeJobDelivery(Request $request)
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         try {
             $jobId = decrypt($request->id);
@@ -326,8 +327,8 @@ class CustomerDashboardController extends Controller
                     'data' => "Job owner open dispute on your job submission."
                 );
                 try {
-                    Http::withHeaders($headers)->post('https://fcm.googleapis.com/fcm/send',$fields);
-                }catch (\Exception $e){
+                    Http::withHeaders($headers)->post('https://fcm.googleapis.com/fcm/send', $fields);
+                } catch (\Exception $e) {
 
                 }
 
@@ -366,7 +367,7 @@ class CustomerDashboardController extends Controller
     */
     public function postedJobs()
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         $user = Auth::user();
         $jobs = Job::where('user_id', $user->id)->where('status', 'opened')->get();
@@ -380,7 +381,7 @@ class CustomerDashboardController extends Controller
     */
     public function hiredJobs()
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         $user = Auth::user();
         $jobs = Job::where('user_id', $user->id)->where('status', 'hired')->get();
@@ -394,7 +395,7 @@ class CustomerDashboardController extends Controller
     */
     public function deliveredJobs()
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         $user = Auth::user();
         $jobs = Job::where('user_id', $user->id)->where('status', 'delivered')->get();
@@ -408,7 +409,7 @@ class CustomerDashboardController extends Controller
     */
     public function completedJobs()
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         $user = Auth::user();
         $jobs = Job::where('user_id', $user->id)->where('status', 'completed')->get();
@@ -420,9 +421,10 @@ class CustomerDashboardController extends Controller
     | Download Delivery File
     |--------------------------------------------------------------------------
     */
-    public function downloadDeliveryFile($file){
-        $lang = session()->get('lang')?: 'en';
+    public function downloadDeliveryFile($file)
+    {
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
-        return Storage::download('job-delivery-file/'.$file);
+        return Storage::download('job-delivery-file/' . $file);
     }
 }

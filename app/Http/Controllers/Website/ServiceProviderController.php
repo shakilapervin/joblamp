@@ -39,10 +39,11 @@ class ServiceProviderController extends Controller
             $receiver = User::where('id',$job->customer_id)->first();
             $rated = false;
             $rating = Rating::where('job_id',$jobId)->where('user_id','!=',Auth::user()->id)->get();
+            $feedback = Rating::where('job_id',$jobId)->where('user_id',Auth::user()->id)->first();
             if ($rating->count() > 0) {
                 $rated = true;
             }
-            return view('frontend.job.service-provider-manage', compact('job','jobId','rated','receiver'));
+            return view('frontend.job.service-provider-manage', compact('job','jobId','rated','receiver','feedback'));
         } else {
             return redirect('')->home();
         }

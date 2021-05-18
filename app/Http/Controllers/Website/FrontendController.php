@@ -370,7 +370,7 @@ class FrontendController extends Controller
         $countries = Country::where('status', 1)->get();
         $states = State::where('status', 1)->get();
         $cities = City::where('status', 1)->get();
-        $skills = Skill::select("$name as name")->where('status', 'active')->get();
+        $skills = Skill::select("$name as name","id")->where('status', 'active')->get();
         return view('frontend.profile.edit-profile', compact('user', 'countries', 'states', 'cities', 'skills'));
     }
 

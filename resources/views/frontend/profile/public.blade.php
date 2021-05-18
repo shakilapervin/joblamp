@@ -87,17 +87,24 @@
 
                     <!-- Button -->
                     <a href="{{ route('message',$user->id) }}" class="apply-now-button margin-bottom-50">
-                        Contact Me
+                        {{ __('Contact Me') }}
                         <i class="icon-material-outline-arrow-right-alt"></i>
                     </a>
 
 
                     <!-- Widget -->
                     <div class="sidebar-widget">
-                        <h3>Skills</h3>
+                        <h3>{{ __('Skills') }}</h3>
                         <div class="task-tags">
+                            @php
+                                $lang = session()->get('lang')?: 'en';
+                                $skillName = 'name_'.$lang;
+                            @endphp
                             @foreach(json_decode($user->skill) as $skill)
-                            <span>{{ \App\Skill::where('id',$skill)->first()->name }}</span>
+                                @php
+                                    $skillDetails = \App\Skill::select("$skillName as name")->where('id',$skill)->first();
+                                @endphp
+                            <span>{{ $skillDetails->name }}</span>
                             @endforeach
                         </div>
                     </div>

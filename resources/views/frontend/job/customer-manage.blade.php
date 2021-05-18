@@ -272,7 +272,26 @@
                                     </div>
                                 </div>
                             </div>
+                        @endif
                     @endif
+                    @if ($job->status == 'completed')
+                        <div class="sidebar-widget">
+                            <div class="job-overview">
+                                <div class="job-overview-headline">
+                                    {{ __('Service Provider Feedback') }}
+                                </div>
+                                <div class="job-overview-inner">
+                                    @if(empty($feedback))
+                                        {{ __('No feedback given yet') }}
+                                    @else
+                                        <div class="star-rating" data-rating="{{ $feedback->rating }}"></div>
+                                        <p>
+                                            {{ $feedback->feedback }}
+                                        </p>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
                 @endif
                 <!-- Sidebar Widget -->
                     <div class="sidebar-widget">
