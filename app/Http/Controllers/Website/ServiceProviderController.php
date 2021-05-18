@@ -173,4 +173,17 @@ class ServiceProviderController extends Controller
         $jobs = UserJob::with('jobDetails')->where('service_provider_id',$user->id)->where('status','delivered')->get();
         return view('frontend.freelancer.delivered-jobs',compact('jobs'));
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Completed Jobs
+    |--------------------------------------------------------------------------
+    */
+    public function completedJobs(){
+        $lang = session()->get('lang')?: 'en';
+        app()->setLocale($lang);
+        $user = Auth::user();
+        $jobs = UserJob::with('jobDetails')->where('service_provider_id',$user->id)->where('status','completed')->get();
+        return view('frontend.freelancer.completed-jobs',compact('jobs'));
+    }
 }

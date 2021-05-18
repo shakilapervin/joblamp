@@ -95,6 +95,7 @@
                                 <thead>
                                 <tr>
                                     <th>SL</th>
+                                    <th>{{ __('Job ID') }}</th>
                                     <th>{{ __('Posted By') }}</th>
                                     <th>{{ __('Title') }}</th>
                                     <th>{{ __('Category') }}</th>
@@ -121,6 +122,9 @@
                                                 {{ $sl }}
                                             </td>
                                             <td>
+                                                {{ $job->job_id }}
+                                            </td>
+                                            <td>
                                                 {{ $job->creatorDetails->first_name }} {{ $job->creatorDetails->last_name }}
                                             </td>
                                             <td>
@@ -133,11 +137,18 @@
                                                 {{ $job->created_at->toDateString() }}
                                             </td>
                                             @php
+                                                if ($job->status == 'hired' || $job->status == 'completed' || $job->status == 'disputed'){
                                                 $jobCharge = \App\JobApplication::where('job_id',$job->id)
                                                             ->whereIn('status',['hired','completed'])
                                                             ->first()->bid_amount;
                                                 $tgCommission = ($jobCharge*$charge->customer_charge)/100;
                                                 $twCommission = ($jobCharge*$charge->worker_charge)/100;
+
+                                                }else{
+                                                    $jobCharge = 0;
+                                                    $tgCommission = 0;
+                                                    $twCommission = 0;
+                                                }
                                             @endphp
                                             <td>
                                                 {{ $jobCharge }}
@@ -153,7 +164,7 @@
                                             </td>
                                             <td>
                                                 @if($job->status == 'opened')
-                                                    <span class="badge badge-primary">{{ __('Pending') }}</span>
+                                                    <span class="badge badge-primary">{{ __('Opened') }}</span>
                                                 @elseif($job->status == 'hired')
                                                     <span class="badge badge-warning">{{ __('Pending') }}</span>
                                                 @elseif($job->status == 'disputed')

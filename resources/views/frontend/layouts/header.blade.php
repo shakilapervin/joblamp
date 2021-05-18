@@ -250,9 +250,14 @@
                                 <div class="header-notifications-trigger">
                                     <a href="#">
                                         <div class="user-avatar status-online">
-                                            <img
-                                                src="{{ asset('assets/frontend') }}/images/user-avatar-small-01.jpg"
-                                                alt="">
+                                            @if(!empty(\Illuminate\Support\Facades\Auth::user()->profile_pic))
+                                                <img class="profile-pic"
+                                                     src="{{ asset('profile') }}/{{ \Illuminate\Support\Facades\Auth::user()->profile_pic }}" alt=""/>
+                                            @else
+                                                <img class="profile-pic"
+                                                     src="{{ asset('assets/frontend') }}/images/user-avatar-placeholder.png"
+                                                     alt=""/>
+                                            @endif
                                         </div>
                                     </a>
                                 </div>
@@ -266,13 +271,17 @@
                                         <!-- User Name / Avatar -->
                                         <div class="user-details">
                                             <div class="user-avatar status-online">
-                                                <img
-                                                    src="{{ asset('assets/frontend') }}/images/user-avatar-small-01.jpg"
-                                                    alt="">
+                                                @if(!empty(\Illuminate\Support\Facades\Auth::user()->profile_pic))
+                                                    <img class="profile-pic"
+                                                         src="{{ asset('profile') }}/{{ \Illuminate\Support\Facades\Auth::user()->profile_pic }}" alt=""/>
+                                                @else
+                                                    <img class="profile-pic"
+                                                         src="{{ asset('assets/frontend') }}/images/user-avatar-placeholder.png"
+                                                         alt=""/>
+                                                @endif
                                             </div>
                                             <div class="user-name">
                                                 {{ \Illuminate\Support\Facades\Auth::user()->first_name }} {{ \Illuminate\Support\Facades\Auth::user()->last_name }}
-                                                <span>Freelancer</span>
                                             </div>
                                         </div>
 

@@ -31,6 +31,14 @@
                                 {{ __('My Profile') }}
                             </a>
                         </li>
+                        @if (\Illuminate\Support\Facades\Auth::user()->user_type == 'service_provider')
+                        <li>
+                            <a href="{{ route('public.profile',encrypt(\Illuminate\Support\Facades\Auth::id())) }}">
+                                <i class="icon-feather-eye"></i>
+                                {{ __('View My Public Profile') }}
+                            </a>
+                        </li>
+                        @endif
                         <li>
                             <a href="{{ route('messages') }}">
                                 <i class="icon-material-outline-question-answer"></i>

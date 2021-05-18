@@ -30,7 +30,7 @@
                     <div class="alert alert-danger text-center">
                         <p>
                             {{ __('Please Upload Your Documents') }}
-                            <a class="btn btn-dark" href="{{ route('edit.profile') }}">Upload Your Document</a>
+                            <a class="btn btn-dark" href="{{ route('edit.profile') }}">{{ __('Upload Your Document') }}</a>
                         </p>
                     </div>
                 @endif
@@ -94,6 +94,10 @@
                                                             ${{ $applied->jobDetails->fee_range_min }} {{ $applied->jobDetails->fee_range_max }}</li>
                                                         <li>{{ __('Posted On') }}
                                                             : {{ $applied->jobDetails->created_at->toDateString() }}</li>
+                                                        <li>
+                                                            {{ __('Job ID') }}:
+                                                            {{ $applied->jobDetails->job_id }}
+                                                        </li>
                                                     </ul>
                                                 </div>
                                                 <!-- Buttons -->
@@ -143,6 +147,10 @@
                                                             ${{ $activeJob->jobDetails->fee_range_min }} {{ $activeJob->jobDetails->fee_range_max }}</li>
                                                         <li>{{ __('Posted On') }}
                                                             : {{ $activeJob->jobDetails->created_at->toDateString() }}</li>
+                                                        <li>
+                                                            {{ __('Job ID') }}:
+                                                            {{ $activeJob->jobDetails->job_id }}
+                                                        </li>
                                                     </ul>
                                                 </div>
                                                 <!-- Buttons -->
@@ -189,6 +197,10 @@
                                                         ${{ $applied->jobDetails->fee_range_min }} {{ $applied->jobDetails->fee_range_max }}</li>
                                                     <li>{{ __('Posted On') }}
                                                         : {{ $applied->jobDetails->created_at->toDateString() }}</li>
+                                                    <li>
+                                                        {{ __('Job ID') }}:
+                                                        {{ $applied->jobDetails->job_id }}
+                                                    </li>
                                                 </ul>
                                             </div>
                                             <!-- Buttons -->
@@ -235,6 +247,10 @@
                                                         ${{ $applied->jobDetails->fee_range_min }} {{ $applied->jobDetails->fee_range_max }}</li>
                                                     <li>{{ __('Posted On') }}
                                                         : {{ $applied->jobDetails->created_at->toDateString() }}</li>
+                                                    <li>
+                                                        {{ __('Job ID') }}:
+                                                        {{ $applied->jobDetails->job_id }}
+                                                    </li>
                                                 </ul>
                                             </div>
                                             <!-- Buttons -->

@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Image;
 
 class ApiController extends Controller
@@ -446,9 +447,10 @@ class ApiController extends Controller
         if (!empty($applied)){
             $has_applied = true;
         }
-        $data = Job::with(array('categoryInfo','creatorDetails','jobCountry','jobCity','jobState'))->where('id', $request->job_id)->first();
+        $data = Job::with(array('categoryInfo','creatorDetails','jobCountry','jobCity','jobState','userJob','ratingsJob'))->where('id', $request->job_id)->first();
         return response()->json(compact('data', 'status','has_applied'));
     }
+
 
     /*
     |--------------------------------------------------------------------------
@@ -477,6 +479,7 @@ class ApiController extends Controller
             return response()->json($validator->errors());
         }
         $data = array(
+            'job_id' => Str::random(10),
             'user_id' => $request->user_id,
             'title' => $request->title,
             'description' => $request->description,

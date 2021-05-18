@@ -17,8 +17,8 @@
                     <!-- Breadcrumbs -->
                     <nav id="breadcrumbs" class="dark">
                         <ul>
-                            <li><a href="{{ route('home') }}">Home</a></li>
-                            <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                            <li><a href="{{ route('home') }}">{{ __('Home') }}</a></li>
+                            <li><a href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a></li>
                             <li>{{ __('Posted Jobs') }}</li>
                         </ul>
                     </nav>
@@ -61,6 +61,10 @@
                                                                         <i class="icon-material-outline-date-range"></i>
                                                                         {{ __('Posted On') }}
                                                                         : {{ $applied->created_at->toDateString() }}
+                                                                    </li>
+                                                                    <li>
+                                                                        {{ __('Job ID') }}
+                                                                        : {{ $applied->job_id }}
                                                                     </li>
                                                                 </ul>
                                                             </div>

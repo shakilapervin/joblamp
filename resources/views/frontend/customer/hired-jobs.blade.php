@@ -17,8 +17,8 @@
                     <!-- Breadcrumbs -->
                     <nav id="breadcrumbs" class="dark">
                         <ul>
-                            <li><a href="{{ route('home') }}">Home</a></li>
-                            <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                            <li><a href="{{ route('home') }}">{{ __('Home') }}</a></li>
+                            <li><a href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a></li>
                             <li>{{ __('Hired Jobs') }}</li>
                         </ul>
                     </nav>
@@ -62,6 +62,10 @@
                                                                         {{ __('Posted On') }}
                                                                         : {{ $applied->created_at->toDateString() }}
                                                                     </li>
+                                                                    <li>
+                                                                        {{ __('Job ID') }}
+                                                                        : {{ $applied->job_id }}
+                                                                    </li>
                                                                 </ul>
                                                             </div>
                                                         </div>
@@ -70,7 +74,7 @@
 
                                                 <!-- Buttons -->
                                                 <div class="buttons-to-right always-visible">
-                                                    <a href="{{ route('job.details',encrypt($applied->id)) }}"
+                                                    <a href="{{ route('manage.my.job',encrypt($applied->id)) }}"
                                                        class="button ripple-effect"><i
                                                             class="icon-feather-eye"></i> {{ __('View Details') }}</a>
                                                 </div>

@@ -157,7 +157,8 @@
                                                 href="#file-dialog">
                                             <i class="icon-feather-paperclip"></i>
                                         </button>
-                                        <button class="button ripple-effect" onclick="postChat();">Send</button>
+                                        <button class="button ripple-effect"
+                                                onclick="postChat();">{{ __('Send') }}</button>
                                     </div>
                                 @endif
                             </div>
@@ -173,15 +174,15 @@
             <div class="col-xl-4 col-lg-4">
                 <div class="sidebar-container">
                     @if ($job->status == 'delivered')
-                            <a href="{{ route('approve.job.delivery',encrypt($jobId)) }}"
-                               class="apply-now-button bg-success">
-                                {{ __('Approve') }}
-                                <i class="icon-material-outline-arrow-right-alt"></i>
-                            </a>
-                            <a href="#small-dialog" class="apply-now-button bg-danger popup-with-zoom-anim">
-                                {{ __('Dispute') }}
-                                <i class="icon-material-outline-arrow-right-alt"></i>
-                            </a>
+                        <a href="{{ route('approve.job.delivery',encrypt($jobId)) }}"
+                           class="apply-now-button bg-success">
+                            {{ __('Approve') }}
+                            <i class="icon-material-outline-arrow-right-alt"></i>
+                        </a>
+                        <a href="#small-dialog" class="apply-now-button bg-danger popup-with-zoom-anim">
+                            {{ __('Dispute') }}
+                            <i class="icon-material-outline-arrow-right-alt"></i>
+                        </a>
                         <div class="sidebar-widget">
                             <div class="job-overview">
                                 <div class="job-overview-headline">
@@ -190,7 +191,8 @@
                                 <div class="job-overview-inner">
                                     <p>{{ $deliveryData->delivery_text }}</p>
                                     @if(!empty($deliveryData->delivery_file))
-                                        <a href="{{ route('download.job.delivery.file',str_replace('job-delivery-file/','',$deliveryData->delivery_file)) }}" class="apply-now-button">
+                                        <a href="{{ route('download.job.delivery.file',str_replace('job-delivery-file/','',$deliveryData->delivery_file)) }}"
+                                           class="apply-now-button">
                                             {{ __('Download Delivery File') }}
                                             <i class="icon-material-outline-arrow-right-alt"></i>
                                         </a>
@@ -200,7 +202,7 @@
                         </div>
                     @endif
 
-                @if ($job->status == 'completed' && $rated == false)
+                    @if ($job->status == 'completed' && $rated == false)
                     <!-- Sidebar Widget -->
                         <div class="sidebar-widget">
                             <div class="job-overview">
@@ -250,8 +252,9 @@
                                 </div>
                             </div>
                         </div>
-                @endif
-                        @if ($job->status == 'delivered' || $job->status == 'completed')
+                    @endif
+                    @if ($job->status == 'delivered' || $job->status == 'completed')
+                        @if(!empty($deliveryData))
                             <div class="sidebar-widget">
                                 <div class="job-overview">
                                     <div class="job-overview-headline">
@@ -260,7 +263,8 @@
                                     <div class="job-overview-inner">
                                         <p>{{ $deliveryData->delivery_text }}</p>
                                         @if(!empty($deliveryData->delivery_file))
-                                            <a href="{{ route('download.job.delivery.file',str_replace('job-delivery-file/','',$deliveryData->delivery_file)) }}" class="apply-now-button">
+                                            <a href="{{ route('download.job.delivery.file',str_replace('job-delivery-file/','',$deliveryData->delivery_file)) }}"
+                                               class="apply-now-button">
                                                 {{ __('Download Delivery File') }}
                                                 <i class="icon-material-outline-arrow-right-alt"></i>
                                             </a>
@@ -269,6 +273,7 @@
                                 </div>
                             </div>
                     @endif
+                @endif
                 <!-- Sidebar Widget -->
                     <div class="sidebar-widget">
                         <div class="job-overview">

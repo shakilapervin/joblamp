@@ -28,6 +28,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Image;
 use Illuminate\View\View;
 use Mail;
@@ -431,6 +432,7 @@ class FrontendController extends Controller
 
             $data = array(
                 'user_id' => Auth::user()->id,
+                'job_id' => Str::random(10),
                 'title' => $request->title,
                 'description' => $request->description,
                 'start_date' => $request->start_date,

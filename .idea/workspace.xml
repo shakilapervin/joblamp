@@ -5,13 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="102137b5-5205-44c0-83f0-459dcecac978" name="Default Changelist" comment="Latest">
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/withdraw/pending-payouts.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/TransactionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/TransactionController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/ContactSupportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/ContactSupportController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/ApiController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/ApiController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Website/FrontendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Website/FrontendController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Job.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Job.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/joblamp.zip" beforeDir="false" afterPath="$PROJECT_DIR$/joblamp.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/job/dispute-index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/job/dispute-index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/job/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/job/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/layouts/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/layouts/sidebar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/customer/completed-jobs.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/customer/completed-jobs.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/customer/delivered-jobs.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/customer/delivered-jobs.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/customer/hired-jobs.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/customer/hired-jobs.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/customer/posted-jobs.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/customer/posted-jobs.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/dashboard/customer-dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/dashboard/customer-dashboard.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/dashboard/service-provider-dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/dashboard/service-provider-dashboard.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/freelancer/active-jobs.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/freelancer/active-jobs.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/freelancer/applied-jobs.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/freelancer/applied-jobs.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/freelancer/completed-jobs.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/freelancer/completed-jobs.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/freelancer/delivered-jobs.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/freelancer/delivered-jobs.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/freelancer/list.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/freelancer/list.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/job/customer-manage.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/job/customer-manage.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/layouts/dashboard-sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/layouts/dashboard-sidebar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/layouts/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/layouts/header.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/mail/support.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/mail/support.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -201,7 +218,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="dart.analysis.tool.window.visible" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/withdraw" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="show.migrate.to.gradle.popup" value="false" />
@@ -395,6 +412,13 @@
       <workItem from="1620491782908" duration="7842000" />
       <workItem from="1620538436140" duration="601000" />
       <workItem from="1620574101107" duration="6552000" />
+      <workItem from="1620628182321" duration="241000" />
+      <workItem from="1620915436114" duration="421000" />
+      <workItem from="1621269554770" duration="3418000" />
+      <workItem from="1621312776552" duration="2401000" />
+      <workItem from="1621324839049" duration="24000" />
+      <workItem from="1621353323239" duration="1279000" />
+      <workItem from="1621359858902" duration="1991000" />
     </task>
     <task id="LOCAL-00001" summary="Latest">
       <created>1616691922612</created>

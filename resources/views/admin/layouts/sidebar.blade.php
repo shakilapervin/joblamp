@@ -163,8 +163,38 @@
                     <a href="{{ route('admin.supports') }}"
                        class="{{ Route::is('admin.supports') ? 'current-page' : '' }}">
                         <i class="icon-help"></i>
-                        <span class="menu-text">Contact Supports</span>
+                        <span class="menu-text">{{ __('Contact Supports') }}</span>
                     </a>
+                </li>
+                <li class="sidebar-dropdown {{ Route::is('admin.withdraw.not.paid') ? 'active' : '' }} {{ Route::is('admin.withdraw.paid') ? 'active' : '' }} {{ Route::is('admin.withdraw.pending.payouts') ? 'active' : '' }}">
+                    <a href="javascript:void(0);">
+                        <i class="icon-attach_money"></i>
+                        <span class="menu-text">{{ __('Withdraw Requests') }}</span>
+                    </a>
+
+                    <div class="sidebar-submenu">
+                        <ul>
+                            <li>
+                                <a href="{{ route('admin.withdraw.not.paid') }}"
+                                   class="{{ Route::is('admin.withdraw.not.paid') ? 'current-page' : '' }}">
+                                    <span class="menu-text">{{ __('Not Paid') }}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.withdraw.paid') }}"
+                                   class="{{ Route::is('admin.withdraw.paid') ? 'current-page' : '' }}">
+                                    {{ __('Paid') }}
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('admin.withdraw.pending.payouts') }}"
+                                   class="{{ Route::is('admin.withdraw.pending.payouts') ? 'current-page' : '' }}">
+                                    {{ __('Pending Payouts') }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
                 @if(\Illuminate\Support\Facades\Auth::user()->user_type == 'admin')
                     <li class="sidebar-dropdown {{ Route::is('admin.banners') ? 'active' : '' }} {{ Route::is('admin.create.banner') ? 'active' : '' }} {{ Route::is('admin.page.privacy.policy') ? 'active' : '' }} {{ Route::is('admin.page.terms.conditions') ? 'active' : '' }} {{ Route::is('admin.page.about.us') ? 'active' : '' }}">
@@ -230,36 +260,6 @@
                             <span class="menu-text">{{ __('Lotto Prizes') }}</span>
                         </a>
                     </li>
-                    <li class="sidebar-dropdown {{ Route::is('admin.withdraw.not.paid') ? 'active' : '' }} {{ Route::is('admin.withdraw.paid') ? 'active' : '' }} {{ Route::is('admin.withdraw.pending.payouts') ? 'active' : '' }}">
-                        <a href="javascript:void(0);">
-                            <i class="icon-attach_money"></i>
-                            <span class="menu-text">{{ __('Withdraw Requests') }}</span>
-                        </a>
-
-                        <div class="sidebar-submenu">
-                            <ul>
-                                <li>
-                                    <a href="{{ route('admin.withdraw.not.paid') }}"
-                                       class="{{ Route::is('admin.withdraw.not.paid') ? 'current-page' : '' }}">
-                                        <span class="menu-text">{{ __('Not Paid') }}</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('admin.withdraw.paid') }}"
-                                       class="{{ Route::is('admin.withdraw.paid') ? 'current-page' : '' }}">
-                                        {{ __('Paid') }}
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="{{ route('admin.withdraw.pending.payouts') }}"
-                                       class="{{ Route::is('admin.withdraw.pending.payouts') ? 'current-page' : '' }}">
-                                        {{ __('Pending Payouts') }}
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
                     <li>
                         <a href="{{ url('/languages') }}">
                             <i class="icon-attach_money"></i>
@@ -267,6 +267,7 @@
                         </a>
                     </li>
                 @endif
+
             </ul>
         </div>
         <!-- sidebar menu end -->

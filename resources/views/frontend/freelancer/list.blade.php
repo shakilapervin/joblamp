@@ -121,7 +121,7 @@
 {{--            </div>--}}
             <div class="col-xl-12 col-lg-12 content-left-offset">
 
-                <h3 class="page-title">Search Results</h3>
+                <h3 class="page-title">{{ __('Search Results') }}</h3>
 
 {{--                <div class="notify-box margin-top-15">--}}
 {{--                    <div class="switch-container">--}}

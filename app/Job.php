@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Job extends Model
 {
     protected $fillable = [
+        'job_id',
         'title',
         'user_id',
         'description',
@@ -84,4 +85,9 @@ class Job extends Model
     {
         return $this->hasOne(UserJob::class, 'job_id','id')->with('workerDetails');
     }
+    public function ratingsJob()
+    {
+        return $this->hasMany(Rating::class, 'job_id','id');
+    }
+
 }

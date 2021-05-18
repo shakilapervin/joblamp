@@ -17,8 +17,8 @@
                     <!-- Breadcrumbs -->
                     <nav id="breadcrumbs" class="dark">
                         <ul>
-                            <li><a href="{{ route('home') }}">Home</a></li>
-                            <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                            <li><a href="{{ route('home') }}">{{ __('Home') }}</a></li>
+                            <li><a href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a></li>
                             <li>{{ __('Delivered Jobs') }}</li>
                         </ul>
                     </nav>
@@ -70,7 +70,7 @@
 
                                                 <!-- Buttons -->
                                                 <div class="buttons-to-right always-visible">
-                                                    <a href="{{ route('job.details',encrypt($applied->job_id)) }}"
+                                                    <a href="{{ route('manage.job',encrypt($applied->job_id)) }}"
                                                        class="button ripple-effect"><i
                                                             class="icon-feather-eye"></i> {{ __('View Details') }}</a>
                                                 </div>

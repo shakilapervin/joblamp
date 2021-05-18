@@ -50,7 +50,7 @@ class ContactSupportController extends Controller
         $support->save();
 
         $mailData = array(
-            'message' => $request->message
+            'reply' => $request->message
         );
         $mailAddress = $support->email;
         try {

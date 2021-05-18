@@ -72,6 +72,7 @@
                                                         ${{ $myJob->fee_range_min }} {{ $myJob->fee_range_max }}</li>
                                                     <li>{{ __('Posted On') }}
                                                         : {{ $myJob->created_at->toDateString() }}</li>
+                                                    <li>{{ __('Job ID') }}: {{ $myJob->job_id }}</li>
                                                 </ul>
                                             </div>
                                             <!-- Buttons -->
@@ -105,6 +106,7 @@
                                                         ${{ $myJob->fee_range_min }} {{ $myJob->fee_range_max }}</li>
                                                     <li>{{ __('Posted On') }}
                                                         : {{ $myJob->created_at->toDateString() }}</li>
+                                                    <li>{{ __('Job ID') }}: {{ $myJob->job_id }}</li>
                                                 </ul>
                                             </div>
                                             <!-- Buttons -->
@@ -138,6 +140,7 @@
                                                         ${{ $myJob->fee_range_min }} {{ $myJob->fee_range_max }}</li>
                                                     <li>{{ __('Posted On') }}
                                                         : {{ $myJob->created_at->toDateString() }}</li>
+                                                    <li>{{ __('Job ID') }}: {{ $myJob->job_id }}</li>
                                                 </ul>
                                             </div>
                                             <!-- Buttons -->
@@ -171,6 +174,7 @@
                                                         ${{ $myJob->fee_range_min }} {{ $myJob->fee_range_max }}</li>
                                                     <li>{{ __('Posted On') }}
                                                         : {{ $myJob->created_at->toDateString() }}</li>
+                                                    <li>{{ __('Job ID') }}: {{ $myJob->job_id }}</li>
                                                 </ul>
                                             </div>
                                             <!-- Buttons -->

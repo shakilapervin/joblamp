@@ -58,6 +58,7 @@
                                 <thead>
                                 <tr>
                                     <th>SL</th>
+                                    <th>{{ __('Job ID') }}</th>
                                     <th>{{ __('Title') }}</th>
                                     <th>{{ __('Job Owner') }}</th>
                                     <th>{{ __('Job Worker') }}</th>
@@ -77,6 +78,9 @@
                                     <tr>
                                         <td>
                                             {{ $sl }}
+                                        </td>
+                                        <td>
+                                            {{ $job->job_id }}
                                         </td>
                                         <td>
                                             {{ $job->title }}
