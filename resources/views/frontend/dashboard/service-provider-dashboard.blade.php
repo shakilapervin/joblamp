@@ -291,19 +291,19 @@
                             <div class="content">
                                 <ul class="dashboard-box-list">
                                     @foreach($notifications as $notification)
-                                    <li>
+                                        <li>
                                         <span class="notification-icon">
-                                            <i class="icon-material-outline-group"></i>
+                                            <i class="icon-material-baseline-notifications-none"></i>
                                         </span>
-                                        <span class="notification-text">
-                                            <strong>Michael Shannah</strong> applied for a job <a href="#">Full Stack Software Engineer</a>
+                                            <span class="notification-text">
+                                            {{ $notification->description }}
                                         </span>
-                                        <!-- Buttons -->
-{{--                                        <div class="buttons-to-right">--}}
-{{--                                            <a href="#" class="button ripple-effect ico" title="Mark as read"--}}
-{{--                                               data-tippy-placement="left"><i class="icon-feather-check-square"></i></a>--}}
-{{--                                        </div>--}}
-                                    </li>
+                                            <!-- Buttons -->
+                                            {{--                                        <div class="buttons-to-right">--}}
+                                            {{--                                            <a href="#" class="button ripple-effect ico" title="Mark as read"--}}
+                                            {{--                                               data-tippy-placement="left"><i class="icon-feather-check-square"></i></a>--}}
+                                            {{--                                        </div>--}}
+                                        </li>
                                     @endforeach
                                 </ul>
                             </div>
