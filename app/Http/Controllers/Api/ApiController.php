@@ -18,6 +18,7 @@ use App\State;
 use App\User;
 use App\UserChat;
 use App\UserJob;
+use App\UserTransaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -57,9 +58,9 @@ class ApiController extends Controller
             return response()->json(compact('status', 'message'));
         }
         if ($request->user_type == 'service_provider') {
-            $status = 3;
+            $status = 'pending';
         } else {
-            $status = 1;
+            $status = 'active';
         }
         $data = array(
             'first_name' => $request->first_name,
@@ -113,19 +114,26 @@ class ApiController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors());
         }
-        $credentials = $request->only('email', 'password');
-        if (Auth::attempt($credentials)) {
-            DB::table('users')
-                ->where('users.email', $request->email)
-                ->update(['device_token' => $request->device_token]);
-            $data = DB::table('users')
-                ->where('users.email', $request->email)
-                ->first();
-            $status = true;
-            return response()->json(compact('data', 'status'));
-        } else {
+        $user = User::where('email',$request->email)->first();
+        if ($user->status == 'active'){
+            $credentials = $request->only('email', 'password');
+            if (Auth::attempt($credentials)) {
+                DB::table('users')
+                    ->where('users.email', $request->email)
+                    ->update(['device_token' => $request->device_token]);
+                $data = DB::table('users')
+                    ->where('users.email', $request->email)
+                    ->first();
+                $status = true;
+                return response()->json(compact('data', 'status'));
+            } else {
+                $status = false;
+                $message = 'Login Credentials are not correct.';
+                return response()->json(compact('status', 'message'));
+            }
+        }else{
             $status = false;
-            $message = 'Login Credentials are not correct.';
+            $message = "Your account is under review. You can't login until your account is activated";
             return response()->json(compact('status', 'message'));
         }
     }
@@ -1390,6 +1398,24 @@ class ApiController extends Controller
     {
         $status = true;
         $data = Page::where('page_name','terms_conditions')->first();
+        return response()->json(compact('status', 'data'));
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Task Worker Total Income
+    |--------------------------------------------------------------------------
+    */
+    public function taskWorkerTotalIncome(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+        $data = UserTransaction::where('user_id',$request->user_id)->sum('credit');
+        $status = true;
         return response()->json(compact('status', 'data'));
     }
 

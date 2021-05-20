@@ -47,6 +47,7 @@ Route::post('save-chat-file', 'Api\ApiController@saveChatFile');
 Route::post('get-category-jobs', 'Api\ApiController@categoryJobList');
 Route::post('generate-chat', 'Api\ApiController@generateChat');
 Route::post('update-skill', 'Api\ApiController@updateSkill');
+Route::post('tw-total-income', 'Api\ApiController@taskWorkerTotalIncome');
 Route::get('get-skill', 'Api\ApiController@getAllSkills');
 Route::get('about-us', 'Api\ApiController@aboutUs');
 Route::get('privacy-policy', 'Api\ApiController@privacyPolicy');

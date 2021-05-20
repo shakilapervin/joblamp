@@ -39,7 +39,7 @@ class ContractorController extends Controller
         $contractor = User::where('id',$id)->first();
         $contractor->status = $status;
         $contractor->save();
-        if ($status == 1){
+        if ($status == 'active'){
             return redirect('admin-contractors')->with('success','Approved');
         }else{
             return redirect('admin-contractors')->with('error','Rejected');

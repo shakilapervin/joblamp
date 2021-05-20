@@ -88,16 +88,16 @@
                                             {{ $contractor->mobile_number }}
                                         </td>
                                         <td>
-                                            @if($contractor->status == 1)
+                                            @if($contractor->status == 'active')
                                                 <span class="badge badge-success">{{ __('Approved') }}</span>
-                                            @elseif($contractor->status == 2)
+                                            @elseif($contractor->status == 'rejected')
                                                 <span class="badge badge-danger">{{ __('Rejected') }}</span>
                                             @else
                                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                                    <a href="{{route('admin.update.contractor.status', [$contractor->id,1])}}" class="btn btn-success">
+                                                    <a href="{{route('admin.update.contractor.status', [$contractor->id,'active'])}}" class="btn btn-success">
                                                         <i class="icon-check"></i> {{ __('Approve') }}
                                                     </a>
-                                                    <a href="{{route('admin.update.contractor.status', [$contractor->id,2])}}" class="btn btn-danger">
+                                                    <a href="{{route('admin.update.contractor.status', [$contractor->id,'rejected'])}}" class="btn btn-danger">
                                                         <i class="icon-close"></i> {{ __('Reject') }}
                                                     </a>
                                                 </div>

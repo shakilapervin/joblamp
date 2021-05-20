@@ -88,7 +88,7 @@
                         </div>
                         <div class="form-group">
                             <label for="colFormLabelSm"
-                                   class="col-sm-12 col-form-label">{{ __('Romanian Content') }}</label>
+                                   class="col-sm-12 col-form-label">{{ __('Russian Content') }}</label>
                             <div class="col-sm-12">
                                 <textarea name="content_ro" id="" cols="30" rows="10" class="form-control @error('content_ro') is-invalid @enderror">{{ $content->content_ro }}</textarea>
                                 @error('content_ro')

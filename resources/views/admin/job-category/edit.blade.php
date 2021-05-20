@@ -165,7 +165,7 @@
 
                         <div class="form-group row">
                             <label for="colFormLabelSm"
-                                   class="col-md-2 col-form-label">{{ __('Category Name Romanian') }}</label>
+                                   class="col-md-2 col-form-label">{{ __('Category Name Russian') }}</label>
                             <div class="col-md-4">
                                 <input type="text"
                                        class="form-control @error('name_ro') is-invalid @enderror"
@@ -177,7 +177,7 @@
                                 @enderror
                             </div>
                             <label for="colFormLabelSm"
-                                   class="col-md-2 col-form-label">{{ __('Category Description Romanian') }}</label>
+                                   class="col-md-2 col-form-label">{{ __('Category Description Russian') }}</label>
                             <div class="col-md-4">
                                 <textarea name="description_ro" class="form-control @error('description_ro') is-invalid @enderror" cols="30" rows="10" required>{{ $category->description_ro }}</textarea>
                                 @error('description_ro')

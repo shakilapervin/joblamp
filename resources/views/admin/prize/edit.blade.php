@@ -161,7 +161,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="colFormLabelSm"
-                                   class="col-sm-12 col-form-label">{{ __('Romanian Title') }}</label>
+                                   class="col-sm-12 col-form-label">{{ __('Russian Title') }}</label>
                             <div class="col-sm-12">
                                 <input type="text"
                                        class="form-control @error('title_ro') is-invalid @enderror"
@@ -175,7 +175,7 @@
                         </div>
                         <div class="form-group">
                             <label for="colFormLabelSm"
-                                   class="col-sm-12 col-form-label">{{ __('Romanian Details') }}</label>
+                                   class="col-sm-12 col-form-label">{{ __('Russian Details') }}</label>
                             <div class="col-sm-12">
                                 <textarea name="details_ro" id="" cols="30" rows="10" class="form-control @error('details_ro') is-invalid @enderror">{{ $prize->details_ro }}</textarea>
                                 @error('details_ro')

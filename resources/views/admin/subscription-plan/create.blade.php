@@ -156,7 +156,7 @@
 
                         <div class="form-group row">
                             <label for="colFormLabelSm"
-                                   class="col-md-2 col-form-label">{{ __('Title Romania') }}</label>
+                                   class="col-md-2 col-form-label">{{ __('Title Russian') }}</label>
                             <div class="col-sm-4">
                                 <input type="text"
                                        class="form-control form-control @error('title_ro') is-invalid @enderror"
@@ -168,7 +168,7 @@
                                 @enderror
                             </div>
                             <label for="colFormLabelSm"
-                                   class="col-md-2 col-form-label">{{ __('Description Romania') }}</label>
+                                   class="col-md-2 col-form-label">{{ __('Description Russian') }}</label>
                             <div class="col-md-4">
                                 <textarea name="description_ro"
                                           class="form-control @error('description_ro') is-invalid @enderror" cols="30"
@@ -343,7 +343,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <label for="colFormLabelSm"
-                                           class="col-sm-2 col-form-label">{{ __('Feature Romania') }}</label>
+                                           class="col-sm-2 col-form-label">{{ __('Feature Russian') }}</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="colFormLabelSm" name="feature_ro[]" required>
                                     </div>

@@ -53,14 +53,14 @@
                                 <input type="radio" name="user_type" id="freelancer-radio"
                                        class="account-type-radio" value="customer" checked/>
                                 <label for="freelancer-radio" class="ripple-effect-dark"><i
-                                        class="icon-material-outline-account-circle"></i> {{ __('Customer') }}</label>
+                                        class="icon-material-outline-account-circle"></i> {{ __('Task Giver') }}</label>
                             </div>
 
                             <div>
                                 <input type="radio" name="user_type" id="employer-radio"
                                        class="account-type-radio" value="service_provider"/>
                                 <label for="employer-radio" class="ripple-effect-dark"><i
-                                        class="icon-material-outline-business-center"></i> {{ __('Service Provider') }}
+                                        class="icon-material-outline-business-center"></i> {{ __('Task Worker') }}
                                 </label>
                             </div>
                         </div>

@@ -5,8 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="102137b5-5205-44c0-83f0-459dcecac978" name="Default Changelist" comment="Latest">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/ContractorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/ContractorController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/ApiController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/ApiController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Website/FrontendController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Website/FrontendController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/joblamp.zip" beforeDir="false" afterPath="$PROJECT_DIR$/joblamp.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/frontend/dashboard/service-provider-dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/dashboard/service-provider-dashboard.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/contractor/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/contractor/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/job-category/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/job-category/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/job-category/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/job-category/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/page/about-us.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/page/about-us.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/page/privacy-policy.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/page/privacy-policy.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/page/terms-conditions.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/page/terms-conditions.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/prize/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/prize/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/prize/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/prize/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/skill/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/skill/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/skill/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/skill/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/subscription-plan/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/subscription-plan/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/subscription-plan/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/subscription-plan/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/auth/register.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/auth/register.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/pages/contact.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/pages/contact.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -396,7 +413,9 @@
       <workItem from="1621312776552" duration="2401000" />
       <workItem from="1621324839049" duration="24000" />
       <workItem from="1621353323239" duration="1279000" />
-      <workItem from="1621359858902" duration="5291000" />
+      <workItem from="1621359858902" duration="5500000" />
+      <workItem from="1621398500112" duration="19000" />
+      <workItem from="1621489256505" duration="2419000" />
     </task>
     <task id="LOCAL-00001" summary="Latest">
       <created>1616691922612</created>

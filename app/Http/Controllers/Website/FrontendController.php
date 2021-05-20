@@ -125,9 +125,9 @@ class FrontendController extends Controller
         }
 
         if ($request->user_type == 'service_provider') {
-            $status = 3;
+            $status = 'pending';
         } else {
-            $status = 1;
+            $status = 'active';
         }
 
         $data = array(
@@ -200,11 +200,16 @@ class FrontendController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-        $credentials = $request->only('email', 'password');
-        if (Auth::attempt($credentials)) {
-            return redirect('dashboard');
-        } else {
-            return redirect()->back()->with('error', __('Email and password did\'t match!'));
+        $user = User::where('email',$request->email)->first();
+        if ($user->status == 'active'){
+            $credentials = $request->only('email', 'password');
+            if (Auth::attempt($credentials)) {
+                return redirect('dashboard');
+            } else {
+                return redirect()->back()->with('error', __('Email and password did\'t match!'));
+            }
+        }else{
+            return redirect()->back()->with('error', __("Your account is under review. You can't login until your account is activated"));
         }
     }
 

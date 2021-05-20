@@ -105,7 +105,7 @@
                         </div>
                         <div class="form-group">
                             <label for="colFormLabelSm"
-                                   class="col-sm-12 col-form-label">{{ __('Romanian Name') }}</label>
+                                   class="col-sm-12 col-form-label">{{ __('Russian Name') }}</label>
                             <div class="col-sm-12">
                                 <input type="text"
                                        class="form-control @error('name_ro') is-invalid @enderror"

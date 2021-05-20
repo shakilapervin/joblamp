@@ -15,7 +15,7 @@
                     <!-- Breadcrumbs -->
                     <nav id="breadcrumbs" class="dark">
                         <ul>
-                            <li><a href="{{ route('home') }}">Home</a></li>
+                            <li><a href="{{ route('home') }}">{{ __('Home') }}</a></li>
                             <li>{{ __('Contact Us') }}</li>
                         </ul>
                     </nav>
@@ -47,7 +47,7 @@
                 <div class="contact-location-info margin-bottom-50">
                     <div class="contact-address">
                         <ul>
-                            <li class="contact-address-headline">Our Office</li>
+                            <li class="contact-address-headline">{{ __('Our Office') }}</li>
                             <li>425 Berry Street, CA 93584</li>
                             <li>Phone (123) 123-456</li>
                             <li><a href="#">mail@example.com</a></li>
@@ -78,14 +78,15 @@
             <div class="col-xl-8 col-lg-8 offset-xl-2 offset-lg-2">
 
                 <section id="contact" class="margin-bottom-60">
-                    <h3 class="headline margin-top-15 margin-bottom-35">Any questions? Feel free to contact us!</h3>
+                    <h3 class="headline margin-top-15 margin-bottom-35">{{ __('Any questions? Feel free to contact us!') }}</h3>
+                    <h4 class="headline margin-top-15 margin-bottom-35">{{ __('We will respond to your queries within 48 hrs of time') }}</h4>
 
                     <form method="post" name="contactform" id="contactform" autocomplete="on" action="{{ route('submit.contact.form') }}">
                         @csrf
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="input-with-icon-left">
-                                    <input class="with-border" name="name" type="text" id="name" placeholder="Your Name"
+                                    <input class="with-border" name="name" type="text" id="name" placeholder="{{ __('Your Name') }}"
                                            required="required"/>
                                     <i class="icon-material-outline-account-circle"></i>
                                 </div>
@@ -94,7 +95,7 @@
                             <div class="col-md-6">
                                 <div class="input-with-icon-left">
                                     <input class="with-border" name="email" type="email" id="email"
-                                           placeholder="Email Address"
+                                           placeholder="{{ __('Email Address') }}"
                                            pattern="^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$"
                                            required="required"/>
                                     <i class="icon-material-outline-email"></i>
@@ -105,10 +106,10 @@
                         <div class="input-with-icon-left">
                             <select name="type" id="" required>
                                 <option value="">Select One</option>
-                                <option value="General Enquiry">General Enquiry</option>
-                                <option value="Dispute">Dispute</option>
-                                <option value="Payment Issue">Payment Issue</option>
-                                <option value="Others">Others</option>
+                                <option value="General Enquiry">{{ __('General Enquiry') }}</option>
+                                <option value="Dispute">{{ __('Dispute') }}</option>
+                                <option value="Payment Issue">{{ __('Payment Issue') }}</option>
+                                <option value="Others">{{ __('Others') }}</option>
                             </select>
                         </div>
 
