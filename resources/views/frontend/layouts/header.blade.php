@@ -10,6 +10,7 @@
 
     <!-- CSS
     ================================================== -->
+    <link rel="stylesheet" href="{{ asset('assets/frontend') }}/css/animate.css">
     <link rel="stylesheet" href="{{ asset('assets/frontend') }}/css/style.css">
     <link rel="stylesheet" href="{{ asset('assets/frontend') }}/css/colors/blue.css">
     @yield('style')
@@ -159,82 +160,11 @@
 
                             <!-- Notifications -->
                             <div class="header-notifications">
-
                                 <!-- Trigger -->
                                 <div class="header-notifications-trigger">
-                                    <a href="#">
+                                    <a href="{{ route('dashboard') }}">
                                         <i class="icon-feather-bell"></i>
-                                        <span>4</span>
                                     </a>
-                                </div>
-
-                                <!-- Dropdown -->
-                                <div class="header-notifications-dropdown">
-
-                                    <div class="header-notifications-headline">
-                                        <h4>Notifications</h4>
-                                        <button class="mark-as-read ripple-effect-dark" title="Mark all as read"
-                                                data-tippy-placement="left">
-                                            <i class="icon-feather-check-square"></i>
-                                        </button>
-                                    </div>
-
-                                    <div class="header-notifications-content">
-                                        <div class="header-notifications-scroll" data-simplebar>
-                                            <ul>
-                                                <!-- Notification -->
-                                                <li class="notifications-not-read">
-                                                    <a href="dashboard-manage-candidates.html">
-                                                    <span class="notification-icon"><i
-                                                            class="icon-material-outline-group"></i></span>
-                                                        <span class="notification-text">
-													<strong>Michael Shannah</strong> applied for a job <span
-                                                                class="color">Full Stack Software Engineer</span>
-												</span>
-                                                    </a>
-                                                </li>
-
-                                                <!-- Notification -->
-                                                <li>
-                                                    <a href="dashboard-manage-bidders.html">
-                                                    <span class="notification-icon"><i
-                                                            class=" icon-material-outline-gavel"></i></span>
-                                                        <span class="notification-text">
-													<strong>Gilbert Allanis</strong> placed a bid on your <span
-                                                                class="color">iOS App Development</span> project
-												</span>
-                                                    </a>
-                                                </li>
-
-                                                <!-- Notification -->
-                                                <li>
-                                                    <a href="dashboard-manage-jobs.html">
-                                                    <span class="notification-icon"><i
-                                                            class="icon-material-outline-autorenew"></i></span>
-                                                        <span class="notification-text">
-													Your job listing <span class="color">Full Stack PHP Developer</span> is expiring.
-												</span>
-                                                    </a>
-                                                </li>
-
-                                                <!-- Notification -->
-                                                <li>
-                                                    <a href="dashboard-manage-candidates.html">
-                                                        <span class="notification-icon">
-                                                            <i class="icon-material-outline-group"></i>
-                                                        </span>
-                                                        <span class="notification-text">
-                                                            <strong>Sindy Forrest</strong> applied for a job
-                                                            <span class="color">
-                                                                Full Stack Software Engineer
-                                                            </span>
-												        </span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-
                                 </div>
 
                             </div>
@@ -283,14 +213,6 @@
                                             <div class="user-name">
                                                 {{ \Illuminate\Support\Facades\Auth::user()->first_name }} {{ \Illuminate\Support\Facades\Auth::user()->last_name }}
                                             </div>
-                                        </div>
-
-                                        <!-- User Status Switcher -->
-                                        <div class="status-switch" id="snackbar-user-status">
-                                            <label class="user-online current-status">Online</label>
-                                            <label class="user-invisible">Invisible</label>
-                                            <!-- Status Indicator -->
-                                            <span class="status-indicator" aria-hidden="true"></span>
                                         </div>
                                     </div>
 

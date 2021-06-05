@@ -21,7 +21,7 @@
                                 <ul>
                                     <li>
                                         <div class="star-rating"
-                                             data-rating="{{ $user->userRating }}"></div>
+                                             data-rating="{{ calculateRating($userFeedbacks) }}"></div>
                                     </li>
                                     <li>
                                         {{ $user->country_name }}

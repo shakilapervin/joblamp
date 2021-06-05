@@ -55,15 +55,15 @@ class FrontendController extends Controller
     */
     public function index()
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         $banners = Slider::where('status', 'active')->get();
         $jobs = Job::where('status', 'opened')->limit(10)->get();
         $subscriptionPlans = SubscriptionPlan::with('features')->where('status', 'active')->get();
-        $categoryNameLang = 'name_'.$lang;
-        $categoryDescriptionLang = 'description_'.$lang;
+        $categoryNameLang = 'name_' . $lang;
+        $categoryDescriptionLang = 'description_' . $lang;
         $jobcategories = DB::table('job_categories')
-            ->select("$categoryNameLang as name","$categoryDescriptionLang as description",'job_categories.id','job_categories.icon', DB::raw('count(*) as totalJob'))
+            ->select("$categoryNameLang as name", "$categoryDescriptionLang as description", 'job_categories.id', 'job_categories.icon', DB::raw('count(*) as totalJob'))
             ->join('jobs', 'jobs.category', '=', 'job_categories.id')
             ->where('job_categories.status', 1)
             ->where('jobs.status', 'opened')
@@ -89,7 +89,7 @@ class FrontendController extends Controller
     */
     public function registrationForm()
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         $countries = Country::where('status', 1)->get();
         $states = State::where('status', 1)->get();
@@ -104,7 +104,7 @@ class FrontendController extends Controller
     */
     public function registerUser(Request $request)
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         $validator = Validator::make($request->all(), [
             'first_name' => 'required',
@@ -171,7 +171,7 @@ class FrontendController extends Controller
     */
     public function loginForm()
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         if (Auth::user()) {
             return redirect('/dashboard');
@@ -188,7 +188,7 @@ class FrontendController extends Controller
     */
     public function checkLogin(Request $request)
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         $validator = Validator::make($request->all(), [
             'password' => 'required',
@@ -200,16 +200,12 @@ class FrontendController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-        $user = User::where('email',$request->email)->first();
-        if ($user->status == 'active'){
-            $credentials = $request->only('email', 'password');
-            if (Auth::attempt($credentials)) {
-                return redirect('dashboard');
-            } else {
-                return redirect()->back()->with('error', __('Email and password did\'t match!'));
-            }
-        }else{
-            return redirect()->back()->with('error', __("Your account is under review. You can't login until your account is activated"));
+        $user = User::where('email', $request->email)->first();
+        $credentials = $request->only('email', 'password');
+        if (Auth::attempt($credentials)) {
+            return redirect('dashboard');
+        } else {
+            return redirect()->back()->with('error', __('Email and password did\'t match!'));
         }
     }
 
@@ -220,7 +216,7 @@ class FrontendController extends Controller
     */
     public function checkLoginSubscription(Request $request)
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         $validator = Validator::make($request->all(), [
             'password' => 'required',
@@ -247,7 +243,7 @@ class FrontendController extends Controller
     */
     public function userLogout(Request $request)
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         $this->guard()->logout();
         $request->session()->invalidate();
@@ -265,7 +261,7 @@ class FrontendController extends Controller
     */
     public function adminLogout(Request $request)
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         $this->guard()->logout();
         $request->session()->invalidate();
@@ -289,7 +285,7 @@ class FrontendController extends Controller
 
     public function dashboard()
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         $user = Auth::user();
         $notifications = Notification::where('user_id', $user->id)->get();
@@ -320,7 +316,7 @@ class FrontendController extends Controller
 
     public function myProfile()
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         $id = Auth::id();
         $user = User::where('id', $id)->first();
@@ -335,7 +331,7 @@ class FrontendController extends Controller
 
     public function publicProfile($id)
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         try {
             $id = decrypt($id);
@@ -343,12 +339,9 @@ class FrontendController extends Controller
             return redirect('');
         }
         $user = DB::table('users')
-            ->select('users.id', 'users.first_name', 'users.last_name', 'users.profile_pic', 'users.skill', 'countries.name as country_name', DB::raw('sum(ratings.rating) / count(*) as userRating'), DB::raw('(sum(ratings.rating) / count(*)) + count(*) as score'))
+            ->select('users.id', 'users.first_name', 'users.last_name', 'users.profile_pic', 'users.skill', 'countries.name as country_name')
             ->join('countries', 'countries.id', '=', 'users.country')
-            ->join('ratings', 'ratings.user_id', '=', 'users.id')
             ->where('users.id', $id)
-            ->groupBy('ratings.user_id')
-            ->orderBy('score', 'desc')
             ->first();
         $jobDone = UserJob::where('service_provider_id', $id)->count();
         $userFeedbacks = DB::table('ratings')
@@ -368,14 +361,14 @@ class FrontendController extends Controller
 
     public function editprofileForm()
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
-        $name = 'name_'.$lang;
+        $name = 'name_' . $lang;
         $user = Auth::user();
         $countries = Country::where('status', 1)->get();
         $states = State::where('status', 1)->get();
         $cities = City::where('status', 1)->get();
-        $skills = Skill::select("$name as name","id")->where('status', 'active')->get();
+        $skills = Skill::select("$name as name", "id")->where('status', 'active')->get();
         return view('frontend.profile.edit-profile', compact('user', 'countries', 'states', 'cities', 'skills'));
     }
 
@@ -387,11 +380,11 @@ class FrontendController extends Controller
 
     public function jobPostForm()
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
-        $categoryNameLang = 'name_'.$lang;
-        $categoryDescriptionLang = 'description_'.$lang;
-        $jobCategories = \App\JobCategory::select("$categoryNameLang as name","$categoryDescriptionLang as description",'job_categories.id','job_categories.icon')->where('status',1)->get();
+        $categoryNameLang = 'name_' . $lang;
+        $categoryDescriptionLang = 'description_' . $lang;
+        $jobCategories = \App\JobCategory::select("$categoryNameLang as name", "$categoryDescriptionLang as description", 'job_categories.id', 'job_categories.icon')->where('status', 1)->get();
         if (Auth::user()->user_type == 'customer') {
             $countries = Country::where('status', 1)->get();
             $states = State::where('status', 1)->get();
@@ -410,7 +403,7 @@ class FrontendController extends Controller
     */
     public function saveJob(Request $request)
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         if (Auth::user()->user_type == 'customer') {
             $validator = Validator::make($request->all(), [
@@ -474,7 +467,7 @@ class FrontendController extends Controller
 
     public function jobList(Request $request)
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         $noJob = false;
         $location = $request->location;
@@ -511,9 +504,9 @@ class FrontendController extends Controller
 
         $jobs = $query->get();
 
-        $categoryNameLang = 'name_'.$lang;
-        $categoryDescriptionLang = 'description_'.$lang;
-        $jobCategories = \App\JobCategory::select("$categoryNameLang as name","$categoryDescriptionLang as description",'job_categories.id','job_categories.icon')->where('status',1)->get();
+        $categoryNameLang = 'name_' . $lang;
+        $categoryDescriptionLang = 'description_' . $lang;
+        $jobCategories = \App\JobCategory::select("$categoryNameLang as name", "$categoryDescriptionLang as description", 'job_categories.id', 'job_categories.icon')->where('status', 1)->get();
         return view('frontend.job.list', compact('jobs', 'jobCategories', 'noJob', 'location', 'keyword', 'category_id'));
 
     }
@@ -526,7 +519,7 @@ class FrontendController extends Controller
 
     public function getStates(Request $request)
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         $states = State::where('country_id', $request->country)->get();
         $user = Auth::user();
@@ -542,7 +535,7 @@ class FrontendController extends Controller
 
     public function getCities(Request $request)
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         $cities = City::where('country_id', $request->country)->where('state_id', $request->state)->get();
         $user = Auth::user();
@@ -558,7 +551,7 @@ class FrontendController extends Controller
 
     public function adminGetStates(Request $request)
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         $states = State::where('country_id', $request->country)->get();
         return view('admin.partials.states', compact('states'));
@@ -572,7 +565,7 @@ class FrontendController extends Controller
 
     public function adminGetCities(Request $request)
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         $cities = City::where('country_id', $request->country)->where('state_id', $request->state)->get();
         return view('admin.partials.cities', compact('cities'));
@@ -586,7 +579,7 @@ class FrontendController extends Controller
 
     public function updateProfile(Request $request)
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         $validator = Validator::make($request->all(), [
             'first_name' => 'required',
@@ -655,7 +648,7 @@ class FrontendController extends Controller
     */
     public function jobDetails($id)
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         try {
             $id = decrypt($id);
@@ -679,11 +672,11 @@ class FrontendController extends Controller
     */
     public function applyJob(Request $request)
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         $id = Auth::id();
         $user = User::where('id', $id)->first();
-        if ($user->user_type == 'service_provider') {
+        if ($user->user_type == 'service_provider' && $user->status == 'active') {
             $validator = Validator::make($request->all(), [
                 'cover_letter' => 'required',
                 'bid_amount' => 'required',
@@ -803,7 +796,7 @@ class FrontendController extends Controller
     */
     public function subscriptionCheckout($id)
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         try {
             $id = decrypt($id);
@@ -821,7 +814,7 @@ class FrontendController extends Controller
     */
     public function subscriptionConfirm($id)
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         try {
             $id = decrypt($id);
@@ -846,7 +839,7 @@ class FrontendController extends Controller
     */
     public function jobApplyCheckout()
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         $data = Session::get('jobData');
         if (!empty($data)) {
@@ -864,7 +857,7 @@ class FrontendController extends Controller
     */
     public function removeDoc(Request $request)
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         $user = User::where('id', $request->user_id)->first();
         $doc = $request->doc;
@@ -888,7 +881,7 @@ class FrontendController extends Controller
 
     public function taskWorkerList(Request $request)
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         $query = User::with('userRating')
             ->select('users.*', 'countries.name as country_name')
@@ -911,7 +904,7 @@ class FrontendController extends Controller
 
     public function contactPage()
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         return view('frontend.pages.contact');
     }
@@ -924,7 +917,7 @@ class FrontendController extends Controller
 
     public function submitContactForm(Request $request)
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
         $validator = Validator::make($request->all(), [
             'name' => 'required',
@@ -955,11 +948,11 @@ class FrontendController extends Controller
     */
     public function lottoPrizes()
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
-        $title = 'title_'.$lang;
-        $details = 'details_'.$lang;
-        $prizes = LottoPriz::select("$title as title","$details as details")->where('status', 'active')->get();
+        $title = 'title_' . $lang;
+        $details = 'details_' . $lang;
+        $prizes = LottoPriz::select("$title as title", "$details as details")->where('status', 'active')->get();
         return view('frontend.pages.prize', compact('prizes'));
     }
 
@@ -970,12 +963,13 @@ class FrontendController extends Controller
     */
     public function privacyPolicyPage()
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
-        $content = 'content_'.$lang;
-        $content = Page::select("$content as data")->where('page_name','privacy_policy')->first();
+        $content = 'content_' . $lang;
+        $content = Page::select("$content as data")->where('page_name', 'privacy_policy')->first();
         return view('frontend.pages.privacy-policy', compact('content'));
     }
+
     /*
     |--------------------------------------------------------------------------
     | Terms and conditions
@@ -983,12 +977,13 @@ class FrontendController extends Controller
     */
     public function termsConditionsPage()
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
-        $content = 'content_'.$lang;
-        $content = Page::select("$content as data")->where('page_name','terms_conditions')->first();
+        $content = 'content_' . $lang;
+        $content = Page::select("$content as data")->where('page_name', 'terms_conditions')->first();
         return view('frontend.pages.terms-conditions', compact('content'));
     }
+
     /*
     |--------------------------------------------------------------------------
     | About Us
@@ -996,11 +991,24 @@ class FrontendController extends Controller
     */
     public function aboutUs()
     {
-        $lang = session()->get('lang')?: 'en';
+        $lang = session()->get('lang') ?: 'en';
         app()->setLocale($lang);
-        $content = 'content_'.$lang;
-        $content = Page::select("$content as data")->where('page_name','about_us')->first();
+        $content = 'content_' . $lang;
+        $content = Page::select("$content as data")->where('page_name', 'about_us')->first();
         return view('frontend.pages.about-us', compact('content'));
+    }
+    /*
+    |--------------------------------------------------------------------------
+    | Accessibility Page
+    |--------------------------------------------------------------------------
+    */
+    public function accessibility()
+    {
+        $lang = session()->get('lang') ?: 'en';
+        app()->setLocale($lang);
+        $content = 'content_' . $lang;
+        $content = Page::select("$content as data")->where('page_name', 'accessibility')->first();
+        return view('frontend.pages.accessibility', compact('content'));
     }
 
 }

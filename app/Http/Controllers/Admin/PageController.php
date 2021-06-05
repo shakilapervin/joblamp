@@ -151,4 +151,51 @@ class PageController extends Controller
         $page->save();
         return redirect()->back()->with('success',__('Successfully Updated!'));
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Accessibility Page
+    |--------------------------------------------------------------------------
+    */
+    public function accessibility(){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
+        $content = Page::where('page_name','accessibility')->first();
+        return view('admin.page.accessibility',compact('content'));
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Update Accessibility Page
+    |--------------------------------------------------------------------------
+    */
+    public function updateAccessibility(Request $request){
+        if (Auth::user()->user_type != 'admin'){
+            return redirect()->route('admin.dashboard');
+        }
+        $validator = Validator::make($request->all(), [
+            'content_en' => 'required',
+            'content_es' => 'required',
+            'content_fr' => 'required',
+            'content_de' => 'required',
+            'content_ro' => 'required',
+            'content_pt' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $page = Page::where('page_name','accessibility')->first();
+        $page->content_en = $request->content_en;
+        $page->content_es = $request->content_es;
+        $page->content_fr = $request->content_fr;
+        $page->content_de = $request->content_de;
+        $page->content_ro = $request->content_ro;
+        $page->content_pt = $request->content_pt;
+        $page->save();
+        return redirect()->back()->with('success',__('Successfully Updated!'));
+    }
 }

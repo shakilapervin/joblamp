@@ -1,4 +1,3 @@
-
 <!-- Footer
     ================================================== -->
 <div id="footer">
@@ -68,7 +67,8 @@
                                                 $langs = languages();
                                             @endphp
                                             @foreach($langs as $lang)
-                                            <option value="{{ $lang->language }}" @if(session()->get('lang') == $lang->language) selected @endif>{{ $lang->name }}</option>
+                                                <option value="{{ $lang->language }}"
+                                                        @if(session()->get('lang') == $lang->language) selected @endif>{{ $lang->name }}</option>
                                             @endforeach
                                         </select>
                                     </form>
@@ -94,7 +94,7 @@
                     <div class="footer-links">
                         <h3>{{ __('For You') }}</h3>
                         <ul>
-                            <li><a href="{{ route('job-list') }}"><span>Browse Jobs</span></a></li>
+                            <li><a href="{{ route('job-list') }}"><span>{{ __('Browse Jobs') }}</span></a></li>
                             @auth
                                 @if (\Illuminate\Support\Facades\Auth::user()->user_type == 'customer')
                                     <li><a href="{{ route('job-post') }}"><span>{{ __('Post a Job') }}</span></a></li>
@@ -105,6 +105,8 @@
                                     <li><a href="{{ route('dashboard') }}"><span>{{ __('My Job') }}</span></a></li>
                                 @endif
                             @endauth
+                            <li><a href="{{ route('lotto.prizes') }}"><span>{{ __('Lotto Prize') }}</span></a></li>
+                            <li><a href="{{ route('accessibility') }}"><span>{{ __('Accessibility') }}</span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -112,28 +114,44 @@
                 <!-- Links -->
                 <div class="col-xl-3 col-lg-3 col-md-3">
                     <div class="footer-links">
-                        <h3>Helpful Links</h3>
+                        <h3>{{ __('Helpful Links') }}</h3>
                         <ul>
                             <li><a href="{{ route('contact.us') }}"><span>{{ __('Contact') }}</span></a></li>
                             <li><a href="{{ route('privacy.policy') }}"><span>{{ __('Privacy Policy') }}</span></a></li>
-                            <li><a href="{{ route('terms.conditions') }}"><span>{{ __('Terms and Conditions') }}</span></a></li>
-                            <li><a href="{{ route('lotto.prizes') }}"><span>{{ __('Lotto Prize') }}</span></a></li>
+                            <li><a href="{{ route('terms.conditions') }}"><span>{{ __('Terms and Conditions') }}</span></a>
+                            </li>
                         </ul>
                     </div>
                 </div>
 
                 <!-- Links -->
-                <div class="col-xl-3 col-lg-3 col-md-3">
-                    <div class="footer-links">
-                        <h3>Account</h3>
-                        <ul>
-                            <li><a href="#"><span>Log In</span></a></li>
-                            <li><a href="#"><span>My Account</span></a></li>
-                        </ul>
+                @auth
+                    <div class="col-xl-3 col-lg-3 col-md-3">
+                        <div class="footer-links">
+                            <h3>{{ __('Account') }}</h3>
+                            <ul>
+                                <li>
+                                    <a href="{{ route('user-logout') }}"><span>{{ __('Logout') }}</span></a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-
-                <!-- Newsletter -->
+                @else
+                    <div class="col-xl-3 col-lg-3 col-md-3">
+                        <div class="footer-links">
+                            <h3>{{ __('Account') }}</h3>
+                            <ul>
+                                <li>
+                                    <a href="{{ route('user-register') }}"><span>{{ __('Register') }}</span></a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('user-login') }}"><span>{{ __('Login') }}</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                @endauth
+            <!-- Newsletter -->
                 <div class="col-xl-3 col-lg-3 col-md-12">
                     <h3><i class="icon-feather-mail"></i> Sign Up For a Newsletter</h3>
                     <p>Weekly breaking news, analysis and cutting edge advices on job searching.</p>
@@ -214,7 +232,7 @@
 </script>
 <script>
     $(document).ready(function () {
-        $('.language-switcher').on('change',function () {
+        $('.language-switcher').on('change', function () {
             $('.lang-form').submit();
         });
     });

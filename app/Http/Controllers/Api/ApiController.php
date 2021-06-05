@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Charge;
 use App\City;
+use App\ContactSupport;
 use App\Country;
 use App\Job;
 use App\JobApplication;
@@ -114,26 +115,20 @@ class ApiController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors());
         }
-        $user = User::where('email',$request->email)->first();
-        if ($user->status == 'active'){
-            $credentials = $request->only('email', 'password');
-            if (Auth::attempt($credentials)) {
-                DB::table('users')
-                    ->where('users.email', $request->email)
-                    ->update(['device_token' => $request->device_token]);
-                $data = DB::table('users')
-                    ->where('users.email', $request->email)
-                    ->first();
-                $status = true;
-                return response()->json(compact('data', 'status'));
-            } else {
-                $status = false;
-                $message = 'Login Credentials are not correct.';
-                return response()->json(compact('status', 'message'));
-            }
-        }else{
+        $user = User::where('email', $request->email)->first();
+        $credentials = $request->only('email', 'password');
+        if (Auth::attempt($credentials)) {
+            DB::table('users')
+                ->where('users.email', $request->email)
+                ->update(['device_token' => $request->device_token]);
+            $data = DB::table('users')
+                ->where('users.email', $request->email)
+                ->first();
+            $status = true;
+            return response()->json(compact('data', 'status'));
+        } else {
             $status = false;
-            $message = "Your account is under review. You can't login until your account is activated";
+            $message = 'Login Credentials are not correct.';
             return response()->json(compact('status', 'message'));
         }
     }
@@ -407,7 +402,7 @@ class ApiController extends Controller
                 'country' => $row->country_name,
                 'cover_letter' => $row->cover_letter,
                 'bid_amount' => $row->bid_amount,
-                'created_date' => date('Y-m-d',strtotime($row->created_at)),
+                'created_date' => date('Y-m-d', strtotime($row->created_at)),
             );
         }
         return response()->json(compact('data', 'status'));
@@ -428,7 +423,7 @@ class ApiController extends Controller
         }
         $status = true;
         $data = DB::table('ratings')
-            ->select('ratings.feedback', 'ratings.rating', 'users.first_name', 'users.profile_pic', 'users.last_name','jobs.*')
+            ->select('ratings.feedback', 'ratings.rating', 'users.first_name', 'users.profile_pic', 'users.last_name', 'jobs.*')
             ->join('jobs', 'jobs.id', '=', 'ratings.job_id')
             ->join('users', 'users.id', '=', 'jobs.user_id')
             ->where('ratings.user_id', $request->user_id)
@@ -451,12 +446,12 @@ class ApiController extends Controller
         }
         $status = true;
         $has_applied = false;
-        $applied = JobApplication::where('job_id',$request->job_id)->where('candidate_id',$request->user_id)->first();
-        if (!empty($applied)){
+        $applied = JobApplication::where('job_id', $request->job_id)->where('candidate_id', $request->user_id)->first();
+        if (!empty($applied)) {
             $has_applied = true;
         }
-        $data = Job::with(array('categoryInfo','creatorDetails','jobCountry','jobCity','jobState','userJob','ratingsJob'))->where('id', $request->job_id)->first();
-        return response()->json(compact('data', 'status','has_applied'));
+        $data = Job::with(array('categoryInfo', 'creatorDetails', 'jobCountry', 'jobCity', 'jobState', 'userJob', 'ratingsJob'))->where('id', $request->job_id)->first();
+        return response()->json(compact('data', 'status', 'has_applied'));
     }
 
 
@@ -699,7 +694,7 @@ class ApiController extends Controller
             return response()->json($validator->errors());
         }
         $data = JobApplication::where('job_applications.candidate_id', $request->user_id)
-            ->select('jobs.*','users.first_name as creator_first_name','users.last_name as creator_last_name','users.profile_pic as picture','users.id as creator_id')
+            ->select('jobs.*', 'users.first_name as creator_first_name', 'users.last_name as creator_last_name', 'users.profile_pic as picture', 'users.id as creator_id')
             ->join('jobs', 'jobs.id', 'job_applications.job_id')
             ->join('users', 'users.id', 'jobs.user_id')
             ->where('job_applications.status', $request->status)
@@ -811,9 +806,7 @@ class ApiController extends Controller
 
             }
             return response()->json(compact('status', 'message'));
-        }
-        else if($request->single_payment == true)
-        {
+        } else if ($request->single_payment == true) {
             JobApplication::create($data);
             $status = true;
             $message = 'Successfully Applied!';
@@ -852,8 +845,7 @@ class ApiController extends Controller
 
             }
             return response()->json(compact('status', 'message'));
-        }
-        else {
+        } else {
             $status = false;
             $message = 'Your job application limit exceeded! please subscribe our subscription plan';
             return response()->json(compact('status', 'message'));
@@ -876,7 +868,7 @@ class ApiController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors());
         }
-        if ($request->hasFile('delivery_file')){
+        if ($request->hasFile('delivery_file')) {
             $deliveryFile = $request->file('delivery_file')->store('job-delivery-file');
             $deliveryData = array(
                 'job_id' => $request->job_id,
@@ -884,7 +876,7 @@ class ApiController extends Controller
                 'delivery_file' => $deliveryFile,
             );
             JobDeliveryData::create($deliveryData);
-        }else{
+        } else {
             $deliveryData = array(
                 'job_id' => $request->job_id,
                 'delivery_text' => $request->delivery_text
@@ -1029,9 +1021,9 @@ class ApiController extends Controller
         } else {
             $data = array();
             $users = User::where('first_name', 'like', '%' . $keyword . '%')
-                    ->orWhere('last_name', 'like', '%' . $keyword . '%')
-                    ->orderBy('promotion_expire','desc')
-                    ->get();
+                ->orWhere('last_name', 'like', '%' . $keyword . '%')
+                ->orderBy('promotion_expire', 'desc')
+                ->get();
             if (!empty($users)) {
                 foreach ($users as $user) {
                     $skills = array();
@@ -1094,10 +1086,10 @@ class ApiController extends Controller
             $query = $query->where('category', $category);
         }
         if (!empty($minPrice)) {
-            $query = $query->where('fee_range_min','>=', $minPrice);
+            $query = $query->where('fee_range_min', '>=', $minPrice);
         }
         if (!empty($maxPrice)) {
-            $query = $query->where('fee_range_max','>=', $maxPrice);
+            $query = $query->where('fee_range_max', '>=', $maxPrice);
         }
         $data = $query->get();
         return response()->json(compact('data'));
@@ -1110,20 +1102,20 @@ class ApiController extends Controller
     */
     public function bannerList()
     {
-        $banners = Slider::where('status','active')->get();
+        $banners = Slider::where('status', 'active')->get();
         $data = array();
-        if (!empty($banners)){
-            foreach ($banners as $banner){
+        if (!empty($banners)) {
+            foreach ($banners as $banner) {
                 $data[] = array(
                     'title' => $banner->title,
                     'image' => asset($banner->image),
                 );
             }
             return response()->json(compact('data'));
-        }else{
+        } else {
             $status = false;
             $message = 'No banners';
-            return response()->json(compact('status','message'));
+            return response()->json(compact('status', 'message'));
         }
     }
 
@@ -1140,7 +1132,7 @@ class ApiController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors());
         }
-        $data = Notification::where('user_id',$request->user_id)->get();
+        $data = Notification::where('user_id', $request->user_id)->get();
         return response()->json(compact('data'));
     }
 
@@ -1157,8 +1149,8 @@ class ApiController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors());
         }
-        $userType = User::where('id',$request->user_id)->first()->user_type;
-        if ($userType == 'service_provider'){
+        $userType = User::where('id', $request->user_id)->first()->user_type;
+        if ($userType == 'service_provider') {
             $completeJob = UserJob::where('service_provider_id', $request->user_id)
                 ->where('status', 'completed')
                 ->count();
@@ -1173,7 +1165,7 @@ class ApiController extends Controller
                 'current' => $currentJob,
                 'applied' => $appliedJob,
             );
-        }else{
+        } else {
             $completeJob = Job::where('user_id', $request->user_id)
                 ->where('status', 'completed')
                 ->count();
@@ -1200,12 +1192,12 @@ class ApiController extends Controller
     public function topRatedWorkers()
     {
         $data = DB::table('users')
-            ->select('users.id','users.first_name','users.last_name','users.profile_pic','countries.name as country_name',DB::raw('sum(ratings.rating) / count(*) as userRating'),DB::raw('(sum(ratings.rating) / count(*)) + count(*) as score'))
-            ->join('countries','countries.id','=','users.country')
-            ->join('ratings','ratings.user_id','=','users.id')
-            ->where('user_type','service_provider')
+            ->select('users.id', 'users.first_name', 'users.last_name', 'users.profile_pic', 'countries.name as country_name', DB::raw('sum(ratings.rating) / count(*) as userRating'), DB::raw('(sum(ratings.rating) / count(*)) + count(*) as score'))
+            ->join('countries', 'countries.id', '=', 'users.country')
+            ->join('ratings', 'ratings.user_id', '=', 'users.id')
+            ->where('user_type', 'service_provider')
             ->groupBy('ratings.user_id')
-            ->orderBy('score','desc')
+            ->orderBy('score', 'desc')
             ->limit(20)
             ->get();
         return response()->json(compact('data'));
@@ -1260,12 +1252,12 @@ class ApiController extends Controller
         if ($validator->fails()) {
             $status = false;
             $error = 'Sorry This file is not allowed';
-            return response()->json(compact('error','status'));
-        }else{
-            if ($request->hasFile('file')){
+            return response()->json(compact('error', 'status'));
+        } else {
+            if ($request->hasFile('file')) {
                 $status = true;
                 $file_name = $request->file('file')->store('chat-file');
-                return response()->json(compact('file_name','status'));
+                return response()->json(compact('file_name', 'status'));
             }
         }
     }
@@ -1318,10 +1310,10 @@ class ApiController extends Controller
             UserChat::create($data);
         }
 
-        $result = array('sender' => $chat,'receiver' => $receiver);
+        $result = array('sender' => $chat, 'receiver' => $receiver);
         $status = true;
         $message = 'Success';
-        return response()->json(compact('status', 'message','result'));
+        return response()->json(compact('status', 'message', 'result'));
     }
 
 
@@ -1339,7 +1331,7 @@ class ApiController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors());
         }
-        $user = User::where('id',$request->user_id)->first();
+        $user = User::where('id', $request->user_id)->first();
         $skills = array();
         $dataSkill = json_decode($request->skills);
         if (count($dataSkill) > 0) {
@@ -1351,7 +1343,7 @@ class ApiController extends Controller
         $user->save();
         $status = true;
         $message = 'Success';
-        return response()->json(compact('status', 'message','user'));
+        return response()->json(compact('status', 'message', 'user'));
 
     }
 
@@ -1375,9 +1367,10 @@ class ApiController extends Controller
     public function aboutUs()
     {
         $status = true;
-        $data = Page::where('page_name','about_us')->first();
+        $data = Page::where('page_name', 'about_us')->first();
         return response()->json(compact('status', 'data'));
     }
+
     /*
     |--------------------------------------------------------------------------
     | Privacy Policy Page
@@ -1386,9 +1379,10 @@ class ApiController extends Controller
     public function privacyPolicy()
     {
         $status = true;
-        $data = Page::where('page_name','privacy_policy')->first();
+        $data = Page::where('page_name', 'privacy_policy')->first();
         return response()->json(compact('status', 'data'));
     }
+
     /*
     |--------------------------------------------------------------------------
     | Terms and Conditions Page
@@ -1397,7 +1391,7 @@ class ApiController extends Controller
     public function termsConditions()
     {
         $status = true;
-        $data = Page::where('page_name','terms_conditions')->first();
+        $data = Page::where('page_name', 'terms_conditions')->first();
         return response()->json(compact('status', 'data'));
     }
 
@@ -1414,9 +1408,37 @@ class ApiController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors());
         }
-        $data = UserTransaction::where('user_id',$request->user_id)->sum('credit');
+        $data = UserTransaction::where('user_id', $request->user_id)->sum('credit');
         $status = true;
         return response()->json(compact('status', 'data'));
     }
+    /*
+    |--------------------------------------------------------------------------
+    | Support Contact
+    |--------------------------------------------------------------------------
+    */
+    public function supportContact(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required',
+            'type' => 'required',
+            'description' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+        $data = array(
+            'name' => $request->name,
+            'email' => $request->email,
+            'type' => $request->type,
+            'description' => $request->description,
+        );
+        ContactSupport::create($data);
+        $status = true;
+        $message = 'Successfully Submitted';
+        return response()->json(compact('status', 'message'));
+    }
+
 
 }

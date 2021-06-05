@@ -64,7 +64,7 @@
     <div class="container">
         <div class="row">
 
-        <!-- Content -->
+            <!-- Content -->
             <div class="col-xl-8 col-lg-8 content-right-offset">
 
                 <div class="single-page-section">
@@ -152,19 +152,24 @@
             <div class="col-xl-4 col-lg-4">
                 <div class="sidebar-container">
                     @auth
-                        @if(\Illuminate\Support\Facades\Auth::user()->user_type == 'service_provider' && \App\JobApplication::where('job_id',$job->id)->where('candidate_id',\Illuminate\Support\Facades\Auth::user()->id)->count() <= 0)
+                        @if(\Illuminate\Support\Facades\Auth::user()->user_type == 'service_provider' && \App\JobApplication::where('job_id',$job->id)->where('candidate_id',\Illuminate\Support\Facades\Auth::user()->id)->count() <= 0 && \Illuminate\Support\Facades\Auth::user()->status == 'active')
                             <a href="#small-dialog" class="apply-now-button popup-with-zoom-anim">
                                 {{ __('Apply Now ') }}
                                 <i class="icon-material-outline-arrow-right-alt"></i>
                             </a>
                         @endif
-                        @if(\App\JobApplication::where('job_id',$job->id)->where('candidate_id',\Illuminate\Support\Facades\Auth::user()->id)->count() > 0)
-                                <a href="javascript:void(0);" class="apply-now-button popup-with-zoom-anim">
-                                    {{ __('Already Applied') }}
-                                    <i class="icon-material-outline-arrow-right-alt"></i>
-                                </a>
+                        @if( \Illuminate\Support\Facades\Auth::user()->status !== 'active')
+                            <a href="javascript:void(0);" class="apply-now-button popup-with-zoom-anim">
+                                {{ __('You are not able to apply for this job because your profile is not approved by admin yet. Please contact our customer support.') }}
+                            </a>
                         @endif
-                    @endauth
+                        @if(\App\JobApplication::where('job_id',$job->id)->where('candidate_id',\Illuminate\Support\Facades\Auth::user()->id)->count() > 0)
+                            <a href="javascript:void(0);" class="apply-now-button popup-with-zoom-anim">
+                                {{ __('Already Applied') }}
+                                <i class="icon-material-outline-arrow-right-alt"></i>
+                            </a>
+                    @endif
+                @endauth
                 <!-- Sidebar Widget -->
                     <div class="sidebar-widget">
                         <div class="job-overview">
@@ -241,72 +246,76 @@
     -->
     @auth
         @if(\Illuminate\Support\Facades\Auth::user()->user_type == 'service_provider' && \App\JobApplication::where('job_id',$job->id)->where('candidate_id',\Illuminate\Support\Facades\Auth::user()->id)->count() <= 0)
-    <div id="small-dialog" class="zoom-anim-dialog mfp-hide dialog-with-tabs">
-        <!--Tabs -->
-        <div class="sign-in-form">
-            <ul class="popup-tabs-nav">
-                <li>
-                    <a href="#tab">
-                        {{ __('Apply Now') }}
-                    </a>
-                </li>
-            </ul>
-            <div class="popup-tabs-container">
+            <div id="small-dialog" class="zoom-anim-dialog mfp-hide dialog-with-tabs">
+                <!--Tabs -->
+                <div class="sign-in-form">
+                    <ul class="popup-tabs-nav">
+                        <li>
+                            <a href="#tab">
+                                {{ __('Apply Now') }}
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="popup-tabs-container">
 
-                <!-- Tab -->
-                <div class="popup-tab-content" id="tab">
+                        <!-- Tab -->
+                        <div class="popup-tab-content" id="tab">
 
-                    <!-- Welcome Text -->
-                    <div class="welcome-text">
-                        <h3>
-                            {{ __('Write Your Cover Letter') }}
-                        </h3>
-                    </div>
+                            <!-- Welcome Text -->
+                            <div class="welcome-text">
+                                <h3>
+                                    {{ __('Write Your Cover Letter') }}
+                                </h3>
+                            </div>
 
-                    <!-- Form -->
-                    <form method="post" id="apply-now-form" action="{{ route('apply-job') }}">
-                        @csrf
-                        <input type="hidden" name="id" value="{{ encrypt($job->id) }}">
-                        <input type="hidden" name="candidate_id"
-                               value="{{ encrypt(\Illuminate\Support\Facades\Auth::user()->id) }}">
-                        <div class="input-with-icon-left">
+                            <!-- Form -->
+                            <form method="post" id="apply-now-form" action="{{ route('apply-job') }}">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ encrypt($job->id) }}">
+                                <input type="hidden" name="candidate_id"
+                                       value="{{ encrypt(\Illuminate\Support\Facades\Auth::user()->id) }}">
+                                <div class="input-with-icon-left">
                             <textarea name="cover_letter"
                                       class="input-text with-border @error('cover_letter') is-invalid @enderror"
                                       cols="30" rows="10" required></textarea>
-                            @error('cover_letter')
-                            <span class="invalid-feedback" role="alert">
+                                    @error('cover_letter')
+                                    <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
-                            @enderror
-                        </div>
-                        <div class="input-with-icon-left">
-                            <input class="input-text with-border @error('bid_amount') is-invalid @enderror" type="text" name="bid_amount" placeholder="{{ __('Offer Amount') }}" style="padding-left: 20px;">
-                            @error('bid_amount')
-                            <span class="invalid-feedback" role="alert">
+                                    @enderror
+                                </div>
+                                <div class="input-with-icon-left">
+                                    <input class="input-text with-border @error('bid_amount') is-invalid @enderror"
+                                           type="text" name="bid_amount" placeholder="{{ __('Offer Amount') }}"
+                                           style="padding-left: 20px;">
+                                    @error('bid_amount')
+                                    <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
-                            @enderror
-                        </div>
-                        <!-- Button -->
-                        @if (\Illuminate\Support\Facades\Auth::user()->remain_job > 0 || \Illuminate\Support\Facades\Auth::user()->remain_job != 'unlimited')
-                            <button class="button margin-top-35 full-width button-sliding-icon ripple-effect" type="submit"
-                                    form="apply-now-form">{{ __('Apply Now') }}
-                                <i class="icon-material-outline-arrow-right-alt"></i>
-                            </button>
-                        @else
-                            <button class="button margin-top-35 full-width button-sliding-icon ripple-effect" type="submit"
-                                    form="apply-now-form">{{ __('Apply Now') }} {{ __('and Pay') }} $2
-                                <i class="icon-material-outline-arrow-right-alt"></i>
-                            </button>
-                        @endif
-                    </form>
+                                    @enderror
+                                </div>
+                                <!-- Button -->
+                                @if (\Illuminate\Support\Facades\Auth::user()->remain_job > 0 || \Illuminate\Support\Facades\Auth::user()->remain_job != 'unlimited')
+                                    <button class="button margin-top-35 full-width button-sliding-icon ripple-effect"
+                                            type="submit"
+                                            form="apply-now-form">{{ __('Apply Now') }}
+                                        <i class="icon-material-outline-arrow-right-alt"></i>
+                                    </button>
+                                @else
+                                    <button class="button margin-top-35 full-width button-sliding-icon ripple-effect"
+                                            type="submit"
+                                            form="apply-now-form">{{ __('Apply Now') }} {{ __('and Pay') }} $2
+                                        <i class="icon-material-outline-arrow-right-alt"></i>
+                                    </button>
+                                @endif
+                            </form>
 
+                        </div>
+
+                    </div>
                 </div>
-
             </div>
-        </div>
-    </div>
-    <!-- Apply for a job popup / End -->
+            <!-- Apply for a job popup / End -->
         @endif
     @endauth
 @endsection

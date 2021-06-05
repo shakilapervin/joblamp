@@ -18,6 +18,7 @@ Route::get('contact-us', 'Website\FrontendController@contactPage')->name('contac
 Route::get('privacy-policy', 'Website\FrontendController@privacyPolicyPage')->name('privacy.policy');
 Route::get('terms-and-conditions', 'Website\FrontendController@termsConditionsPage')->name('terms.conditions');
 Route::get('about-us', 'Website\FrontendController@aboutUs')->name('about.us');
+Route::get('accessibility', 'Website\FrontendController@accessibility')->name('accessibility');
 Route::get('lotto-prizes', 'Website\FrontendController@lottoPrizes')->name('lotto.prizes');
 Route::post('change-lang', 'Website\FrontendController@changeLang')->name('change.lang');
 Route::post('submit-contact-form', 'Website\FrontendController@submitContactForm')->name('submit.contact.form');
@@ -372,5 +373,8 @@ Route::group(['middleware' => ['admin']], function () {
 
     Route::get('admin-page-about-us', 'Admin\PageController@aboutUs')->name('admin.page.about.us');
     Route::post('admin-page-update-about-us', 'Admin\PageController@updateAboutUs')->name('admin.update.about.us');
+
+    Route::get('admin-page-accessibility', 'Admin\PageController@accessibility')->name('admin.page.accessibility');
+    Route::post('admin-page-update-accessibility', 'Admin\PageController@updateAccessibility')->name('admin.update.accessibility');
 });
 

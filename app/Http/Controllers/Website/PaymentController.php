@@ -235,7 +235,7 @@ class PaymentController extends Controller
         app()->setLocale($lang);
         $jobId = session()->get('jobId');
         $userId = session()->get('userId');
-        $user = User::where(id, $userId)->first();
+        $user = User::where('id', $userId)->first();
         $candidateId = session()->get('candidateId');
         // Once the transaction has been approved, we need to complete it.
         if ($request->input('paymentId') && $request->input('PayerID')) {

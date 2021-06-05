@@ -229,6 +229,12 @@
                                         <span class="menu-text">{{ __('About Us') }}</span>
                                     </a>
                                 </li>
+                                <li>
+                                    <a href="{{ route('admin.page.accessibility') }}"
+                                       class="{{ Route::is('admin.page.accessibility') ? 'current-page' : '' }}">
+                                        <span class="menu-text">{{ __('Accessibility') }}</span>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </li>

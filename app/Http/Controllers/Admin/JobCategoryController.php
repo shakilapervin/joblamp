@@ -166,9 +166,9 @@ class JobCategoryController extends Controller
         }
         $status = JobCategory::where('id',$id)->delete();
         if ($status){
-            return redirect('admin-customers')->with('success', __('Deleted!'));
+            return redirect()->back()->with('success', __('Successfully Deleted!'));
         }else{
-            return redirect('admin-customers')->with('error', __('Error!'));
+            return redirect()->back()->with('error', __('Error!'));
         }
     }
 }
