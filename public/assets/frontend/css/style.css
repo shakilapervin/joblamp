@@ -20495,3 +20495,11 @@ figure {
     top: 0;
     position: absolute;
 }
+.lotto-prize {
+    padding: 25px 30px;
+    background: #fff;
+    border-radius: 10px;
+    -webkit-box-shadow: 0 3px 15px 0 rgba(0,0,0,0.08);
+    box-shadow: 0 3px 15px 0 rgba(0,0,0,0.08);
+    transition: all 300ms ease-in-out;
+}

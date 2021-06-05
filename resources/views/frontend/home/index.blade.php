@@ -259,6 +259,50 @@
     </div>
     <!-- Hero Section / End-->
 
+    <!-- Latto Section -->
+    <div class="section padding-top-60 padding-bottom-75">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12">
+                    <div class="fr-about-conrent">
+                        <span>Win A Special Price</span>
+                        <h2>Lotto Prizes</h2>
+                        <p>Experience state-of-the-art marketplace platform with the Exertio. We combine the experience
+                            of our global community around the globe for a best marketplace theme.</p>
+                        <p>With Exertio, you can develop a website for remote freelancers that will provide their best
+                            to the clients who are looking for remote resources. </p><h4>Key Points</h4>
+                        <div class="fr-product-checks">
+                            <ul>
+                                <li><img
+                                        src="https://marketplace.exertiowp.com/wp-content/themes/exertio/images/check-box.png"
+                                        alt="" class="img-fluid"> <span>Get commission on project or servies</span></li>
+                                <li><img
+                                        src="https://marketplace.exertiowp.com/wp-content/themes/exertio/images/check-box.png"
+                                        alt="" class="img-fluid"> <span>Services addons and  micro earnings</span></li>
+                                <li><img
+                                        src="https://marketplace.exertiowp.com/wp-content/themes/exertio/images/check-box.png"
+                                        alt="" class="img-fluid"> <span>Communicate easily with live chat</span></li>
+                                <li><img
+                                        src="https://marketplace.exertiowp.com/wp-content/themes/exertio/images/check-box.png"
+                                        alt="" class="img-fluid"> <span>Send media &amp; emoji in chat</span></li>
+                            </ul>
+                        </div>
+                        <a href="https://www.youtube.com/watch?v=S7r23-YvGrc" class="button">Read More</a>
+                    </div>
+                </div>
+                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12">
+                    <div class="fr-about-video">
+                        <div class="fr-about-container">
+                            <img src="{{ asset('assets/frontend/images/latto.png') }}" alt=""
+                                 class="img-fluid wow pulse" data-wow-iteration="infinite" data-wow-duration="2s">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Latto Section / End-->
+
     <!-- Membership Plans -->
     <div class="section padding-top-60 padding-bottom-75" style="background: #fceff0; background-image: url({{ asset('assets/frontend/images/background.png') }})">
         <div class="container">
